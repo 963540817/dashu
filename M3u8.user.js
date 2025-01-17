@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250105
+// @version 20250117
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -16,7 +16,7 @@
 // @include /\/\d+?[Kk]b\/hls\/index\.m3u8|\.m3u8\?[^=]+?=[^\/]*?(?:info|llq)|\.m3u8$/
 // @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
 // @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)|(?:[^\/]+?\/(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/\d+?)$)/
-// @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
+// @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
 // @grant unsafeWindow
 // @run-at document-start
 // ==/UserScript==
@@ -57,12 +57,15 @@
                         self = typeof unsafeWindow !== 'undefined' ? unsafeWindow : self;
                     } catch (e) {}
                     /*以下是 M3U8 插播广告 过滤核心代码 不懂勿动*/
-                    const tyad1 = '#EXTINF\\s*?:\\s*?'
+                    const tyad0 = '#EXTINF'
+                      , tyad1 = tyad0 + '\\s*?:\\s*?'
                       , tyad2 = '#EXT-X-DISCONTINUITY'
                       , tyad3 = tyad2 + hhzz
                       , tyad4 = '(?:' + ggzlhx + ')'
                       , tyad5 = '\\.' + tyad4
                       , tyad6 = tyad5 + hhzz + '+'
+                      , tyad7 = '#EXT-X-ENDLIST'
+                      , tyad8 = '(?:[a-z]+?(?:\\s*?[\\_\\-]\\s*?)?)?\\d+?'
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -81,7 +84,7 @@
                       , tyad106 = '+?\\\/\\d+?_\\w{1,10}\\.ts'
                       , tyad107 = /^\s*#EXTM3U/i
                       , tyad108 = '[a-z\\d]{10,}0{2}\\d+?\\.'
-                      , tyad109 = '(?:(?=#EXT-X-ENDLIST)|' + tyad3 + ')'
+                      , tyad109 = '(?:(?=' + tyad7 + ')|' + tyad3 + ')'
                       , tyad1010 = '^\\s*?#EXTM3U\\s*?'
                       , tyad1011 = hhzz + '+?' + bhhzz + '+?'
                       , tyad1012 = tyad1011 + hhzz + '+?'
@@ -131,6 +134,8 @@
                       , itemstygza3 = new RegExp(tyad1039 + tyad6,'igm')
                       , itemstygza4 = new RegExp(tyad1032 + '?:' + tyadb + '(?<!' + tyad105 + ')[a-z0-9\\\/]+?' + tyad6 + '?){3,}' + tyad1014 + '(?:' + tyad1039 + tyad6 + '){3,}','i')
                       , itemstygza5 = new RegExp('(?<=(?<=' + hhzz + '+)' + tyad1014 + tyadi + tyad1018 + tyad1050 + tyad2 + '(?:' + hhzz + '+?' + tyad1045 + '1,}(?:' + tyadi + '3{5}' + tyad1050 + '{2,}' + tyad1047,'gi')
+                      , itemstygza6 = new RegExp('(?<=' + hhzz + '+)' + tyad1014 + '(?:#EXT-X-' + bhhzz + '+' + hhzz + '+){1,}(?=(?:' + tyad7 + '|' + tyad1 + '\\d))','gmi')
+                      , itemstygza7 = new RegExp('(?<=' + tyadb + tyad1017 + ')(?:#EXT-X-(?!(?:DISCONTINUITY|ENDLIST))' + tyad1017 + '){1,}(?=(?:' + tyad2 + '|#EXT-X-|' + tyad1 + '\\d))','gmi')
                       , itemsPaichu = [/*动态排除指定资源 正规则表达式,以达到智能删除插播广告的效果*/
                     new RegExp(tyad1031 + '(?![\\S\\s]*?(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){2,})[\\S\\s]*?' + tyad1014 + '(?:' + tyad1015 + '(?:[a-z]+?\\d+?|\\d+?[a-z]+?){10,}' + tyad1016 + '){2,}','i')]
                       , itemsHandle = [{
@@ -157,13 +162,24 @@
                       , logysg = 'color:blue;'
                       , logysh = 'color:red;'
                       , logysi = 'color:black;'
-                      , logysj = '广告标识';
+                      , logysj = '广告标识'
+                      , logysk = '额外删除-具体内容] ✂%c'
+                      , logysl = '时间差异-具体内容] ✂\n%c'
+                      , logysm = '长度差异-具体内容] ✂\n%c';
                     const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
                     const matchM3u = url=>{
-                        spbfurl = url;
-                        const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url) && !ggbmd.test(url));
-                        itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
-                        return matchedItem;
+                        try {
+                            if (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url)) {
+                                spbfurl = url;
+                                const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url) && !ggbmd.test(url));
+                                itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && m3u8wz.test(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
+                                return matchedItem;
+                            } else {
+                                return null;
+                            }
+                        } catch (e) {
+                            return null;
+                        }
                     }
                     ;
                     const M3umatch = text=>{
@@ -231,7 +247,7 @@
                                                     if (!new RegExp(tyad5 + '\\?','i').test(text)) {
                                                         if (new RegExp(tyad5 + hhzz,'i').test(text)) {
                                                             if (!jxbgzd) {
-                                                                jxbgzd = /^\s*?(?:[a-z]+?(?:\s*?[\_\-]\s*?)?)?\d+?\s*?$/i;
+                                                                jxbgzd = new RegExp('^\\s*?' + tyad8 + '\\s*?$','i');
                                                             } else if (jxbgzd == '空') {
                                                                 jxbgzd = /^\s*?空\s*?$/;
                                                             }
@@ -415,7 +431,7 @@
                                                                 }
                                                                 try {
                                                                     if (!text.match(itemstygza4)) {
-                                                                        modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称');
+                                                                        modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称', new RegExp('^\\s*?(?!.*?0{3,})(?:[a-z\\d]+?|' + tyad8 + ')\\s*?$','i'));
                                                                     }
                                                                 } catch (e) {}
                                                                 try {
@@ -489,6 +505,260 @@
                         }
                     }
                     ;
+                    const removeprunerm3u8a = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!tyad107.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            let deletedContent = '';
+                                            text = text.replace(itemstygza6, (match)=>{
+                                                deletedContent += match + '\n';
+                                                return '';
+                                            }
+                                            );
+                                            try {
+                                                if (deletedContent.trim() !== '') {
+                                                    if (!dypd.test(打印)) {
+                                                        console.log(logysa + logysk + deletedContent, logysf, logysi);
+                                                    }
+                                                }
+                                            } catch (e) {}
+                                            return text;
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
+                    const removeprunerm3u8b = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!tyad107.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            let deletedContent = '';
+                                            let addedMatches = new Set();
+                                            text = text.replace(itemstygza7, (match)=>{
+                                                match = match.trim();
+                                                if (!addedMatches.has(match) && match !== '') {
+                                                    deletedContent += match + '\n';
+                                                    addedMatches.add(match);
+                                                }
+                                                return '';
+                                            }
+                                            );
+                                            try {
+                                                if (deletedContent.trim() !== '') {
+                                                    if (!dypd.test(打印)) {
+                                                        console.log(logysa + logysk + deletedContent, logysf, logysi);
+                                                    }
+                                                }
+                                            } catch (e) {}
+                                            return text;
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
+                    const removeprunerm3u8c = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!tyad107.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            const lines = text.split('\n');
+                                            const extinfLines = lines.filter(line=>new RegExp('^' + tyad0,'i').test(line));
+                                            const extinfValues = extinfLines.map(line=>parseFloat(line.split(':')[1].split(',')[0]));
+                                            const valueCounts = extinfValues.reduce((acc,value)=>{
+                                                acc[value] = (acc[value] || 0) + 1;
+                                                return acc;
+                                            }
+                                            , {});
+                                            const maxCount = Math.max(...Object.values(valueCounts));
+                                            const maxValue = Object.keys(valueCounts).find(key=>valueCounts[key] === maxCount);
+                                            const maxValueRatio = maxCount / extinfValues.length;
+                                            let deletedLines = [];
+                                            if (maxValueRatio > 0.987) {
+                                                const newLines = [];
+                                                let skipNextTs = false;
+                                                for (let i = 0; i < lines.length; i++) {
+                                                    if (new RegExp('^' + tyad0,'i').test(lines[i])) {
+                                                        if (firstExtinf) {
+                                                            firstExtinf = false;
+                                                            newLines.push(lines[i]);
+                                                            skipNextTs = false;
+                                                        } else if (i === lines.length - 1 || !new RegExp('^' + tyad0,'i').test(lines[i + 1])) {
+                                                            lastExtinf = true;
+                                                            newLines.push(lines[i]);
+                                                            skipNextTs = false;
+                                                        } else {
+                                                            const value = parseFloat(lines[i].split(':')[1].split(',')[0]);
+                                                            if (value != maxValue) {
+                                                                deletedLines.push(lines[i], lines[i + 1]);
+                                                                skipNextTs = true;
+                                                            } else {
+                                                                newLines.push(lines[i]);
+                                                                skipNextTs = false;
+                                                            }
+                                                        }
+                                                    } else if (skipNextTs) {
+                                                        skipNextTs = false;
+                                                    } else {
+                                                        newLines.push(lines[i]);
+                                                    }
+                                                }
+                                                text = newLines.join('\n');
+                                            }
+                                            try {
+                                                if (deletedLines.length > 0) {
+                                                    if (!dypd.test(打印)) {
+                                                        console.log(logysa + logysl + deletedLines.map(line=>{
+                                                            return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                if (!tsLink.startsWith('http')) {
+                                                                    if (m3u8gglj) {
+                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                                    } else {
+                                                                        return tsLink;
+                                                                    }
+                                                                } else {
+                                                                    return tsLink;
+                                                                }
+                                                            }
+                                                            );
+                                                        }
+                                                        ).join('\n'), logysf, logysi);
+                                                    }
+                                                }
+                                            } catch (e) {}
+                                            return text;
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
+                    const removeprunerm3u8d = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!tyad107.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            const lines = text.split('\n');
+                                            const urlLengths = [];
+                                            const urlsWithIndex = [];
+                                            lines.forEach((line,index)=>{
+                                                const match = line.match(new RegExp(tyad5 + '\\s*?$','i'));
+                                                if (match) {
+                                                    urlsWithIndex.push({
+                                                        url: line,
+                                                        index
+                                                    });
+                                                    urlLengths.push(line.length);
+                                                }
+                                            }
+                                            );
+                                            const lengthCounts = urlLengths.reduce((acc,length)=>{
+                                                acc[length] = (acc[length] || 0) + 1;
+                                                return acc;
+                                            }
+                                            , {});
+                                            const total = urlLengths.length;
+                                            let dominantLength = null;
+                                            for (const length in lengthCounts) {
+                                                if (lengthCounts[length] / total >= 0.789) {
+                                                    dominantLength = parseInt(length);
+                                                    break;
+                                                }
+                                            }
+                                            let deletedUrls = [];
+                                            if (dominantLength !== null) {
+                                                urlsWithIndex.forEach(({url, index})=>{
+                                                    if (url.length !== dominantLength) {
+                                                        deletedUrls.push(url);
+                                                        lines.splice(index - 1, 1);
+                                                        lines.splice(index - 1, 1);
+                                                    }
+                                                }
+                                                );
+                                            }
+                                            try {
+                                                if (deletedUrls.length > 0) {
+                                                    if (!dypd.test(打印)) {
+                                                        console.log(logysa + logysm + deletedUrls.map(line=>{
+                                                            return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                if (!tsLink.startsWith('http')) {
+                                                                    if (m3u8gglj) {
+                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                                    } else {
+                                                                        return tsLink;
+                                                                    }
+                                                                } else {
+                                                                    return tsLink;
+                                                                }
+                                                            }
+                                                            );
+                                                        }
+                                                        ).join('\n'), logysf, logysi);
+                                                    }
+                                                }
+                                            } catch (e) {}
+                                            return lines.join('\n');
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
                     const prunerm3u8 = (text)=>{
                         try {
                             if (!shouldStopExecution) {
@@ -520,19 +790,34 @@
                                                         }
                                                     }
                                                 } catch (e) {}
+                                                try {
+                                                    result = removeprunerm3u8a(result);
+                                                } catch (e) {}
                                                 return result;
                                             } else {
+                                                try {
+                                                    text = removeprunerm3u8a(text);
+                                                } catch (e) {}
                                                 return text;
                                             }
                                         }
                                     }
                                 } else {
+                                    try {
+                                        text = removeprunerm3u8a(text);
+                                    } catch (e) {}
                                     return text;
                                 }
                             } else {
+                                try {
+                                    text = removeprunerm3u8a(text);
+                                } catch (e) {}
                                 return text;
                             }
                         } catch (e) {
+                            try {
+                                text = removeprunerm3u8a(text);
+                            } catch (e) {}
                             return text;
                         }
                     }
@@ -577,7 +862,7 @@
                                         } else {
                                             m3u8gglj = urlFromArgBy;
                                             try {
-                                                if (wzm3u8.test(m3u8gglj) && !mp4wz.test(m3u8gglj) && !flvwz.test(m3u8gglj) && !tswz.test(m3u8gglj) && !playsharewz.test(m3u8gglj)) {
+                                                if (wzm3u8.test(m3u8gglj) && m3u8wz.test(m3u8gglj) && !mp4wz.test(m3u8gglj) && !flvwz.test(m3u8gglj) && !tswz.test(m3u8gglj) && !playsharewz.test(m3u8gglj)) {
                                                     m3u8bflj = m3u8gglj;
                                                 }
                                             } catch (e) {}
@@ -595,14 +880,11 @@
                                                         return;
                                                     }
                                                 } catch (e) {}
-                                                const textout = pruner(textin, item);
+                                                const textout = removeprunerm3u8d(removeprunerm3u8c(removeprunerm3u8b(prunerm3u8(pruner(textin, item)))));
                                                 try {
                                                     if (M3umatch(textout)) {
                                                         return;
                                                     }
-                                                } catch (e) {}
-                                                try {
-                                                    textout = prunerm3u8(textout);
                                                 } catch (e) {}
                                                 if (textout !== textin) {
                                                     Reflect.defineProperty(thisArg, 'response', {
