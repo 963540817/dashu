@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250117
+// @version 20250118
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -136,6 +136,7 @@
                       , itemstygza5 = new RegExp('(?<=(?<=' + hhzz + '+)' + tyad1014 + tyadi + tyad1018 + tyad1050 + tyad2 + '(?:' + hhzz + '+?' + tyad1045 + '1,}(?:' + tyadi + '3{5}' + tyad1050 + '{2,}' + tyad1047,'gi')
                       , itemstygza6 = new RegExp('(?<=' + hhzz + '+)' + tyad1014 + '(?:#EXT-X-' + bhhzz + '+' + hhzz + '+){1,}(?=(?:' + tyad7 + '|' + tyad1 + '\\d))','gmi')
                       , itemstygza7 = new RegExp('(?<=' + tyadb + tyad1017 + ')(?:#EXT-X-(?!(?:DISCONTINUITY|ENDLIST))' + tyad1017 + '){1,}(?=(?:' + tyad2 + '|#EXT-X-|' + tyad1 + '\\d))','gmi')
+                      , itemstygza8 = new RegExp(tyad1026 + '(\\d+?(?:\\.(?!0{1,},)\\d+?)?),' + tyad1037 + '\\1,' + tyad1028 + '){1,}' + tyad109,'gim')
                       , itemsPaichu = [/*动态排除指定资源 正规则表达式,以达到智能删除插播广告的效果*/
                     new RegExp(tyad1031 + '(?![\\S\\s]*?(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){2,})[\\S\\s]*?' + tyad1014 + '(?:' + tyad1015 + '(?:[a-z]+?\\d+?|\\d+?[a-z]+?){10,}' + tyad1016 + '){2,}','i')]
                       , itemsHandle = [{
@@ -146,7 +147,7 @@
                       , itemsHandleby = [/*播放黑木耳采集资源的时候,额外增加该数组规则,避免其他的误杀*/
                     {
                         reUrl: /^https?:\/\/(?:[^\/]+?\.)?(?:hmr|heimuer)/i,
-                        reAds: [new RegExp('(?<=' + tyad1014 + ')' + tyad1039 + tyad5 + tyad1017 + tyad1047,'gim'), new RegExp(tyad1026 + '((?<!0)\\d\\.(?!0)\\d{4,5}[1-9]),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp(tyad1026 + '(\\d+?(?:\\.(?!0{1,},)\\d+?)?),' + tyad1037 + '\\1,' + tyad1028 + '){1,}' + tyad109,'gim'), ]
+                        reAds: [new RegExp('(?<=' + tyad1014 + ')' + tyad1039 + tyad5 + tyad1017 + tyad1047,'gim'), new RegExp(tyad1026 + '((?<!0)\\d\\.(?!0)\\d{4,5}[1-9]),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), itemstygza8, ]
                     }, /*播放华为采集资源的时候,额外增加该数组规则,避免其他资源误杀*/
                     {
                         reUrl: /^https?:\/\/(?:[^\/]+?\.)?nikanba/i,
@@ -337,6 +338,31 @@
                         }
                     }
                     ;
+                    const reAdmatch = (reAd,match)=>{
+                        try {
+                            if (!dypd.test(打印)) {
+                                console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                    if (!tsLink.startsWith('http')) {
+                                        if (m3u8gglj) {
+                                            return new URL(tsLink,m3u8gglj).href;
+                                        } else {
+                                            return tsLink;
+                                        }
+                                    } else {
+                                        return tsLink;
+                                    }
+                                }
+                                ), logysf, logysg, logysh, logysg, logysi);
+                            }
+                        } catch (e) {
+                            try {
+                                if (!dypd.test(打印)) {
+                                    console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                }
+                            } catch (e) {}
+                        }
+                    }
+                    ;
                     const pruner = (text,item)=>{
                         try {
                             if (!shouldStopExecution) {
@@ -452,38 +478,46 @@
                                                 for (const reAd of item.reAds) {
                                                     const matches = modifiedText.match(reAd);
                                                     if (matches) {
-                                                        matches.forEach(match=>{
-                                                            try {
-                                                                if (!dypd.test(打印)) {
-                                                                    try {
-                                                                        console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
-                                                                            if (!tsLink.startsWith('http')) {
-                                                                                if (m3u8gglj) {
-                                                                                    return new URL(tsLink,m3u8gglj).href;
-                                                                                } else {
-                                                                                    return tsLink;
-                                                                                }
-                                                                            } else {
-                                                                                return tsLink;
-                                                                            }
+                                                        try {
+                                                            if (reAd === itemstygza8) {
+                                                                if (matches.length > 1) {
+                                                                    matches.forEach((match,index)=>{
+                                                                        if (index > 0) {
+                                                                            reAdmatch(reAd, match);
+                                                                            modifiedText = modifiedText.replace(reAd, "");
                                                                         }
-                                                                        ), logysf, logysg, logysh, logysg, logysi);
-                                                                    } catch (e) {
-                                                                        try {
-                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
-                                                                        } catch (e) {}
+                                                                    }
+                                                                    );
+                                                                } else if (matches.length === 1) {
+                                                                    const match = matches[0];
+                                                                    const tsLinks = match.match(new RegExp(tyad5,'i'));
+                                                                    if (tsLinks && tsLinks.length === 3) {
+                                                                        continue;
+                                                                    } else {
+                                                                        reAdmatch(reAd, match);
+                                                                        modifiedText = modifiedText.replace(reAd, "");
                                                                     }
                                                                 }
-                                                            } catch (e) {}
-                                                        }
-                                                        );
-                                                        try {
-                                                            if (!ggtspd) {
-                                                                ggtspd = true;
+                                                            } else {
+                                                                matches.forEach(match=>{
+                                                                    reAdmatch(reAd, match);
+                                                                }
+                                                                );
+                                                                modifiedText = modifiedText.replace(reAd, "");
                                                             }
-                                                        } catch (e) {}
+                                                        } catch (e) {
+                                                            matches.forEach(match=>{
+                                                                reAdmatch(reAd, match);
+                                                            }
+                                                            );
+                                                            modifiedText = modifiedText.replace(reAd, "");
+                                                        }
                                                     }
-                                                    modifiedText = modifiedText.replace(reAd, "");
+                                                    try {
+                                                        if (!ggtspd) {
+                                                            ggtspd = true;
+                                                        }
+                                                    } catch (e) {}
                                                 }
                                                 if (modifiedText.length < text.length) {
                                                     return modifiedText;
