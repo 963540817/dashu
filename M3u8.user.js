@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250119
+// @version 20250120
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -83,7 +83,7 @@
                       , tyad104 = tyad1 + '\\d+?(?:\\.\\d+?)?,'
                       , tyad105 = 'https?:\\\/\\\/'
                       , tyad106 = '+?\\\/\\d+?_\\w{1,10}\\.ts'
-                      , tyad107 = new RegExp('^(' + bhhzz + '+?)(?=0{3}\\d+?' + tyad5 + ')','i')
+                      , tyad107 = new RegExp('^(' + bhhzz + '*?)(?=0{3}\\d+?' + tyad5 + ')','i')
                       , tyad108 = '[a-z\\d]{10,}0{2}\\d+?\\.'
                       , tyad109 = '(?:(?=' + tyad7 + ')|' + tyad3 + ')'
                       , tyad1010 = '^\\s*?#EXTM3U\\s*?'
