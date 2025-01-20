@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250120
+// @version 20250121
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -67,6 +67,7 @@
                       , tyad7 = '#EXT-X-ENDLIST'
                       , tyad8 = '(?:[a-z\\d]+?(?:\\s*?[\\_\\-]\\s*?)?)?\\d+?'
                       , tyad9 = '#EXT-X-TARGETDURATION'
+                      , tyad10 = new RegExp('^\\s*?(?:(?!.*?0{3,})[a-z\\d]+?|' + tyad8 + ')\\s*?$','i')
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -83,7 +84,7 @@
                       , tyad104 = tyad1 + '\\d+?(?:\\.\\d+?)?,'
                       , tyad105 = 'https?:\\\/\\\/'
                       , tyad106 = '+?\\\/\\d+?_\\w{1,10}\\.ts'
-                      , tyad107 = new RegExp('^(' + bhhzz + '*?)(?=0{3}\\d+?' + tyad5 + ')','i')
+                      , tyad107 = new RegExp('^((?:' + bhhzz + '+?|\\s*?))(?=0{3}\\d+?' + tyad5 + ')','i')
                       , tyad108 = '[a-z\\d]{10,}0{2}\\d+?\\.'
                       , tyad109 = '(?:(?=' + tyad7 + ')|' + tyad3 + ')'
                       , tyad1010 = '^\\s*?#EXTM3U\\s*?'
@@ -244,7 +245,7 @@
                                             return text;
                                         } else {
                                             if (ggljdmb.test(text)) {
-                                                if (new RegExp(tyad1022,'i').test(text)) {
+                                                if (new RegExp(tyad1023,'i').test(text)) {
                                                     if (!new RegExp(tyad5 + '\\?','i').test(text)) {
                                                         if (new RegExp(tyad5 + hhzz,'i').test(text)) {
                                                             if (!jxbgzd) {
@@ -277,12 +278,19 @@
                                                                         }
                                                                     }
                                                                     if (maxCount > matches.length * 0.66 && Object.keys(paths).length < matches.length * 0.66) {
+                                                                        let deleteCount = 0;
                                                                         for (const path in paths) {
                                                                             if (path !== maxPath) {
-                                                                                paths[path].forEach(p=>{
-                                                                                    if (!jxbgzd.test(p)) {
-                                                                                        text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
-                                                                                            try {
+                                                                                deleteCount += paths[path].length;
+                                                                            }
+                                                                        }
+                                                                        if (deleteCount <= maxCount) {
+                                                                            for (const path in paths) {
+                                                                                if (path !== maxPath) {
+                                                                                    paths[path].forEach(p=>{
+                                                                                        /*console.log("排除测试：\n"+p);*/
+                                                                                        if (!jxbgzd.test(p)) {
+                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
                                                                                                 if (!dypd.test(打印)) {
                                                                                                     try {
                                                                                                         console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
@@ -303,19 +311,16 @@
                                                                                                         } catch (e) {}
                                                                                                     }
                                                                                                 }
-                                                                                            } catch (e) {}
-                                                                                            try {
-                                                                                                if (!ggtspd) {
-                                                                                                    ggtspd = true;
-                                                                                                }
-                                                                                            } catch (e) {}
-                                                                                            return '';
+                                                                                                return '';
+                                                                                            }
+                                                                                            );
                                                                                         }
-                                                                                        );
                                                                                     }
+                                                                                    );
                                                                                 }
-                                                                                );
                                                                             }
+                                                                        } else {
+                                                                            return text;
                                                                         }
                                                                     }
                                                                 }
@@ -486,9 +491,17 @@
                                                                 } catch (e) {
                                                                     modifiedText = text;
                                                                 }
-                                                                /*try{if(!text.match(itemstygza4)){modifiedText=deleteAbnormalTs(modifiedText,'(?:\\d+?|[a-z]+?)','\\w+?(?:[^\\d]\\d{2})?','名称',new RegExp('^\\s*?(?:(?!.*?0{3,})[a-z\\d]+?|'+tyad8+')\\s*?$','i'));}}catch(e){}*/
-                                                                /*try{modifiedText=deleteAbnormalTs(modifiedText,'\\d+?','\\w+(?=\\d{3})','名称','空',100);}catch(e){}*/
-                                                                /*try{modifiedText=deleteAbnormalTs(modifiedText,'\\d+?','\\w+(?=\\d{4})','名称','空');}catch(e){}*/
+                                                                try {
+                                                                    if (!text.match(itemstygza4)) {
+                                                                        modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称', tyad10);
+                                                                    }
+                                                                } catch (e) {}
+                                                                try {
+                                                                    modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '\\w+(?=\\d{3})', '名称', '空', 100);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '\\w+(?=\\d{4})', '名称', '空');
+                                                                } catch (e) {}
                                                                 try {
                                                                     modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '[^0]\\d+[^0]0{2,}\\d0', '名称', /(?<=[^0]0{3,})\d+$/);
                                                                 } catch (e) {}
@@ -519,18 +532,15 @@
                                                                         ), logysf, logysg, logysh, logysg, logysi);
                                                                     } catch (e) {
                                                                         try {
-                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                            if (!dypd.test(打印)) {
+                                                                                console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                            }
                                                                         } catch (e) {}
                                                                     }
                                                                 }
                                                             } catch (e) {}
                                                         }
                                                         );
-                                                        try {
-                                                            if (!ggtspd) {
-                                                                ggtspd = true;
-                                                            }
-                                                        } catch (e) {}
                                                     }
                                                     modifiedText = modifiedText.replace(reAd, "");
                                                 }
@@ -687,7 +697,11 @@
                                                         newLines.push(lines[i]);
                                                     }
                                                 }
-                                                text = endlist(newLines.join('\n'));
+                                                if (deleteCount > maxValueRatio * extinfValues.length) {
+                                                    return text;
+                                                } else {
+                                                    text = endlist(newLines.join('\n'));
+                                                }
                                             }
                                             try {
                                                 if (deletedLines.length > 0) {
@@ -767,34 +781,44 @@
                                                 urlsWithIndex.forEach(({url, index})=>{
                                                     if (url.length !== dominantLength) {
                                                         deletedUrls.push(url);
-                                                        lines.splice(index - 1, 1);
-                                                        lines.splice(index - 1, 1);
                                                     }
                                                 }
                                                 );
+                                                if (deletedUrls.length > lengthCounts[dominantLength]) {
+                                                    return text;
+                                                } else {
+                                                    deletedUrls.forEach((url)=>{
+                                                        const {index} = urlsWithIndex.find(u=>u.url === url);
+                                                        if (index >= 0) {
+                                                            lines.splice(index, 1);
+                                                            if (index - 1 >= 0 && !new RegExp(tyad7,'i').test(lines[index - 1])) {
+                                                                lines.splice(index - 1, 1);
+                                                            }
+                                                        }
+                                                    }
+                                                    );
+                                                }
                                             }
-                                            try {
-                                                if (deletedUrls.length > 0) {
-                                                    if (!dypd.test(打印)) {
-                                                        console.log(logysa + logysm + deletedUrls.map(line=>{
-                                                            return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
-                                                                if (!tsLink.startsWith('http')) {
-                                                                    if (m3u8gglj) {
-                                                                        return new URL(tsLink,m3u8gglj).href;
-                                                                    } else {
-                                                                        return tsLink;
-                                                                    }
+                                            if (deletedUrls.length > 0) {
+                                                if (!dypd.test(打印)) {
+                                                    console.log(logysa + logysm + deletedUrls.map(line=>{
+                                                        return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                            if (!tsLink.startsWith('http')) {
+                                                                if (m3u8gglj) {
+                                                                    return new URL(tsLink,m3u8gglj).href;
                                                                 } else {
                                                                     return tsLink;
                                                                 }
+                                                            } else {
+                                                                return tsLink;
                                                             }
-                                                            );
                                                         }
-                                                        ).join('\n'), logysf, logysi);
+                                                        );
                                                     }
+                                                    ).join('\n'), logysf, logysi);
                                                 }
-                                            } catch (e) {}
-                                            return endlist(lines.join('\n'));
+                                            }
+                                            return lines.join('\n');
                                         }
                                     }
                                 } else {
@@ -804,7 +828,7 @@
                                 return text;
                             }
                         } catch (e) {
-                            return text;
+                            return text
                         }
                     }
                     ;
@@ -843,6 +867,19 @@
                                                     matchedGroupCounts[item.matchedGroup] = (matchedGroupCounts[item.matchedGroup] || 0) + 1;
                                                 }
                                                 );
+                                                const minCount = Math.min(...Object.values(matchedGroupCounts));
+                                                const lessFrequentMatchedGroups = Object.keys(matchedGroupCounts).filter(group=>matchedGroupCounts[group] === minCount);
+                                                let filteredMatchedGroups = lessFrequentMatchedGroups.map(group=>{
+                                                    const lastSlashIndex = group.lastIndexOf('/');
+                                                    if (lastSlashIndex !== -1) {
+                                                        group = group.substring(0, lastSlashIndex + 1);
+                                                    }
+                                                    if (!group.match(/^https?:\/\//) && !group.startsWith('/')) {
+                                                        return null;
+                                                    }
+                                                    return group;
+                                                }
+                                                ).filter(group=>group !== null);
                                                 const totalMatched = matchedLines.length;
                                                 let dominantMatchedGroup;
                                                 for (const matchedGroup in matchedGroupCounts) {
@@ -868,41 +905,66 @@
                                                         return text;
                                                     } else {
                                                         const deletedLines = [];
-                                                        for (let i = allLines.length - 1; i >= 0; i--) {
-                                                            if (allLines[i].line.startsWith(tyad0)) {
-                                                                const nextLine = allLines[i + 1]?.line;
-                                                                const match = nextLine?.match(tyad107);
-                                                                if (!match || match[1] !== dominantMatchedGroup) {
-                                                                    deletedLines.push(allLines[i + 1].line);
-                                                                    deletedLines.push(allLines[i].line);
-                                                                    allLines.splice(i, 2);
+                                                        if (filteredMatchedGroups.length > 0) {
+                                                            for (let i = allLines.length - 1; i >= 0; i--) {
+                                                                if (allLines[i].line.startsWith(tyad0)) {
+                                                                    const nextLine = allLines[i + 1]?.line;
+                                                                    const cleanedNextLine = nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '');
+                                                                    if (!tyad10.test(cleanedNextLine)) {
+                                                                        const isFilteredMatched = filteredMatchedGroups.some(group=>nextLine.startsWith(group));
+                                                                        if (isFilteredMatched) {
+                                                                            deletedLines.push(allLines[i + 1].line);
+                                                                            deletedLines.push(allLines[i].line);
+                                                                            allLines.splice(i, 2);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        } else {
+                                                            for (let i = allLines.length - 1; i >= 0; i--) {
+                                                                if (allLines[i].line.startsWith(tyad0)) {
+                                                                    const nextLine = allLines[i + 1]?.line;
+                                                                    const cleanedNextLine = nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '');
+                                                                    const match = nextLine?.match(tyad107);
+                                                                    if (!match || match[1] !== dominantMatchedGroup) {
+                                                                        if (!tyad10.test(cleanedNextLine)) {
+                                                                            deletedLines.push(allLines[i + 1].line);
+                                                                            deletedLines.push(allLines[i].line);
+                                                                            allLines.splice(i, 2);
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         }
-                                                        try {
-                                                            if (deletedLines.length > 0) {
-                                                                try {
-                                                                    if (!dypd.test(打印)) {
-                                                                        console.log(logysa + logysn + deletedLines.reverse().map(line=>{
-                                                                            return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
-                                                                                if (!tsLink.startsWith('http')) {
-                                                                                    if (m3u8gglj) {
-                                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                        const tsToDeleteCount = deletedLines.length / 2;
+                                                        if (tsToDeleteCount > totalMatched) {
+                                                            return text;
+                                                        } else {
+                                                            try {
+                                                                if (deletedLines.length > 0) {
+                                                                    try {
+                                                                        if (!dypd.test(打印)) {
+                                                                            console.log(logysa + logysn + deletedLines.reverse().map(line=>{
+                                                                                return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                                    if (!tsLink.startsWith('http')) {
+                                                                                        if (m3u8gglj) {
+                                                                                            return new URL(tsLink,m3u8gglj).href;
+                                                                                        } else {
+                                                                                            return tsLink;
+                                                                                        }
                                                                                     } else {
                                                                                         return tsLink;
                                                                                     }
-                                                                                } else {
-                                                                                    return tsLink;
                                                                                 }
+                                                                                );
                                                                             }
-                                                                            );
+                                                                            ).join('\n'), logysf, logysi);
                                                                         }
-                                                                        ).join('\n'), logysf, logysi);
-                                                                    }
-                                                                } catch (e) {}
-                                                            }
-                                                        } catch (e) {}
-                                                        return endlist(allLines.map(item=>item.line).join('\n'));
+                                                                    } catch (e) {}
+                                                                }
+                                                            } catch (e) {}
+                                                            return endlist(allLines.map(item=>item.line).join('\n'));
+                                                        }
                                                     }
                                                 }
                                             }
@@ -985,28 +1047,32 @@
                     const realFetch = self.fetch;
                     self.fetch = new Proxy(self.fetch,{
                         apply(target, thisArg, args) {
-                            const item = matchM3u(urlFromArg(args[0]));
-                            if (!item) {
+                            const url = urlFromArg(args[0]);
+                            const item = matchM3u(url);
+                            if (!item || shouldStopExecution) {
                                 return Reflect.apply(target, thisArg, args);
                             }
-                            if (!shouldStopExecution) {
-                                return realFetch(...args).then(realResponse=>realResponse.text().then(text=>{
-                                    const modifiedText = pruner(text, item);
-                                    try {
-                                        if (M3umatch(modifiedText)) {
-                                            return realResponse;
-                                        }
-                                    } catch (e) {}
-                                    return new Response(modifiedText,{
-                                        status: realResponse.status,
-                                        statusText: realResponse.statusText,
-                                        headers: realResponse.headers
-                                    });
+                            return realFetch(...args).then((realResponse)=>{
+                                try {
+                                    const text = realResponse.text();
+                                    const modifiedText = text;
+                                    if (M3umatch(modifiedText)) {
+                                        return realResponse;
+                                    } else {
+                                        return new Response(modifiedText,{
+                                            status: realResponse.status,
+                                            statusText: realResponse.statusText,
+                                            headers: realResponse.headers
+                                        });
+                                    }
+                                } catch (error) {
+                                    return Reflect.apply(target, thisArg, args);
                                 }
-                                ));
-                            } else {
+                            }
+                            ).catch(error=>{
                                 return Reflect.apply(target, thisArg, args);
                             }
+                            );
                         }
                     });
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
