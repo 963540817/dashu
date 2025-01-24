@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250123
+// @version 20250124
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -128,6 +128,8 @@
                       , tyad1048 = '){0,}'
                       , tyad1049 = tyad1048 + tyad1 + '\\d+?\\.3{3,}\\s*?,'
                       , tyad1050 = tyad1046 + '(?:' + tyad1043 + tyad1044 + tyad1048 + ')'
+                      , itemts = new RegExp(tyad5,'i')
+                      , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                       , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
                       , itemspdgza = '(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){5,}'
                       , itemstygza = '(?<=(?:' + tyad1015 + tyad108 + tyad4 + hhzz + '+?){1,})' + tyad1014 + '(?:' + tyad1015 + '(?!' + tyad108 + tyad4 + ')' + tyada + '?){1,}' + tyad109
@@ -186,7 +188,7 @@
                     ;
                     const M3umatch = text=>{
                         try {
-                            if (!text || !new RegExp(tyad5,'i').test(text) || !new RegExp(tyad1010,'i').test(text)) {
+                            if (!text || !itemts.test(text) || !itemm3u8.test(text)) {
                                 return true;
                             } else {
                                 return false;
@@ -205,13 +207,12 @@
                     const m3u8text = (text)=>{
                         try {
                             const regex = /^[a-z\d]{20,}/i;
-                            const extensionRegex = new RegExp(tyad5,'i');
                             const lines = text.split('\n');
                             let count = 0;
                             for (let line of lines) {
                                 const trimmedLine = line.trim();
-                                if (extensionRegex.test(trimmedLine)) {
-                                    const match = trimmedLine.match(extensionRegex);
+                                if (itemts.test(trimmedLine)) {
+                                    const match = trimmedLine.match(itemts);
                                     if (match) {
                                         const extension = match[0];
                                         const fileName = trimmedLine.slice(0, -extension.length);
@@ -235,7 +236,7 @@
                     ;
                     const endlist = (text)=>{
                         try {
-                            if (!new RegExp(tyad1010,'i').test(text)) {
+                            if (!itemm3u8.test(text)) {
                                 return text;
                             } else {
                                 const lines = text.trim().split('\n');
@@ -254,7 +255,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -364,7 +365,7 @@
                     ;
                     const taragtduration = (text)=>{
                         try {
-                            if (!new RegExp(tyad1010,'i').test(text)) {
+                            if (!itemm3u8.test(text)) {
                                 return text;
                             } else {
                                 var lines = text.split('\n');
@@ -403,7 +404,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -448,8 +449,8 @@
                                                         if (!dypd.test(打印)) {
                                                             console.table(itemsPaichu);
                                                             console.table(itemsHandle);
-                                                            console.log("播放链接：" + spbfurl);
                                                         }
+                                                        console.log("播放链接：" + spbfurl);
                                                     }
                                                 } catch (e) {}
                                                 let modifiedText;
@@ -569,7 +570,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -607,7 +608,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -650,7 +651,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -743,7 +744,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -837,7 +838,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
@@ -986,7 +987,7 @@
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
-                                    if (!new RegExp(tyad1010,'i').test(text)) {
+                                    if (!itemm3u8.test(text)) {
                                         return text;
                                     } else {
                                         if (ggljbmd.test(text)) {
