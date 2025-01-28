@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
-// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片  个人自用脚本
-// @version 20250124
+// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8视频缓存，提高流畅度
+// @version 20250128
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -32,7 +32,7 @@
                     configurable: false
                 });
             } catch (e) {}
-            let self, urlvip, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
+            let fn, self, urlvip, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, 缓存开关, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
             urlvip = location.href;
             m3u8gglj = '';
             m3u8bflj = '';
@@ -45,7 +45,9 @@
             tswz = /\.ts(?:#|\?|\\|&|$)/i;
             playsharewz = /^https?:\/\/[^\/]+?\/{1,}(?:play|share)\/{1,}[a-zA-Z0-9]+?(?:\/{1,})?$/i;
             dypd = /^\s*?(?:0{1,}|(?<!开\s*?)关(?:\s*?[闭掉])?)\s*?$/;
-            打印 = '关';
+            打印开关 = '关';
+            缓存开关 = '开';
+            视频缓存 = 80;
             ggsjgg = '4|20';
             ggzlhx = 'ts|png|jpe?g|txt';
             ggljbmd = /&[a-z]*?(?:sign|token|version)=/i;
@@ -54,8 +56,34 @@
             try {
                 if (!shouldStopExecution) {
                     try {
-                        self = typeof unsafeWindow !== 'undefined' ? unsafeWindow : self;
-                    } catch (e) {}
+                        if (typeof unsafeWindow !== 'undefined') {
+                            self = unsafeWindow;
+                            if (!dypd.test(缓存开关)) {
+                                fn = MediaSource.isTypeSupported;
+                                self.MediaSource.isTypeSupported = function(...args) {
+                                    if (self.Hls) {
+                                        self.MediaSource.isTypeSupported = fn;
+                                        const opts = {
+                                            maxBufferSize: 36 << 20,
+                                            maxBufferLength: 视频缓存,
+                                            maxMaxBufferLength: 视频缓存 + 9,
+                                            backBufferLength: 9
+                                        };
+                                        self.Hls = new Proxy(Hls,{
+                                            construct(target, args) {
+                                                args[0] = Object.assign(args[0] || {}, opts);
+                                                return new target(...args);
+                                            }
+                                        });
+                                    }
+                                    return fn(...args);
+                                }
+                                ;
+                            }
+                        }
+                    } catch (e) {
+                        console.error('视频缓存报错\n:' + e);
+                    }
                     /*以下是 M3U8 插播广告 过滤核心代码 不懂勿动*/
                     const tyad0 = '#EXTINF'
                       , tyad1 = tyad0 + '\\s*?:\\s*?'
@@ -309,7 +337,7 @@
                                                                                         /*console.log("排除测试：\n"+p);*/
                                                                                         if (!jxbgzd.test(p)) {
                                                                                             text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
-                                                                                                if (!dypd.test(打印)) {
+                                                                                                if (!dypd.test(打印开关)) {
                                                                                                     try {
                                                                                                         console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
                                                                                                             if (!tsLink.startsWith('http')) {
@@ -388,7 +416,7 @@
                                 if (newTargetDuration !== originalTargetDuration) {
                                     lines[targetDurationLineIndex] = tyad9 + ':' + newTargetDuration;
                                     try {
-                                        if (!dypd.test(打印)) {
+                                        if (!dypd.test(打印开关)) {
                                             console.log(logysa + logyso + "-已经发现] ✂" + '已经把《' + tyad9 + '》数值从<' + originalTargetDuration + '>修改成<' + newTargetDuration + '>', logysf);
                                         }
                                     } catch (e) {}
@@ -446,7 +474,7 @@
                                                                 );
                                                             }
                                                         } catch (e) {}
-                                                        if (!dypd.test(打印)) {
+                                                        if (!dypd.test(打印开关)) {
                                                             console.table(itemsPaichu);
                                                             console.table(itemsHandle);
                                                         }
@@ -474,7 +502,7 @@
                                                                         const matchessc = text.match(itemstygza3);
                                                                         if (matchessc) {
                                                                             try {
-                                                                                if (!dypd.test(打印)) {
+                                                                                if (!dypd.test(打印开关)) {
                                                                                     console.log(logysa + "资源广告" + logysc + itemstygza3 + logyse, logysf, logysg, logysh, logysg);
                                                                                     matchessc.forEach(match=>{
                                                                                         console.log(match);
@@ -517,7 +545,7 @@
                                                     if (matches) {
                                                         matches.forEach(match=>{
                                                             try {
-                                                                if (!dypd.test(打印)) {
+                                                                if (!dypd.test(打印开关)) {
                                                                     try {
                                                                         console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
                                                                             if (!tsLink.startsWith('http')) {
@@ -533,7 +561,7 @@
                                                                         ), logysf, logysg, logysh, logysg, logysi);
                                                                     } catch (e) {
                                                                         try {
-                                                                            if (!dypd.test(打印)) {
+                                                                            if (!dypd.test(打印开关)) {
                                                                                 console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
                                                                             }
                                                                         } catch (e) {}
@@ -585,7 +613,7 @@
                                             );
                                             try {
                                                 if (deletedContent.trim() !== '') {
-                                                    if (!dypd.test(打印)) {
+                                                    if (!dypd.test(打印开关)) {
                                                         console.log(logysa + logysk + deletedContent, logysf, logysi);
                                                     }
                                                 }
@@ -628,7 +656,7 @@
                                             );
                                             try {
                                                 if (deletedContent.trim() !== '') {
-                                                    if (!dypd.test(打印)) {
+                                                    if (!dypd.test(打印开关)) {
                                                         console.log(logysa + logysk + deletedContent, logysf, logysi);
                                                     }
                                                 }
@@ -707,7 +735,7 @@
                                             }
                                             try {
                                                 if (deletedLines.length > 0) {
-                                                    if (!dypd.test(打印)) {
+                                                    if (!dypd.test(打印开关)) {
                                                         console.log(logysa + logysl + deletedLines.map(line=>{
                                                             return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
                                                                 if (!tsLink.startsWith('http')) {
@@ -802,7 +830,7 @@
                                                 }
                                             }
                                             if (deletedUrls.length > 0) {
-                                                if (!dypd.test(打印)) {
+                                                if (!dypd.test(打印开关)) {
                                                     console.log(logysa + logysm + deletedUrls.map(line=>{
                                                         return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
                                                             if (!tsLink.startsWith('http')) {
@@ -945,7 +973,7 @@
                                                             try {
                                                                 if (deletedLines.length > 0) {
                                                                     try {
-                                                                        if (!dypd.test(打印)) {
+                                                                        if (!dypd.test(打印开关)) {
                                                                             console.log(logysa + logysn + deletedLines.reverse().map(line=>{
                                                                                 return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
                                                                                     if (!tsLink.startsWith('http')) {
@@ -1009,7 +1037,7 @@
                                                 const result = endlist(filteredLines.join('\n'));
                                                 try {
                                                     if (discontinuityCount > 1) {
-                                                        if (!dypd.test(打印)) {
+                                                        if (!dypd.test(打印开关)) {
                                                             console.log(logysa + logysj + "-已经发现] ✂" + '已删除《' + discontinuityCount + '》个' + tyad2 + logysj, logysf);
                                                         }
                                                     }
