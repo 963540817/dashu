@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
-// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8视频缓存，提高流畅度
-// @version 20250128
+// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8 hls 视频缓存，提高流畅度
+// @version 20250130
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -96,6 +96,8 @@
                       , tyad8 = '(?:[a-z\\d]+?(?:\\s*?[\\_\\-]\\s*?)?)?\\d+?'
                       , tyad9 = '#EXT-X-TARGETDURATION'
                       , tyad10 = new RegExp('^\\s*?(?:(?!.*?0{3,})[a-z\\d]+?|' + tyad8 + ')\\s*?$','i')
+                      , tyad11 = new RegExp('^' + tyad0,'i')
+                      , tyad12 = new RegExp('^\\s*?' + tyad1,'i')
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -391,37 +393,120 @@
                         }
                     }
                     ;
+                    const durationtaragt = (text)=>{
+                        try {
+                            if (!itemm3u8.test(text)) {
+                                return text;
+                            } else {
+                                const lines = text.split('\n');
+                                const outputLines = [];
+                                let extinfCount = 0;
+                                let tsCount = 0;
+                                let lastExtinf = null;
+                                for (let i = 0; i < lines.length; i++) {
+                                    const line = lines[i].trim();
+                                    if (tyad12.test(line)) {
+                                        const durationPart = line.split(',', 1)[0].replace(tyad12, '').trim();
+                                        if (!isNaN(durationPart) && durationPart.trim() !== '') {
+                                            extinfCount++;
+                                            lastExtinf = line;
+                                        } else {
+                                            lastExtinf = null;
+                                        }
+                                    } else if (itemts.test(line)) {
+                                        tsCount++;
+                                        if (lastExtinf) {
+                                            outputLines.push(lastExtinf);
+                                            outputLines.push(line);
+                                            lastExtinf = null;
+                                        } else {
+                                            outputLines.push(line);
+                                        }
+                                    } else if (line) {
+                                        outputLines.push(line);
+                                    }
+                                }
+                                if (extinfCount > tsCount) {
+                                    const finalLines = [];
+                                    let shouldKeepTs = false;
+                                    for (let i = 0; i < outputLines.length; i++) {
+                                        const line = outputLines[i];
+                                        if (tyad12.test(line)) {
+                                            shouldKeepTs = true;
+                                            finalLines.push(line);
+                                        } else if (itemts.test(line)) {
+                                            if (shouldKeepTs) {
+                                                finalLines.push(line);
+                                                shouldKeepTs = false;
+                                            }
+                                        } else {
+                                            finalLines.push(line);
+                                        }
+                                    }
+                                    return finalLines.join('\n').trim();
+                                } else {
+                                    return outputLines.join('\n').trim();
+                                }
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
                     const taragtduration = (text)=>{
                         try {
                             if (!itemm3u8.test(text)) {
                                 return text;
                             } else {
                                 var lines = text.split('\n');
-                                var totalDuration = 0;
-                                var segmentCount = 0;
-                                var originalTargetDuration = 0;
+                                var maxDuration = 0;
+                                var minDuration = Infinity;
                                 var targetDurationLineIndex = -1;
+                                var originalTargetDuration = 0;
                                 for (var i = 0; i < lines.length; i++) {
-                                    if (lines[i].match(new RegExp('^\\s*?' + tyad1,'i'))) {
+                                    if (lines[i].match(tyad12)) {
                                         var duration = parseFloat(lines[i].split(',')[0].split(':')[1]);
-                                        totalDuration += duration;
-                                        segmentCount++;
+                                        if (duration > maxDuration) {
+                                            maxDuration = duration;
+                                        }
+                                        if (duration < minDuration) {
+                                            minDuration = duration;
+                                        }
                                     } else if (lines[i].match(new RegExp('^\\s*?' + tyad9 + '\\s*?:','i'))) {
-                                        originalTargetDuration = parseInt(lines[i].split(':')[1]);
                                         targetDurationLineIndex = i;
+                                        originalTargetDuration = parseInt(lines[i].split(':')[1], 10);
                                     }
                                 }
-                                var averageDuration = totalDuration / segmentCount;
-                                var newTargetDuration = Math.ceil(averageDuration * 1.5);
-                                if (newTargetDuration !== originalTargetDuration) {
-                                    lines[targetDurationLineIndex] = tyad9 + ':' + newTargetDuration;
-                                    try {
-                                        if (!dypd.test(打印开关)) {
-                                            console.log(logysa + logyso + "-已经发现] ✂" + '已经把《' + tyad9 + '》数值从<' + originalTargetDuration + '>修改成<' + newTargetDuration + '>', logysf);
-                                        }
-                                    } catch (e) {}
+                                if (targetDurationLineIndex === -1) {
+                                    return text;
+                                } else {
+                                    var newTargetDuration;
+                                    if (maxDuration === minDuration) {
+                                        var multiplier = maxDuration < 10 ? 1.5 : 1.23;
+                                        newTargetDuration = Math.ceil(maxDuration * multiplier);
+                                    } else {
+                                        newTargetDuration = Math.ceil(maxDuration + minDuration);
+                                    }
+                                    if (newTargetDuration === originalTargetDuration) {
+                                        var multiplier = maxDuration < 10 ? 1.5 : 1.23;
+                                        newTargetDuration = Math.ceil(maxDuration * multiplier);
+                                    }
+                                    if (newTargetDuration === originalTargetDuration) {
+                                        var multiplier = originalTargetDuration < 10 ? 1.5 : 1.23;
+                                        newTargetDuration = Math.ceil(originalTargetDuration * multiplier);
+                                    }
+                                    if (newTargetDuration !== originalTargetDuration) {
+                                        lines[targetDurationLineIndex] = tyad9 + ':' + newTargetDuration;
+                                        try {
+                                            if (!dypd.test(打印开关)) {
+                                                console.log(logysa + logyso + "-已经发现] ✂" + '已经把《' + tyad9 + '》数值从原来的值<' + originalTargetDuration + '>修改成<' + newTargetDuration + '>', logysf);
+                                            }
+                                        } catch (e) {}
+                                        return lines.join('\n');
+                                    } else {
+                                        return text;
+                                    }
                                 }
-                                return lines.join('\n');
                             }
                         } catch (e) {
                             return text;
@@ -687,7 +772,7 @@
                                             return text;
                                         } else {
                                             const lines = text.split('\n');
-                                            const extinfLines = lines.filter(line=>new RegExp('^' + tyad0,'i').test(line));
+                                            const extinfLines = lines.filter(line=>tyad11.test(line));
                                             const extinfValues = extinfLines.map(line=>parseFloat(line.split(':')[1].split(',')[0]));
                                             const valueCounts = extinfValues.reduce((acc,value)=>{
                                                 acc[value] = (acc[value] || 0) + 1;
@@ -702,12 +787,12 @@
                                                 const newLines = [];
                                                 let skipNextTs = false;
                                                 for (let i = 0; i < lines.length; i++) {
-                                                    if (new RegExp('^' + tyad0,'i').test(lines[i])) {
+                                                    if (tyad11.test(lines[i])) {
                                                         if (firstExtinf) {
                                                             firstExtinf = false;
                                                             newLines.push(lines[i]);
                                                             skipNextTs = false;
-                                                        } else if (i === lines.length - 1 || !new RegExp('^' + tyad0,'i').test(lines[i + 1])) {
+                                                        } else if (i === lines.length - 1 || !tyad11.test(lines[i + 1])) {
                                                             lastExtinf = true;
                                                             newLines.push(lines[i]);
                                                             skipNextTs = false;
@@ -1034,7 +1119,6 @@
                                                     return true;
                                                 }
                                                 );
-                                                const result = endlist(filteredLines.join('\n'));
                                                 try {
                                                     if (discontinuityCount > 1) {
                                                         if (!dypd.test(打印开关)) {
@@ -1042,34 +1126,19 @@
                                                         }
                                                     }
                                                 } catch (e) {}
-                                                try {
-                                                    result = removeprunerm3u8a(result);
-                                                } catch (e) {}
-                                                return result;
+                                                return endlist(removeprunerm3u8a(filteredLines.join('\n')));
                                             } else {
-                                                try {
-                                                    text = removeprunerm3u8a(text);
-                                                } catch (e) {}
                                                 return text;
                                             }
                                         }
                                     }
                                 } else {
-                                    try {
-                                        text = removeprunerm3u8a(text);
-                                    } catch (e) {}
                                     return text;
                                 }
                             } else {
-                                try {
-                                    text = removeprunerm3u8a(text);
-                                } catch (e) {}
                                 return text;
                             }
                         } catch (e) {
-                            try {
-                                text = removeprunerm3u8a(text);
-                            } catch (e) {}
                             return text;
                         }
                     }
@@ -1100,7 +1169,7 @@
                         }
                     });
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
-                        apply: async(target,thisArg,args)=>{
+                        apply: (target,thisArg,args)=>{
                             try {
                                 if (!shouldStopExecution) {
                                     urlFromArgBy = urlFromArg(args[1]);
@@ -1129,28 +1198,7 @@
                                                             if (M3umatch(textin)) {
                                                                 return;
                                                             } else {
-                                                                const textout = pruner(textin, item);
-                                                                try {
-                                                                    textout = prunerm3u8(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8e(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8b(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8c(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8d(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = taragtduration(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = endlist(textout);
-                                                                } catch (e) {}
+                                                                const textout = endlist(taragtduration(durationtaragt(removeprunerm3u8d(removeprunerm3u8c(removeprunerm3u8b(removeprunerm3u8e(prunerm3u8(pruner(textin, item)))))))));
                                                                 /*console.log("测试广告：\n"+textout);*/
                                                                 if (M3umatch(textout)) {
                                                                     return;
