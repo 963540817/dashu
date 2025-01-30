@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8 hls 视频缓存，提高流畅度
-// @version 20250130
+// @version 20250131
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -128,7 +128,7 @@
                       , tyad1018 = '0{3}'
                       , tyad1019 = tyad1011 + hhzz + '+?'
                       , tyad1020 = tyad104 + tyad1019
-                      , tyad1021 = '#EXT-X-KEY\\s*?:\\s*?METHOD=NONE'
+                      , tyad1021 = '#EXT-X-KEY\\s*?:\\s*?METHOD\\s*?='
                       , tyad1022 = bhhzz + '+?' + tyad5
                       , tyad1023 = '(?<=' + hhzz + '+)' + tyad1022
                       , tyad1024 = tyad105 + bhhzz
@@ -174,7 +174,7 @@
                     new RegExp(tyad1031 + '(?![\\S\\s]*?(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){2,})[\\S\\s]*?' + tyad1014 + '(?:' + tyad1015 + '(?:[a-z]+?\\d+?|\\d+?[a-z]+?){10,}' + tyad1016 + '){2,}','i')]
                       , itemsHandle = [{
                         reUrl: wzm3u8,
-                        reAds: [new RegExp(itemsdpgza,'gim'), new RegExp(itemstygza,'gim'), new RegExp(itemstygza1,'gim'), /*动态拼接采集资源 正规则表达式,以达到智能删除插播广告的效果*/
+                        reAds: [new RegExp(itemsdpgza,'gim'), new RegExp(itemstygza,'gim'), new RegExp(itemstygza1,'gim'), new RegExp('(?<=' + tyad1031 + '(?:#EXT-X-(?!KEY)' + tyad1017 + '){1,})(?:' + tyad1021 + tyad1017 + '(?:' + tyad1014 + ')?){1,}(?=' + tyad1021 + ')','gim'), /*动态拼接采集资源 正规则表达式,以达到智能删除插播广告的效果*/
                         new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp(tyad1014 + tyad1036 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1035 + '(?:' + tyad1036 + tyad1049 + tyad1035 + '(?:' + tyad1036 + tyad1048 + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
                     }]
                       , itemsHandleby = [/*播放黑木耳采集资源的时候,额外增加该数组规则,避免其他的误杀*/
@@ -1108,25 +1108,29 @@
                                             return text;
                                         } else {
                                             if (!shouldStopExecution) {
-                                                const extensionRegex = new RegExp(tyad2,'i');
                                                 const lines = text.split('\n');
-                                                let discontinuityCount = 0;
-                                                const filteredLines = lines.filter(line=>{
-                                                    if (extensionRegex.test(line)) {
-                                                        discontinuityCount++;
-                                                        return false;
-                                                    }
-                                                    return true;
-                                                }
-                                                );
-                                                try {
-                                                    if (discontinuityCount > 1) {
-                                                        if (!dypd.test(打印开关)) {
-                                                            console.log(logysa + logysj + "-已经发现] ✂" + '已删除《' + discontinuityCount + '》个' + tyad2 + logysj, logysf);
+                                                const keyCount = lines.filter(line=>new RegExp(tyad1021,'i').test(line)).length;
+                                                if (keyCount >= 2) {
+                                                    return text;
+                                                } else {
+                                                    let discontinuityCount = 0;
+                                                    const filteredLines = lines.filter(line=>{
+                                                        if (new RegExp(tyad2,'i').test(line)) {
+                                                            discontinuityCount++;
+                                                            return false;
                                                         }
+                                                        return true;
                                                     }
-                                                } catch (e) {}
-                                                return endlist(removeprunerm3u8a(filteredLines.join('\n')));
+                                                    );
+                                                    try {
+                                                        if (!dypd.test(打印开关)) {
+                                                            if (discontinuityCount > 1) {
+                                                                console.log(logysa + logysj + "-已经发现] ✂" + '已删除《' + discontinuityCount + '》个' + tyad2 + logysj, logysf);
+                                                            }
+                                                        }
+                                                    } catch (e) {}
+                                                    return endlist(removeprunerm3u8a(filteredLines.join('\n')));
+                                                }
                                             } else {
                                                 return text;
                                             }
@@ -1143,31 +1147,6 @@
                         }
                     }
                     ;
-                    const realFetch = self.fetch;
-                    self.fetch = new Proxy(self.fetch,{
-                        apply(target, thisArg, args) {
-                            try {
-                                if (!matchM3u(urlFromArg(args[0])) || shouldStopExecution) {
-                                    return Reflect.apply(target, thisArg, args);
-                                } else {
-                                    return Reflect.apply(target, thisArg, args).then(realResponse=>realResponse.text()).then(text=>{
-                                        if (!M3umatch(text)) {
-                                            return new Response(text,{
-                                                status: realResponse.status,
-                                                statusText: realResponse.statusText,
-                                                headers: realResponse.headers
-                                            });
-                                        } else {
-                                            return realResponse;
-                                        }
-                                    }
-                                    ).catch(()=>Reflect.apply(target, thisArg, args));
-                                }
-                            } catch (e) {
-                                return Reflect.apply(target, thisArg, args);
-                            }
-                        }
-                    });
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
                         apply: (target,thisArg,args)=>{
                             try {
@@ -1185,20 +1164,44 @@
                                                     m3u8bflj = m3u8gglj;
                                                 }
                                             } catch (e) {}
-                                            thisArg.addEventListener('readystatechange', function() {
+                                            thisArg.addEventListener('readystatechange', function handler() {
                                                 try {
                                                     if (thisArg.readyState !== 4) {
                                                         return;
                                                     } else {
-                                                        const type = thisArg.responseType;
+                                                        var type = thisArg.responseType;
                                                         if (type !== '' && type !== 'text') {
                                                             return;
                                                         } else {
-                                                            const textin = thisArg.responseText;
+                                                            try {
+                                                                thisArg.removeEventListener('readystatechange', handler);
+                                                            } catch (e) {}
+                                                            var textin = thisArg.responseText;
                                                             if (M3umatch(textin)) {
                                                                 return;
                                                             } else {
-                                                                const textout = endlist(taragtduration(durationtaragt(removeprunerm3u8d(removeprunerm3u8c(removeprunerm3u8b(removeprunerm3u8e(prunerm3u8(pruner(textin, item)))))))));
+                                                                var textout = pruner(textin, item);
+                                                                try {
+                                                                    textout = prunerm3u8(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = removeprunerm3u8e(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = removeprunerm3u8b(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = removeprunerm3u8c(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = removeprunerm3u8d(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = taragtduration(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = endlist(textout);
+                                                                } catch (e) {}
                                                                 /*console.log("测试广告：\n"+textout);*/
                                                                 if (M3umatch(textout)) {
                                                                     return;
