@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8 hls 视频缓存，提高流畅度
-// @version 20250131
+// @version 20250201
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -64,6 +64,10 @@
                                     if (self.Hls) {
                                         self.MediaSource.isTypeSupported = fn;
                                         const opts = {
+                                            autoStartLoad: true,
+                                            startFragPrefetch: true,
+                                            enableWorker: true,
+                                            lowLatencyMode: true,
                                             maxBufferSize: 36 << 20,
                                             maxBufferLength: 视频缓存,
                                             maxMaxBufferLength: 视频缓存 + 9,
@@ -1195,6 +1199,9 @@
                                                                 } catch (e) {}
                                                                 try {
                                                                     textout = removeprunerm3u8d(textout);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    textout = durationtaragt(textout);
                                                                 } catch (e) {}
                                                                 try {
                                                                     textout = taragtduration(textout);
