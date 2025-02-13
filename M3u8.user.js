@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250212
+// @version 20250214
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -105,6 +105,7 @@
                       , tyad10 = new RegExp('^\\s*?(?:(?!.*?0{3,})[a-z\\d]+?|' + tyad8 + ')\\s*?$','i')
                       , tyad11 = new RegExp('^' + tyad0,'i')
                       , tyad12 = new RegExp('^\\s*?' + tyad1,'i')
+                      , tyad13 = '[\\S\\s]+?'
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -165,6 +166,7 @@
                       , tyad1048 = '){0,}'
                       , tyad1049 = tyad1048 + tyad1 + '\\d+?\\.3{3,}\\s*?,'
                       , tyad1050 = tyad1046 + '(?:' + tyad1043 + tyad1044 + tyad1048 + ')'
+                      , tyad1051 = new RegExp(tyad1010 + tyad13 + tyad5 + '(?:\\?' + bhhzz + '+?)?' + hhzz + '+?' + tyad1 + tyad13 + tyad7 + '\\s*?$','i')
                       , itemts = new RegExp(tyad5,'i')
                       , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                       , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
@@ -278,12 +280,20 @@
                             if (!itemm3u8.test(text)) {
                                 return text;
                             } else {
-                                const lines = text.trim().split('\n');
-                                const lastLine = lines[lines.length - 1];
-                                if (lastLine.trim() !== tyad7) {
-                                    lines.push(tyad7);
+                                if (ggljbmd.test(text)) {
+                                    return text;
+                                } else {
+                                    if (!new RegExp(tyad5,'i').test(text)) {
+                                        return text;
+                                    } else {
+                                        const lines = text.trim().split('\n');
+                                        const lastLine = lines[lines.length - 1];
+                                        if (lastLine.trim() !== tyad7) {
+                                            lines.push(tyad7);
+                                        }
+                                        return lines.join('\n');
+                                    }
                                 }
-                                return lines.join('\n');
                             }
                         } catch (e) {
                             return text;
@@ -1156,6 +1166,45 @@
                         }
                     }
                     ;
+                    const realFetch = self.fetch;
+                    self.fetch = new Proxy(self.fetch,{
+                        apply(target, thisArg, args) {
+                            const item = matchM3u(urlFromArg(args[0]));
+                            if (!item) {
+                                return Reflect.apply(target, thisArg, args);
+                            } else {
+                                if (!shouldStopExecution) {
+                                    return realFetch(...args).then(realResponse=>realResponse.text().then(text=>{
+                                        try {
+                                            const modifiedText = pruner(text, item);
+                                            if (M3umatch(modifiedText)) {
+                                                return realResponse;
+                                            } else {
+                                                if (!new RegExp(tyad5,'i').test(modifiedText)) {
+                                                    return realResponse;
+                                                } else {
+                                                    if (!tyad1051.test(modifiedText)) {
+                                                        return realResponse;
+                                                    } else {
+                                                        return new Response(modifiedText,{
+                                                            status: realResponse.status,
+                                                            statusText: realResponse.statusText,
+                                                            headers: realResponse.headers
+                                                        });
+                                                    }
+                                                }
+                                            }
+                                        } catch (e) {
+                                            return realResponse;
+                                        }
+                                    }
+                                    ));
+                                } else {
+                                    return Reflect.apply(target, thisArg, args);
+                                }
+                            }
+                        }
+                    });
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
                         apply: (target,thisArg,args)=>{
                             try {
@@ -1172,6 +1221,7 @@
                                                 if (wzm3u8.test(m3u8gglj) && m3u8wz.test(m3u8gglj) && !mp4wz.test(m3u8gglj) && !flvwz.test(m3u8gglj) && !tswz.test(m3u8gglj) && !playsharewz.test(m3u8gglj)) {
                                                     m3u8bflj = m3u8gglj;
                                                 }
+                                                /*else{console.log("即时链接：\n"+m3u8gglj);}*/
                                             } catch (e) {}
                                             thisArg.addEventListener('readystatechange', function handler() {
                                                 try {
@@ -1189,44 +1239,52 @@
                                                             if (M3umatch(textin)) {
                                                                 return;
                                                             } else {
-                                                                var textout = pruner(textin, item);
-                                                                try {
-                                                                    textout = prunerm3u8(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8e(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8b(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8c(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = removeprunerm3u8d(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = durationtaragt(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = taragtduration(textout);
-                                                                } catch (e) {}
-                                                                try {
-                                                                    textout = endlist(textout);
-                                                                } catch (e) {}
-                                                                /*console.log("测试广告：\n"+textout);*/
-                                                                if (M3umatch(textout)) {
+                                                                if (!new RegExp(tyad5,'i').test(textin)) {
                                                                     return;
                                                                 } else {
-                                                                    if (textout !== textin) {
-                                                                        Reflect.defineProperty(thisArg, 'response', {
-                                                                            value: textout
-                                                                        });
-                                                                        Reflect.defineProperty(thisArg, 'responseText', {
-                                                                            value: textout
-                                                                        });
-                                                                    } else {
+                                                                    if (!tyad1051.test(textin)) {
                                                                         return;
+                                                                    } else {
+                                                                        var textout = pruner(textin, item);
+                                                                        try {
+                                                                            textout = prunerm3u8(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8e(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8b(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8c(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8d(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = durationtaragt(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = taragtduration(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = endlist(textout);
+                                                                        } catch (e) {}
+                                                                        /*console.log("测试广告：\n"+textout);*/
+                                                                        if (M3umatch(textout)) {
+                                                                            return;
+                                                                        } else {
+                                                                            if (textout !== textin) {
+                                                                                Reflect.defineProperty(thisArg, 'response', {
+                                                                                    value: textout
+                                                                                });
+                                                                                Reflect.defineProperty(thisArg, 'responseText', {
+                                                                                    value: textout
+                                                                                });
+                                                                            } else {
+                                                                                return;
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
                                                             }
