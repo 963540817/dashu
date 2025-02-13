@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
-// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片 并且 提高 m3u8 hls 视频缓存，提高流畅度
-// @version 20250201
+// @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
+// @version 20250212
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -32,7 +32,7 @@
                     configurable: false
                 });
             } catch (e) {}
-            let fn, self, urlvip, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, 缓存开关, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
+            let fn, self, urlvip, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, 缓存开关, 无限缓存, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
             urlvip = location.href;
             m3u8gglj = '';
             m3u8bflj = '';
@@ -46,7 +46,8 @@
             playsharewz = /^https?:\/\/[^\/]+?\/{1,}(?:play|share)\/{1,}[a-zA-Z0-9]+?(?:\/{1,})?$/i;
             dypd = /^\s*?(?:0{1,}|(?<!开\s*?)关(?:\s*?[闭掉])?)\s*?$/;
             打印开关 = '关';
-            缓存开关 = '开';
+            缓存开关 = '关';
+            无限缓存 = '开';
             视频缓存 = 80;
             ggsjgg = '4|20';
             ggzlhx = 'ts|png|jpe?g|txt';
@@ -63,19 +64,21 @@
                                 self.MediaSource.isTypeSupported = function(...args) {
                                     if (self.Hls) {
                                         self.MediaSource.isTypeSupported = fn;
-                                        const opts = {
-                                            autoStartLoad: true,
-                                            startFragPrefetch: true,
-                                            enableWorker: true,
-                                            lowLatencyMode: true,
-                                            maxBufferSize: 36 << 20,
-                                            maxBufferLength: 视频缓存,
-                                            maxMaxBufferLength: 视频缓存 + 9,
-                                            backBufferLength: 9
-                                        };
                                         self.Hls = new Proxy(Hls,{
                                             construct(target, args) {
-                                                args[0] = Object.assign(args[0] || {}, opts);
+                                                args[0] = Object.assign(args[0] || {}, {
+                                                    autoStartLoad: true,
+                                                    startFragPrefetch: true,
+                                                    enableWorker: true,
+                                                    lowLatencyMode: true
+                                                }, !dypd.test(无限缓存) ? {
+                                                    maxBufferLength: Infinity
+                                                } : {
+                                                    maxBufferSize: 36 << 20,
+                                                    maxBufferLength: 视频缓存,
+                                                    maxMaxBufferLength: 视频缓存 + 9,
+                                                    backBufferLength: 9
+                                                });
                                                 return new target(...args);
                                             }
                                         });
@@ -182,8 +185,10 @@
                         new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp(tyad1014 + tyad1036 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1035 + '(?:' + tyad1036 + tyad1049 + tyad1035 + '(?:' + tyad1036 + tyad1048 + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
                     }]
                       , itemsHandleby = [/*播放黑木耳采集资源的时候,额外增加该数组规则,避免其他的误杀*/
-                    /*{reUrl:/^https?:\/\/(?:[^\/]+?\.)?(?:hmr|heimuer)/i,reAds:[new RegExp('(?<='+tyad1014+')'+tyad1039+tyad5+tyad1017+tyad1047,'gim'),new RegExp(tyad1026+'((?<!0)\\d\\.(?!0)\\d{4,5}[1-9]),'+tyad1037+'\\1,'+tyad1028+'){2,6}'+tyad109,'gim'),new RegExp(tyad1026+'(\\d+?(?:\\.(?!0{1,},)\\d+?)?),'+tyad1037+'\\1,'+tyad1028+'){1,}'+tyad109,'gim'),]},*/
-                    /*播放华为采集资源的时候,额外增加该数组规则,避免其他资源误杀*/
+                    {
+                        reUrl: /^https?:\/\/(?:[^\/]+?\.)?(?:hmr|heimuer)/i,
+                        reAds: [new RegExp('(\\n' + tyad2 + ')\\n.+\\n.+\\1','i'), new RegExp('(\\n' + tyad2 + ')(\\n.+\\n).+\\2.+\\2.+(\\2.+)?\\1','gi'), new RegExp('(?<=' + tyad1014 + ')' + tyad1039 + tyad5 + tyad1017 + tyad1047,'gim'), new RegExp(tyad1026 + '((?<!0)\\d\\.(?!0)\\d{4,5}[1-9]),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp(tyad1026 + '(\\d+?(?:\\.(?!0{1,},)\\d+?)?),' + tyad1037 + '\\1,' + tyad1028 + '){1,}' + tyad109,'gim'), ]
+                    }, /*播放华为采集资源的时候,额外增加该数组规则,避免其他资源误杀*/
                     {
                         reUrl: /^https?:\/\/(?:[^\/]+?\.)?nikanba/i,
                         reAds: [new RegExp('(?<=' + tyad2 + ')' + hhzz + '+?' + tyad1 + '10,' + tyad1027 + tyada + '?' + tyad2 + '(?=' + hhzz + ')','gim'), new RegExp(tyad1014 + tyad1 + '2,' + tyad1040 + '3,' + tyad1040 + '1,' + tyad1029 + '(?:' + tyad104 + tyad1011 + tyad6 + '?' + tyad1048 + tyad3 + '+','gim'), ]
