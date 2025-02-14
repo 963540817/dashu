@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250214
+// @version 20250215
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -32,8 +32,7 @@
                     configurable: false
                 });
             } catch (e) {}
-            let fn, self, urlvip, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, 缓存开关, 无限缓存, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
-            urlvip = location.href;
+            let fn, self, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, shouldStopExecutionbf, 打印开关, 缓存开关, 无限缓存, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
             m3u8gglj = '';
             m3u8bflj = '';
             hhzz = '[\\n\\r\\u0085\\u2028\\u2029]';
@@ -54,8 +53,10 @@
             ggljbmd = /&[a-z]*?(?:sign|token|version)=/i;
             ggbmd = /(?:\.php|\_(?:ts|mp4)\/.+?\.m3u8)(?:#|\?|\\|&|$)/i;
             ggljdmb = new RegExp('\\.(?:' + ggzlhx + ')' + hhzz + '+?#EXTINF','i');
+            shouldStopExecution = false;
+            shouldStopExecutionbf = false;
             try {
-                if (!shouldStopExecution) {
+                if (!shouldStopExecution || !shouldStopExecutionbf) {
                     try {
                         if (typeof unsafeWindow !== 'undefined') {
                             self = unsafeWindow;
@@ -302,7 +303,7 @@
                     ;
                     const deleteAbnormalTs = (text,jxbgza,jxbgzb,jxbgzc,jxbgzd,jxbgze)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -534,7 +535,7 @@
                     ;
                     const pruner = (text,item)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -700,7 +701,7 @@
                     ;
                     const removeprunerm3u8a = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -738,7 +739,7 @@
                     ;
                     const removeprunerm3u8b = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -781,7 +782,7 @@
                     ;
                     const removeprunerm3u8c = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -874,7 +875,7 @@
                     ;
                     const removeprunerm3u8d = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -968,7 +969,7 @@
                     ;
                     const removeprunerm3u8e = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -1117,7 +1118,7 @@
                     ;
                     const prunerm3u8 = (text)=>{
                         try {
-                            if (!shouldStopExecution) {
+                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                 if (text) {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -1126,7 +1127,7 @@
                                             shouldStopExecution = true;
                                             return text;
                                         } else {
-                                            if (!shouldStopExecution) {
+                                            if (!shouldStopExecution || !shouldStopExecutionbf) {
                                                 const lines = text.split('\n');
                                                 const keyCount = lines.filter(line=>new RegExp(tyad1021,'i').test(line)).length;
                                                 if (keyCount >= 2) {
@@ -1166,143 +1167,224 @@
                         }
                     }
                     ;
-                    const realFetch = self.fetch;
-                    self.fetch = new Proxy(self.fetch,{
-                        apply(target, thisArg, args) {
-                            const item = matchM3u(urlFromArg(args[0]));
-                            if (!item) {
-                                return Reflect.apply(target, thisArg, args);
+                    function isValidM3U8Url(url) {
+                        return (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url));
+                    }
+                    ;function processText(textin, item) {
+                        try {
+                            if (shouldStopExecution || shouldStopExecutionbf) {
+                                return textin;
                             } else {
-                                if (!shouldStopExecution) {
-                                    return realFetch(...args).then(realResponse=>realResponse.text().then(text=>{
-                                        try {
-                                            const modifiedText = pruner(text, item);
-                                            if (M3umatch(modifiedText)) {
-                                                return realResponse;
+                                if (!shouldStopExecution || !shouldStopExecutionbf) {
+                                    let textout = pruner(textin, item);
+                                    try {
+                                        textout = prunerm3u8(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8e(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8b(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8c(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8d(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = durationtaragt(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = taragtduration(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = endlist(textout);
+                                    } catch (e) {}
+                                    /*console.log("测试广告：\n"+textout);*/
+                                    return textout;
+                                } else {
+                                    return textout;
+                                }
+                            }
+                            {
+                                return textout;
+                            }
+                        } catch (e) {
+                            return textout;
+                        }
+                    }
+                    ;const realFetch = self.fetch;
+                    self.fetch = new Proxy(self.fetch,{
+                        apply: (target,thisArg,args)=>{
+                            try {
+                                if (shouldStopExecution || shouldStopExecutionbf) {
+                                    return Reflect.apply(target, thisArg, args);
+                                } else {
+                                    if (!shouldStopExecution || !shouldStopExecutionbf) {
+                                        const urlFromArgBy = urlFromArg(args[0]);
+                                        const item = matchM3u(urlFromArgBy);
+                                        if (item) {
+                                            if (ggljbmd.test(urlFromArgBy)) {
+                                                shouldStopExecution = true;
+                                                shouldStopExecutionbf = true;
+                                                return Reflect.apply(target, thisArg, args);
                                             } else {
-                                                if (!new RegExp(tyad5,'i').test(modifiedText)) {
-                                                    return realResponse;
-                                                } else {
-                                                    if (!tyad1051.test(modifiedText)) {
-                                                        return realResponse;
-                                                    } else {
-                                                        return new Response(modifiedText,{
-                                                            status: realResponse.status,
-                                                            statusText: realResponse.statusText,
-                                                            headers: realResponse.headers
-                                                        });
+                                                m3u8gglj = urlFromArgBy;
+                                                try {
+                                                    if (isValidM3U8Url(m3u8gglj)) {
+                                                        m3u8bflj = m3u8gglj;
+                                                    }
+                                                } catch (e) {}
+                                                return realFetch(...args).then(realResponse=>realResponse.text().then(textin=>{
+                                                    try {
+                                                        if (M3umatch(textin)) {
+                                                            return Reflect.apply(target, thisArg, args);
+                                                        } else {
+                                                            if (!new RegExp(tyad5,'i').test(textin)) {
+                                                                shouldStopExecution = true;
+                                                                shouldStopExecutionbf = true;
+                                                                return Reflect.apply(target, thisArg, args);
+                                                            } else {
+                                                                if (!tyad1051.test(textin)) {
+                                                                    shouldStopExecution = true;
+                                                                    shouldStopExecutionbf = true;
+                                                                    return Reflect.apply(target, thisArg, args);
+                                                                } else {
+                                                                    const textout = processText(textin, item);
+                                                                    if (M3umatch(textout)) {
+                                                                        shouldStopExecution = true;
+                                                                        shouldStopExecutionbf = true;
+                                                                        return Reflect.apply(target, thisArg, args);
+                                                                    } else {
+                                                                        if (textout !== textin) {
+                                                                            shouldStopExecution = true;
+                                                                            shouldStopExecutionbf = true;
+                                                                            return new Response(textout,{
+                                                                                status: realResponse.status,
+                                                                                statusText: realResponse.statusText,
+                                                                                headers: realResponse.headers
+                                                                            });
+                                                                        } else {
+                                                                            shouldStopExecution = true;
+                                                                            shouldStopExecutionbf = true;
+                                                                            return Reflect.apply(target, thisArg, args);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    } catch (e) {
+                                                        shouldStopExecution = true;
+                                                        shouldStopExecutionbf = true;
+                                                        return Reflect.apply(target, thisArg, args);
                                                     }
                                                 }
+                                                ));
                                             }
-                                        } catch (e) {
-                                            return realResponse;
+                                        } else {
+                                            shouldStopExecution = true;
+                                            shouldStopExecutionbf = true;
+                                            return Reflect.apply(target, thisArg, args);
                                         }
+                                    } else {
+                                        shouldStopExecution = true;
+                                        shouldStopExecutionbf = true;
+                                        return Reflect.apply(target, thisArg, args);
                                     }
-                                    ));
-                                } else {
-                                    return Reflect.apply(target, thisArg, args);
                                 }
+                            } catch (e) {
+                                shouldStopExecution = true;
+                                shouldStopExecutionbf = true;
+                                return Reflect.apply(target, thisArg, args);
                             }
                         }
                     });
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
                         apply: (target,thisArg,args)=>{
                             try {
-                                if (!shouldStopExecution) {
-                                    urlFromArgBy = urlFromArg(args[1]);
-                                    const item = matchM3u(urlFromArgBy);
-                                    if (item) {
-                                        if (ggljbmd.test(urlFromArgBy) || !!shouldStopExecution) {
-                                            shouldStopExecution = true;
-                                            return Reflect.apply(target, thisArg, args);
-                                        } else {
-                                            m3u8gglj = urlFromArgBy;
-                                            try {
-                                                if (wzm3u8.test(m3u8gglj) && m3u8wz.test(m3u8gglj) && !mp4wz.test(m3u8gglj) && !flvwz.test(m3u8gglj) && !tswz.test(m3u8gglj) && !playsharewz.test(m3u8gglj)) {
-                                                    m3u8bflj = m3u8gglj;
-                                                }
-                                                /*else{console.log("即时链接：\n"+m3u8gglj);}*/
-                                            } catch (e) {}
-                                            thisArg.addEventListener('readystatechange', function handler() {
+                                if (shouldStopExecution || shouldStopExecutionbf) {
+                                    return Reflect.apply(target, thisArg, args);
+                                } else {
+                                    if (!shouldStopExecution || !shouldStopExecutionbf) {
+                                        const urlFromArgBy = urlFromArg(args[1]);
+                                        const item = matchM3u(urlFromArgBy);
+                                        if (item) {
+                                            if (ggljbmd.test(urlFromArgBy)) {
+                                                shouldStopExecution = true;
+                                                shouldStopExecutionbf = true;
+                                                return Reflect.apply(target, thisArg, args);
+                                            } else {
+                                                m3u8gglj = urlFromArgBy;
                                                 try {
-                                                    if (thisArg.readyState !== 4) {
-                                                        return;
-                                                    } else {
-                                                        var type = thisArg.responseType;
-                                                        if (type !== '' && type !== 'text') {
+                                                    if (isValidM3U8Url(m3u8gglj)) {
+                                                        m3u8bflj = m3u8gglj;
+                                                    }
+                                                } catch (e) {}
+                                                thisArg.addEventListener('readystatechange', function handler() {
+                                                    try {
+                                                        if (thisArg.readyState !== 4) {
                                                             return;
                                                         } else {
-                                                            try {
-                                                                thisArg.removeEventListener('readystatechange', handler);
-                                                            } catch (e) {}
-                                                            var textin = thisArg.responseText;
-                                                            if (M3umatch(textin)) {
+                                                            const type = thisArg.responseType;
+                                                            if (type !== '' && type !== 'text') {
                                                                 return;
                                                             } else {
-                                                                if (!new RegExp(tyad5,'i').test(textin)) {
+                                                                try {
+                                                                    thisArg.removeEventListener('readystatechange', handler);
+                                                                } catch (e) {}
+                                                                const textin = thisArg.responseText;
+                                                                if (M3umatch(textin)) {
                                                                     return;
                                                                 } else {
-                                                                    if (!tyad1051.test(textin)) {
+                                                                    if (!new RegExp(tyad5,'i').test(textin)) {
                                                                         return;
                                                                     } else {
-                                                                        var textout = pruner(textin, item);
-                                                                        try {
-                                                                            textout = prunerm3u8(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = removeprunerm3u8e(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = removeprunerm3u8b(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = removeprunerm3u8c(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = removeprunerm3u8d(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = durationtaragt(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = taragtduration(textout);
-                                                                        } catch (e) {}
-                                                                        try {
-                                                                            textout = endlist(textout);
-                                                                        } catch (e) {}
-                                                                        /*console.log("测试广告：\n"+textout);*/
-                                                                        if (M3umatch(textout)) {
+                                                                        if (!tyad1051.test(textin)) {
                                                                             return;
                                                                         } else {
-                                                                            if (textout !== textin) {
-                                                                                Reflect.defineProperty(thisArg, 'response', {
-                                                                                    value: textout
-                                                                                });
-                                                                                Reflect.defineProperty(thisArg, 'responseText', {
-                                                                                    value: textout
-                                                                                });
-                                                                            } else {
+                                                                            const textout = processText(textin, item);
+                                                                            if (M3umatch(textout)) {
                                                                                 return;
+                                                                            } else {
+                                                                                if (textout !== textin) {
+                                                                                    shouldStopExecution = true;
+                                                                                    shouldStopExecutionbf = true;
+                                                                                    Reflect.defineProperty(thisArg, 'response', {
+                                                                                        value: textout
+                                                                                    });
+                                                                                    Reflect.defineProperty(thisArg, 'responseText', {
+                                                                                        value: textout
+                                                                                    });
+                                                                                } else {
+                                                                                    return;
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
                                                                 }
                                                             }
                                                         }
+                                                    } catch (e) {
+                                                        return;
                                                     }
-                                                } catch (e) {
-                                                    return;
-                                                }
-                                            });
+                                                });
+                                                return Reflect.apply(target, thisArg, args);
+                                            }
+                                        } else {
+                                            shouldStopExecution = true;
+                                            shouldStopExecutionbf = true;
                                             return Reflect.apply(target, thisArg, args);
                                         }
                                     } else {
+                                        shouldStopExecution = true;
+                                        shouldStopExecutionbf = true;
                                         return Reflect.apply(target, thisArg, args);
                                     }
-                                } else {
-                                    return Reflect.apply(target, thisArg, args);
                                 }
                             } catch (e) {
+                                shouldStopExecution = true;
+                                shouldStopExecutionbf = true;
                                 return Reflect.apply(target, thisArg, args);
                             }
                         }
