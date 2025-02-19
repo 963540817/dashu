@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250215
+// @version 20250217
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -32,7 +32,7 @@
                     configurable: false
                 });
             } catch (e) {}
-            let fn, self, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, shouldStopExecutionbf, 打印开关, 缓存开关, 无限缓存, 视频缓存, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
+            let fn, self, m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, shouldStopExecutionbf, 打印开关, 缓存开关, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
             m3u8gglj = '';
             m3u8bflj = '';
             hhzz = '[\\n\\r\\u0085\\u2028\\u2029]';
@@ -45,9 +45,7 @@
             playsharewz = /^https?:\/\/[^\/]+?\/{1,}(?:play|share)\/{1,}[a-zA-Z0-9]+?(?:\/{1,})?$/i;
             dypd = /^\s*?(?:0{1,}|(?<!开\s*?)关(?:\s*?[闭掉])?)\s*?$/;
             打印开关 = '关';
-            缓存开关 = '关';
-            无限缓存 = '开';
-            视频缓存 = 80;
+            缓存开关 = '开';
             ggsjgg = '4|20';
             ggzlhx = 'ts|png|jpe?g|txt';
             ggljbmd = /&[a-z]*?(?:sign|token|version)=/i;
@@ -68,17 +66,9 @@
                                         self.Hls = new Proxy(Hls,{
                                             construct(target, args) {
                                                 args[0] = Object.assign(args[0] || {}, {
-                                                    autoStartLoad: true,
                                                     startFragPrefetch: true,
                                                     enableWorker: true,
-                                                    lowLatencyMode: true
-                                                }, !dypd.test(无限缓存) ? {
-                                                    maxBufferLength: Infinity
-                                                } : {
-                                                    maxBufferSize: 36 << 20,
-                                                    maxBufferLength: 视频缓存,
-                                                    maxMaxBufferLength: 视频缓存 + 9,
-                                                    backBufferLength: 9
+                                                    lowLatencyMode: false
                                                 });
                                                 return new target(...args);
                                             }
