@@ -1,19 +1,19 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250220
+// @version 20250227
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
 // @include /\/[pP]lay(?:\/|\?id=\d)/
 // @include /(?:lay|ideo).*?\.html/
+// @include /\.m3u8(?:\?(?!.+?&)|$)/
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
 // @include /^https?:\/\/.+?(?<!(?:refer(?:rer)?|ori(?:gin)?))[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?[\?&](?:url|rul)=(?!http).{5,}/
 // @include /^https?:\/\/[^\/]+?\/(?:play|share)\/[a-z0-9]+?\/?\s*?$/
 // @include /^https?:\/\/[^\/]+?\/vod(?:\/[^\/]+?(?:\/\d[^\/]+?\d)?\.html|detail\/\d[^\/]+?\d\.html)/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\/(?:index\.php\/vod\/detail\/id\/\d+?|p\/\d[^\.]+?\d)\.html/
-// @include /\/\d+?[Kk]b\/hls\/index\.m3u8|\.m3u8\?[^=]+?=[^\/]*?(?:info|llq)|\.m3u8$/
 // @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
 // @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)|(?:[^\/]+?\/(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/\d+?)$)/
 // @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
@@ -36,7 +36,7 @@
             m3u8bflj = '';
             hhzz = '[\\n\\r\\u0085\\u2028\\u2029]';
             bhhzz = '[^\\n\\r\\u0085\\u2028\\u2029]';
-            wzm3u8 = /\/\d+?kb\/hls\/index\.m3u8|\.m3u8\?[^=]+?=[^\/]*?(?:info|llq)|\.m3u8$/i;
+            wzm3u8 = /\.m3u8(?:\?(?!.+?&)|$)/i;
             m3u8wz = /\.(?:m3u8|png|css)(?:#|\?|\\|&|$)|(?<!thread|forum|read)\.php(?!(?:[a-z0-9\/]|\?\w+?=.+?\.(?:m(?:p4|kv)|flv|ts)(?:#|\?|\\|&|$)))|\/(?!.+?\.m(?:3u8|p4)(?:#|\?|\\|&|$)).+?(?<![a-z0-9])m(?:3u8|p4)(?![a-z0-9])/i;
             mp4wz = /\.m(?:p4|kv)(?:#|\?|\\|&|$)|^https?:\/\/(?:[^\/]+?\.)?pstatp.+?\/obj\/[^\.]+?$|type=video_mp4&(?!.+\.[a-z]{2,5}(?:#|\?|\\|&|$))|\.php\?\w+?=.+?\.mp4/i;
             flvwz = /\.flv(?:#|\?|\\|&|$)/i;
