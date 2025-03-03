@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250227
+// @version 20250303
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -68,6 +68,7 @@
                       , tyad11 = new RegExp('^' + tyad0,'i')
                       , tyad12 = new RegExp('^\\s*?' + tyad1,'i')
                       , tyad13 = '[\\S\\s]+?'
+                      , tyad14 = new RegExp(tyad8 + tyad5,'i')
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -174,12 +175,16 @@
                       , logyso = '时间标识';
                     /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
                     const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
+                    const isValidM3U8Url = url=>{
+                        return (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url));
+                    }
+                    ;
                     const matchM3u = url=>{
                         try {
-                            if (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url)) {
+                            if (isValidM3U8Url(url)) {
                                 spbfurl = url;
-                                const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url) && !ggbmd.test(url));
-                                itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && m3u8wz.test(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
+                                const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && isValidM3U8Url(url) && !ggbmd.test(url));
+                                itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && isValidM3U8Url(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
                                 return matchedItem;
                             } else {
                                 return null;
@@ -875,7 +880,7 @@
                                             let deletedUrls = [];
                                             if (dominantLength !== null) {
                                                 urlsWithIndex.forEach(({url, index})=>{
-                                                    if (url.length !== dominantLength) {
+                                                    if (url.length !== dominantLength && !tyad14.test(url)) {
                                                         deletedUrls.push(url);
                                                     }
                                                 }
@@ -1128,10 +1133,7 @@
                         }
                     }
                     ;
-                    function isValidM3U8Url(url) {
-                        return (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url));
-                    }
-                    ;function processText(textin, item) {
+                    function processText(textin, item) {
                         try {
                             if (shouldStopExecution || shouldStopExecutionbf) {
                                 return textin;
