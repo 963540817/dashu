@@ -16,6 +16,14 @@ https://raw.githubusercontent.com/963540817/dashu/main/1.txt
 
 
 
+PC电脑腾讯如果频繁奔溃的可以尝试安装以下脚本:
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/qq.user.js
+https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/qq.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/qq.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/qq.user.js
+
+
+
 在线播放器 和 野鸡网站 通用过滤 采集资源 插播广告脚本:
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
