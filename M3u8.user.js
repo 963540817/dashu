@@ -593,7 +593,7 @@
                                                                 }
                                                                 try {
                                                                     if (!text.match(itemstygza4)) {
-                                                                        modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称', tyad10);
+                                                                        modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称');
                                                                     }
                                                                 } catch (e) {}
                                                                 try {
