@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250319
+// @version 20250320
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\.php\?vod_id=\d+?$/
@@ -1135,74 +1135,93 @@
                     ;
                     let realFetch = self.fetch;
                     self.fetch = new Proxy(self.fetch,{
-                        apply(target, thisArg, args) {
+                        apply: function(target, thisArg, args) {
                             try {
-                                urlFromArgBy = matchM3u(urlFromArg(args[0]));
-                                let item = matchM3u(urlFromArgBy);
+                                let url = urlFromArg(args[0]);
+                                let item = matchM3u(url);
                                 if (item) {
-                                    if (ggljbmd.test(urlFromArgBy) || !!shouldStopExecution) {
+                                    if (ggljbmd.test(url) || shouldStopExecution) {
                                         shouldStopExecution = true;
                                         return Reflect.apply(target, thisArg, args);
                                     } else {
-                                        m3u8gglj = urlFromArg;
+                                        m3u8gglj = url;
                                         try {
                                             if (isValidM3U8Url(m3u8gglj)) {
                                                 m3u8bflj = m3u8gglj;
                                             }
                                         } catch (e) {}
                                         if (!shouldStopExecution) {
-                                            return realFetch(...args).then(realResponse=>realResponse.text().then(textin=>{
+                                            return realFetch.apply(thisArg, args).then(realResponse=>{
                                                 try {
-                                                    if (M3umatch(textin)) {
-                                                        return Reflect.apply(target, thisArg, args);
+                                                    if (!realResponse || !realResponse.ok) {
+                                                        return realResponse;
                                                     } else {
-                                                        if (!new RegExp(tyad5,'i').test(textin)) {
-                                                            return Reflect.apply(target, thisArg, args);
-                                                        } else {
-                                                            let textout = pruner(textin, item);
+                                                        return realResponse.text().then(textin=>{
                                                             try {
-                                                                textout = prunerm3u8(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = removeprunerm3u8e(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = removeprunerm3u8b(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = removeprunerm3u8c(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = removeprunerm3u8d(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = durationtaragt(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = taragtduration(textout);
-                                                            } catch (e) {}
-                                                            try {
-                                                                textout = endlist(textout);
-                                                            } catch (e) {}
-                                                            /*console.log("测试 realFetch 广告：\n"+textout);*/
-                                                            try {
-                                                                if (M3umatch(textout)) {
-                                                                    return Reflect.apply(target, thisArg, args);
+                                                                if (M3umatch(textin)) {
+                                                                    return realResponse;
+                                                                } else {
+                                                                    if (!new RegExp(tyad5,'i').test(textin)) {
+                                                                        return realResponse;
+                                                                    } else {
+                                                                        if (!tyad1051.test(textin)) {
+                                                                            return realResponse;
+                                                                        } else {
+                                                                            let textout = pruner(textin, item);
+                                                                            try {
+                                                                                textout = prunerm3u8(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = removeprunerm3u8e(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = removeprunerm3u8b(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = removeprunerm3u8c(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = removeprunerm3u8d(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = durationtaragt(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = taragtduration(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = endlist(textout);
+                                                                            } catch (e) {}
+                                                                            /*console.log("测试 realFetch 广告：\n"+textout);*/
+                                                                            try {
+                                                                                if (M3umatch(textout)) {
+                                                                                    return realResponse;
+                                                                                }
+                                                                            } catch (e) {}
+                                                                            if (textout !== textin) {
+                                                                                self.fetch = realFetch;
+                                                                                return new Response(textout,{
+                                                                                    status: realResponse.status,
+                                                                                    statusText: realResponse.statusText,
+                                                                                    headers: realResponse.headers
+                                                                                });
+                                                                            } else {
+                                                                                return realResponse;
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
-                                                            } catch (e) {}
-                                                            self.fetch = realFetch;
-                                                            return new Response(textout,{
-                                                                status: realResponse.status,
-                                                                statusText: realResponse.statusText,
-                                                                headers: realResponse.headers
-                                                            });
+                                                            } catch (e) {
+                                                                return realResponse;
+                                                            }
                                                         }
+                                                        );
                                                     }
                                                 } catch (e) {
-                                                    return Reflect.apply(target, thisArg, args);
+                                                    return realResponse;
                                                 }
                                             }
-                                            ));
+                                            );
                                         } else {
                                             return Reflect.apply(target, thisArg, args);
                                         }
@@ -1217,91 +1236,95 @@
                     });
                     let originalOpen = self.XMLHttpRequest.prototype.open;
                     self.XMLHttpRequest.prototype.open = new Proxy(self.XMLHttpRequest.prototype.open,{
-                        apply: async(target,thisArg,args)=>{
+                        apply: async function(target, thisArg, args) {
                             try {
                                 if (!shouldStopExecution) {
-                                    urlFromArgBy = urlFromArg(args[1]);
-                                    let item = matchM3u(urlFromArgBy);
+                                    let url = urlFromArg(args[1]);
+                                    let item = matchM3u(url);
                                     if (item) {
-                                        if (ggljbmd.test(urlFromArgBy) || !!shouldStopExecution) {
+                                        if (ggljbmd.test(url) || shouldStopExecution) {
                                             shouldStopExecution = true;
                                             return Reflect.apply(target, thisArg, args);
                                         } else {
-                                            m3u8gglj = urlFromArgBy;
+                                            m3u8gglj = url;
                                             try {
                                                 if (isValidM3U8Url(m3u8gglj)) {
                                                     m3u8bflj = m3u8gglj;
                                                 }
                                             } catch (e) {}
-                                            thisArg.addEventListener('readystatechange', async function() {
-                                                try {
-                                                    if (thisArg.readyState !== 4) {
-                                                        return;
-                                                    } else {
-                                                        const type = thisArg.responseType;
-                                                        if (type !== '' && type !== 'text') {
+                                            try {
+                                                thisArg.addEventListener('readystatechange', async function() {
+                                                    try {
+                                                        if (thisArg.readyState !== 4) {
                                                             return;
                                                         } else {
-                                                            let textin = thisArg.responseText;
-                                                            try {
-                                                                if (M3umatch(textin)) {
-                                                                    return;
-                                                                }
-                                                            } catch (e) {}
-                                                            if (!new RegExp(tyad5,'i').test(textin)) {
+                                                            const type = thisArg.responseType;
+                                                            if (type !== '' && type !== 'text') {
                                                                 return;
                                                             } else {
-                                                                if (!tyad1051.test(textin)) {
+                                                                let textin = thisArg.responseText;
+                                                                try {
+                                                                    if (M3umatch(textin)) {
+                                                                        return;
+                                                                    }
+                                                                } catch (e) {}
+                                                                if (!new RegExp(tyad5,'i').test(textin)) {
                                                                     return;
                                                                 } else {
-                                                                    let textout = pruner(textin, item);
-                                                                    try {
-                                                                        textout = prunerm3u8(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = removeprunerm3u8e(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = removeprunerm3u8b(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = removeprunerm3u8c(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = removeprunerm3u8d(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = durationtaragt(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = taragtduration(textout);
-                                                                    } catch (e) {}
-                                                                    try {
-                                                                        textout = endlist(textout);
-                                                                    } catch (e) {}
-                                                                    /*console.log("测试 originalOpen 广告：\n"+textout);*/
-                                                                    try {
-                                                                        if (M3umatch(textout)) {
+                                                                    if (!tyad1051.test(textin)) {
+                                                                        return;
+                                                                    } else {
+                                                                        let textout = pruner(textin, item);
+                                                                        try {
+                                                                            textout = prunerm3u8(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8e(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8b(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8c(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = removeprunerm3u8d(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = durationtaragt(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = taragtduration(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = endlist(textout);
+                                                                        } catch (e) {}
+                                                                        /*console.log("测试 originalOpen 广告：\n"+textout);*/
+                                                                        try {
+                                                                            if (M3umatch(textout)) {
+                                                                                return;
+                                                                            }
+                                                                        } catch (e) {}
+                                                                        if (textout !== textin) {
+                                                                            self.XMLHttpRequest.prototype.open = originalOpen;
+                                                                            Reflect.defineProperty(thisArg, 'response', {
+                                                                                value: textout
+                                                                            });
+                                                                            Reflect.defineProperty(thisArg, 'responseText', {
+                                                                                value: textout
+                                                                            });
+                                                                        } else {
                                                                             return;
                                                                         }
-                                                                    } catch (e) {}
-                                                                    if (textout !== textin) {
-                                                                        Reflect.defineProperty(thisArg, 'response', {
-                                                                            value: textout
-                                                                        });
-                                                                        Reflect.defineProperty(thisArg, 'responseText', {
-                                                                            value: textout
-                                                                        });
                                                                     }
-                                                                    self.XMLHttpRequest.prototype.open = originalOpen;
                                                                 }
                                                             }
                                                         }
+                                                    } catch (e) {
+                                                        return;
                                                     }
-                                                } catch (e) {
-                                                    return;
-                                                }
-                                            });
+                                                });
+                                            } catch (e) {}
                                             return Reflect.apply(target, thisArg, args);
                                         }
                                     } else {
