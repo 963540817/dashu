@@ -8,6 +8,7 @@
 （这是腾讯官方新出的反解析手段）
 
 在线群公告地址：
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/1.txt
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/1.txt
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/1.txt
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/1.txt
@@ -17,6 +18,7 @@ https://raw.githubusercontent.com/963540817/dashu/main/1.txt
 
 
 PC电脑腾讯如果频繁奔溃的可以尝试安装以下脚本:
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/qq.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/qq.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/qq.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/qq.user.js
@@ -25,6 +27,7 @@ https://raw.githubusercontent.com/963540817/dashu/main/qq.user.js
 
 
 在线播放器 和 野鸡网站 通用过滤 采集资源 插播广告脚本:
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/M3u8.user.js
@@ -32,12 +35,14 @@ https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
 
 
 VIP解析 && 资源采集 -- 主脚本（自动更新版）:
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/jxb.user.js
 https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
 
 VIP解析 && 资源采集 -- 主脚本（手动更新版本）:
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/Freemovies.user.js
@@ -48,6 +53,7 @@ https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
 jxb.user.js 和 Freemovies.user.js 脚本代码都是一样的，看需要哪个安装哪个，不要同时安装
 
 111辅助脚本(以下地址随便选择一个安装)：
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/111.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/111.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/111.user.js
@@ -55,6 +61,7 @@ https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
 
 
 222辅助增强脚本（进阶版，可以跟之前的辅助脚本共存，主要是可以 自定义禁止爬虫 指定接口）(以下地址随便选择一个安装)：
+https://seep.eu.org/raw.githubusercontent.com/963540817/dashu/main/222.user.js
 https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
 https://mirror.ghproxy.com/raw.githubusercontent.com/963540817/dashu/main/222.user.js
 https://gcore.jsdelivr.net/gh/963540817/dashu@master/222.user.js
