@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250324
+// @version 20250325
 // @author 江小白
-// @match https://v.68sou.com/
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
-// @include /\/[pP]lay(?:\/|\?id=\d)/
+// @include /\/[pP]lay(?:er)?(?:\/|\?id=\d)/
 // @include /(?:lay|ideo).*?\.html/
 // @include /\.m3u8(?:\?(?!.+?&)|$)/
+// @include /^https?:\/\/[^\/]+?\/$/
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
 // @include /^https?:\/\/.+?(?<!(?:refer(?:rer)?|ori(?:gin)?))[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?[\?&](?:url|rul)=(?!http).{5,}/
@@ -551,7 +551,6 @@
                                                             console.table(itemsPaichu);
                                                             console.table(itemsHandle);
                                                         }
-                                                        console.log("播放链接：" + spbfurl);
                                                     }
                                                 } catch (e) {}
                                                 let modifiedText;
@@ -1530,6 +1529,10 @@
                                         try {
                                             if (isValidM3U8Url(m3u8gglj)) {
                                                 m3u8bflj = m3u8gglj;
+                                                try {
+                                                    console.clear();
+                                                } catch (e) {}
+                                                console.log("播放链接：" + m3u8bflj);
                                             }
                                         } catch (e) {}
                                         if (!shouldStopExecution) {
@@ -1587,7 +1590,6 @@
                                                                                 }
                                                                             } catch (e) {}
                                                                             if (textout !== textin) {
-                                                                                self.fetch = realFetch;
                                                                                 return new Response(textout,{
                                                                                     status: realResponse.status,
                                                                                     statusText: realResponse.statusText,
@@ -1638,6 +1640,10 @@
                                             try {
                                                 if (isValidM3U8Url(m3u8gglj)) {
                                                     m3u8bflj = m3u8gglj;
+                                                    try {
+                                                        console.clear();
+                                                    } catch (e) {}
+                                                    console.log("播放链接：" + m3u8bflj);
                                                 }
                                             } catch (e) {}
                                             try {
@@ -1700,7 +1706,6 @@
                                                                             }
                                                                         } catch (e) {}
                                                                         if (textout !== textin) {
-                                                                            self.XMLHttpRequest.prototype.open = originalOpen;
                                                                             Reflect.defineProperty(thisArg, 'response', {
                                                                                 value: textout
                                                                             });
