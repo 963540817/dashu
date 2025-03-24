@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250320
+// @version 20250324
 // @author 江小白
 // @match https://v.68sou.com/
 // @include /\.php\?vod_id=\d+?$/
@@ -69,6 +69,7 @@
                       , tyad12 = new RegExp('^\\s*?' + tyad1,'i')
                       , tyad13 = '[\\S\\s]+?'
                       , tyad14 = new RegExp(tyad8 + tyad5,'i')
+                      , tyad15 = '#EXT-X-PLAYLIST-TYPE'
                       , tyada = bhhzz + '+?' + tyad6
                       , tyadb = tyad1 + '\\d+?(?:\\.\\d+?)?\\s*?,' + hhzz + '+?'
                       , tyadc = tyad3 + '+'
@@ -172,7 +173,8 @@
                       , logysl = '时间差异-具体内容] ✂\n%c'
                       , logysm = '长度差异-具体内容] ✂\n%c'
                       , logysn = '长短差异-具体内容] ✂\n%c'
-                      , logyso = '时间标识';
+                      , logyso = '时间标识'
+                      , logysq = '名称差异-具体内容] ✂\n%c';
                     /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
                     const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
                     const isValidM3U8Url = url=>{
@@ -499,7 +501,7 @@
                         }
                     }
                     ;
-                    const pruner = (text,item)=>{
+                    const proqca = (text,item)=>{
                         try {
                             if (!shouldStopExecution) {
                                 if (text) {
@@ -649,6 +651,386 @@
                                                 } else {
                                                     return text;
                                                 }
+                                            } else {
+                                                return text;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
+                    const proqcb = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!itemm3u8.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            if (!shouldStopExecution) {
+                                                const lines = text.split('\n');
+                                                const tsLines = lines.filter(line=>line.trim().match(tyad5));
+                                                const tsLinesWith00 = tsLines.filter(line=>line.includes('00'));
+                                                const totalTsLines = tsLines.length;
+                                                const tsLinesWith00Count = tsLinesWith00.length;
+                                                if (tsLinesWith00Count / totalTsLines >= 0.666) {
+                                                    const prefixes = tsLinesWith00.map(line=>{
+                                                        const index = line.indexOf('00');
+                                                        return line.substring(0, index + 2);
+                                                    }
+                                                    );
+                                                    let commonPrefix = prefixes[0];
+                                                    const backupArray = [];
+                                                    for (let i = 1; i < prefixes.length; i++) {
+                                                        let currentPrefix = '';
+                                                        for (let j = 0; j < Math.min(commonPrefix.length, prefixes[i].length); j++) {
+                                                            if (commonPrefix[j] === prefixes[i][j]) {
+                                                                currentPrefix += commonPrefix[j];
+                                                                backupArray.push(currentPrefix);
+                                                            } else {
+                                                                break;
+                                                            }
+                                                        }
+                                                        commonPrefix = currentPrefix;
+                                                        if (commonPrefix === '') {
+                                                            break;
+                                                        }
+                                                    }
+                                                    const uniqueBackupArray = Array.from(new Set(backupArray));
+                                                    let longestItem = '';
+                                                    for (const item of uniqueBackupArray) {
+                                                        if (item.length > longestItem.length) {
+                                                            longestItem = item;
+                                                        }
+                                                    }
+                                                    const tsLinesToDelete = tsLines.filter(line=>!line.startsWith(longestItem));
+                                                    const tsLinesToDeleteCount = tsLinesToDelete.length;
+                                                    if (tsLinesToDeleteCount / totalTsLines > 0.666) {
+                                                        return text;
+                                                    } else {
+                                                        const deletedLines = [];
+                                                        const newLines = [];
+                                                        let i = 0;
+                                                        while (i < lines.length) {
+                                                            if (lines[i].includes(tyad0) && i + 1 < lines.length && lines[i + 1].trim().match(tyad5)) {
+                                                                const tsLine = lines[i + 1];
+                                                                if (!tsLine.startsWith(longestItem)) {
+                                                                    deletedLines.push(lines[i], lines[i + 1]);
+                                                                    i += 2;
+                                                                } else {
+                                                                    newLines.push(lines[i], lines[i + 1]);
+                                                                    i += 2;
+                                                                }
+                                                            } else {
+                                                                newLines.push(lines[i]);
+                                                                i += 1;
+                                                            }
+                                                        }
+                                                        try {
+                                                            if (!dypd.test(打印开关)) {
+                                                                if (deletedLines.length > 0) {
+                                                                    try {
+                                                                        console.log(logysa + logysq + deletedLines.reverse().map(line=>{
+                                                                            return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                                if (!tsLink.startsWith('http')) {
+                                                                                    if (m3u8gglj) {
+                                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                                                    } else {
+                                                                                        return tsLink;
+                                                                                    }
+                                                                                } else {
+                                                                                    return tsLink;
+                                                                                }
+                                                                            }
+                                                                            );
+                                                                        }
+                                                                        ).join('\n'), logysf, logysi);
+                                                                    } catch (e) {}
+                                                                }
+                                                            }
+                                                        } catch (e) {}
+                                                        return endlist(newLines.join('\n'));
+                                                    }
+                                                } else {
+                                                    return text;
+                                                }
+                                            } else {
+                                                return text;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    return text;
+                                }
+                            } else {
+                                return text;
+                            }
+                        } catch (e) {
+                            return text;
+                        }
+                    }
+                    ;
+                    const proqcc = (text)=>{
+                        try {
+                            if (!shouldStopExecution) {
+                                if (text) {
+                                    if (!itemm3u8.test(text)) {
+                                        return text;
+                                    } else {
+                                        if (ggljbmd.test(text)) {
+                                            shouldStopExecution = true;
+                                            return text;
+                                        } else {
+                                            if (!shouldStopExecution) {
+                                                let tsFileNameLength = 0;
+                                                let tsFileNameLengthTolerance = 1;
+                                                let firstExtInfRow = '';
+                                                let extInfJudgeRowCounter = 0;
+                                                let sameExtInfNameCounter = 0;
+                                                let extInfBenchmarkCounter = 5;
+                                                let previousTsNameIndex = -1;
+                                                let firstTsNameIndex = -1;
+                                                let tsType = 0;
+                                                let extXMode = 0;
+                                                let violentFilterModeFlag = false;
+                                                let result = [];
+                                                let deletedLines = [];
+                                                const numberBeforeTsRegex = new RegExp('(\\d+)' + tyad5,'i');
+                                                const tsExtensionRegex = new RegExp(tyad5,'i');
+                                                const lines = text.split('\n');
+                                                function extractNumberBeforeTs(str) {
+                                                    const match = numberBeforeTsRegex.exec(str);
+                                                    if (match) {
+                                                        return parseInt(match[1], 10);
+                                                    }
+                                                    return null;
+                                                }
+                                                ;function getTsIndex(str) {
+                                                    const match = tsExtensionRegex.exec(str);
+                                                    if (match) {
+                                                        return match.index;
+                                                    }
+                                                    return -1;
+                                                }
+                                                ;if (violentFilterModeFlag) {
+                                                    tsType = 2;
+                                                } else {
+                                                    let normalIntTsCounter = 0;
+                                                    let diffIntTsCounter = 0;
+                                                    let lastTsNameLength = 0;
+                                                    for (let i = 0; i < lines.length; i++) {
+                                                        const line = lines[i];
+                                                        if (extInfJudgeRowCounter === 0 && line.startsWith(tyad0)) {
+                                                            firstExtInfRow = line;
+                                                            extInfJudgeRowCounter++;
+                                                        } else if (extInfJudgeRowCounter === 1 && line.startsWith(tyad0)) {
+                                                            if (line !== firstExtInfRow) {
+                                                                firstExtInfRow = '';
+                                                            }
+                                                            extInfJudgeRowCounter++;
+                                                        }
+                                                        let currentTsNameLength = getTsIndex(line);
+                                                        if (currentTsNameLength > 0) {
+                                                            if (extInfJudgeRowCounter === 1) {
+                                                                tsFileNameLength = currentTsNameLength;
+                                                            }
+                                                            lastTsNameLength = currentTsNameLength;
+                                                            let tsNameIndex = extractNumberBeforeTs(line);
+                                                            if (tsNameIndex === null) {
+                                                                if (extInfJudgeRowCounter === 1) {
+                                                                    tsType = 1;
+                                                                } else if (extInfJudgeRowCounter === 2 && (tsType === 1 || currentTsNameLength === tsFileNameLength)) {
+                                                                    tsType = 1;
+                                                                    break;
+                                                                } else {
+                                                                    diffIntTsCounter++;
+                                                                }
+                                                            } else {
+                                                                if (normalIntTsCounter === 0) {
+                                                                    previousTsNameIndex = tsNameIndex;
+                                                                    firstTsNameIndex = tsNameIndex;
+                                                                    previousTsNameIndex = firstTsNameIndex - 1;
+                                                                }
+                                                                if (currentTsNameLength !== tsFileNameLength) {
+                                                                    if (currentTsNameLength === lastTsNameLength + 1 && tsNameIndex === previousTsNameIndex + 1) {
+                                                                        if (diffIntTsCounter) {
+                                                                            if (tsNameIndex === previousTsNameIndex + 1) {
+                                                                                tsType = 0;
+                                                                                previousTsNameIndex = firstTsNameIndex - 1;
+                                                                                break;
+                                                                            } else {
+                                                                                tsType = 2;
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        normalIntTsCounter++;
+                                                                        previousTsNameIndex = tsNameIndex;
+                                                                    } else {
+                                                                        diffIntTsCounter++;
+                                                                    }
+                                                                } else {
+                                                                    if (diffIntTsCounter) {
+                                                                        if (tsNameIndex === previousTsNameIndex + 1) {
+                                                                            tsType = 0;
+                                                                            previousTsNameIndex = firstTsNameIndex - 1;
+                                                                            break;
+                                                                        } else {
+                                                                            tsType = 2;
+                                                                            break;
+                                                                        }
+                                                                    }
+                                                                    normalIntTsCounter++;
+                                                                    previousTsNameIndex = tsNameIndex;
+                                                                }
+                                                            }
+                                                        }
+                                                        if (i === lines.length - 1) {
+                                                            tsType = 2;
+                                                        }
+                                                    }
+                                                }
+                                                for (let i = 0; i < lines.length; i++) {
+                                                    const line = lines[i];
+                                                    if (tsType === 0) {
+                                                        if (line.startsWith(tyad2) && lines[i + 1] && lines[i + 2]) {
+                                                            if (i > 0 && lines[i - 1].startsWith(tyad15)) {
+                                                                result.push(line);
+                                                                continue;
+                                                            } else {
+                                                                let currentTsNameLength = getTsIndex(lines[i + 2]);
+                                                                if (currentTsNameLength > 0) {
+                                                                    if (currentTsNameLength - tsFileNameLength > tsFileNameLengthTolerance) {
+                                                                        if (lines[i + 3] && lines[i + 3].startsWith(tyad2)) {
+                                                                            deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
+                                                                            i += 3;
+                                                                        } else {
+                                                                            deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
+                                                                            i += 2;
+                                                                        }
+                                                                        continue;
+                                                                    } else {
+                                                                        tsFileNameLength = currentTsNameLength;
+                                                                    }
+                                                                    let currentTsNameIndex = extractNumberBeforeTs(lines[i + 2]);
+                                                                    if (currentTsNameIndex !== previousTsNameIndex + 1) {
+                                                                        if (lines[i + 3] && lines[i + 3].startsWith(tyad2)) {
+                                                                            deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
+                                                                            i += 3;
+                                                                        } else {
+                                                                            deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
+                                                                            i += 2;
+                                                                        }
+                                                                        continue;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        if (line.startsWith(tyad0) && lines[i + 1]) {
+                                                            let currentTsNameLength = getTsIndex(lines[i + 1]);
+                                                            if (currentTsNameLength > 0) {
+                                                                if (currentTsNameLength - tsFileNameLength > tsFileNameLengthTolerance) {
+                                                                    if (lines[i + 2] && lines[i + 2].startsWith(tyad2)) {
+                                                                        deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
+                                                                        i += 2;
+                                                                    } else {
+                                                                        deletedLines.push(lines[i], lines[i + 1]);
+                                                                        i += 1;
+                                                                    }
+                                                                    continue;
+                                                                } else {
+                                                                    tsFileNameLength = currentTsNameLength;
+                                                                }
+                                                                let currentTsNameIndex = extractNumberBeforeTs(lines[i + 1]);
+                                                                if (currentTsNameIndex === previousTsNameIndex + 1) {
+                                                                    previousTsNameIndex++;
+                                                                } else {
+                                                                    if (lines[i + 2].startsWith(tyad2)) {
+                                                                        deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
+                                                                        i += 2;
+                                                                    } else {
+                                                                        deletedLines.push(lines[i], lines[i + 1]);
+                                                                        i += 1;
+                                                                    }
+                                                                    continue;
+                                                                }
+                                                            }
+                                                        }
+                                                    } else if (tsType === 1) {
+                                                        if (line.startsWith(tyad0)) {
+                                                            if (line === firstExtInfRow && sameExtInfNameCounter <= extInfBenchmarkCounter && extXMode === 0) {
+                                                                sameExtInfNameCounter++;
+                                                            } else {
+                                                                extXMode = 1;
+                                                            }
+                                                            if (sameExtInfNameCounter > extInfBenchmarkCounter) {
+                                                                extXMode = 1;
+                                                            }
+                                                        }
+                                                        if (line.startsWith(tyad2)) {
+                                                            if (i > 0 && lines[i - 1].startsWith(tyad15)) {
+                                                                result.push(line);
+                                                                continue;
+                                                            } else {
+                                                                if (lines[i + 1] && lines[i + 1].startsWith(tyad0) && lines[i + 2] && getTsIndex(lines[i + 2]) > 0) {
+                                                                    let extXDiscontinuityConditionFlag = false;
+                                                                    if (extXMode === 1) {
+                                                                        extXDiscontinuityConditionFlag = lines[i + 1] !== firstExtInfRow && sameExtInfNameCounter > extInfBenchmarkCounter;
+                                                                    }
+                                                                    if (lines[i + 3] && lines[i + 3].startsWith(tyad2) && extXDiscontinuityConditionFlag) {
+                                                                        deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
+                                                                        i += 3;
+                                                                    }
+                                                                    continue;
+                                                                }
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (line.startsWith(tyad2)) {
+                                                            if (i > 0 && lines[i - 1].startsWith(tyad15)) {
+                                                                result.push(line);
+                                                                continue;
+                                                            } else {
+                                                                continue;
+                                                            }
+                                                        }
+                                                    }
+                                                    result.push(line);
+                                                }
+                                                try {
+                                                    if (!dypd.test(打印开关)) {
+                                                        if (deletedLines.length > 0) {
+                                                            try {
+                                                                console.log(logysa + logysq + deletedLines.reverse().map(line=>{
+                                                                    return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                        if (!tsLink.startsWith('http')) {
+                                                                            if (m3u8gglj) {
+                                                                                return new URL(tsLink,m3u8gglj).href;
+                                                                            } else {
+                                                                                return tsLink;
+                                                                            }
+                                                                        } else {
+                                                                            return tsLink;
+                                                                        }
+                                                                    }
+                                                                    );
+                                                                }
+                                                                ).join('\n'), logysf, logysi);
+                                                            } catch (e) {}
+                                                        }
+                                                    }
+                                                } catch (e) {}
+                                                return endlist(result.join('\n'));
                                             } else {
                                                 return text;
                                             }
@@ -1167,7 +1549,13 @@
                                                                         if (!tyad1051.test(textin)) {
                                                                             return realResponse;
                                                                         } else {
-                                                                            let textout = pruner(textin, item);
+                                                                            let textout = proqca(textin, item);
+                                                                            try {
+                                                                                textout = proqcb(textout);
+                                                                            } catch (e) {}
+                                                                            try {
+                                                                                textout = proqcc(textout);
+                                                                            } catch (e) {}
                                                                             try {
                                                                                 textout = prunerm3u8(textout);
                                                                             } catch (e) {}
@@ -1192,7 +1580,7 @@
                                                                             try {
                                                                                 textout = endlist(textout);
                                                                             } catch (e) {}
-                                                                            /*console.log("测试 realFetch 广告：\n"+textout);*/
+                                                                            /*console.log("realFetch测试广告：\n"+textout);*/
                                                                             try {
                                                                                 if (M3umatch(textout)) {
                                                                                     return realResponse;
@@ -1274,7 +1662,13 @@
                                                                     if (!tyad1051.test(textin)) {
                                                                         return;
                                                                     } else {
-                                                                        let textout = pruner(textin, item);
+                                                                        let textout = proqca(textin, item);
+                                                                        try {
+                                                                            textout = proqcb(textout);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            textout = proqcc(textout);
+                                                                        } catch (e) {}
                                                                         try {
                                                                             textout = prunerm3u8(textout);
                                                                         } catch (e) {}
@@ -1299,7 +1693,7 @@
                                                                         try {
                                                                             textout = endlist(textout);
                                                                         } catch (e) {}
-                                                                        /*console.log("测试 originalOpen 广告：\n"+textout);*/
+                                                                        /*console.log("originalOpen测试广告：\n"+textout);*/
                                                                         try {
                                                                             if (M3umatch(textout)) {
                                                                                 return;
