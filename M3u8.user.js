@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250325
+// @version 20250401
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -1376,8 +1376,19 @@
                                                     let diffCount = 0;
                                                     for (let i = allLines.length - 1; i >= 0; i--) {
                                                         if (allLines[i].line.startsWith(tyad0)) {
-                                                            const nextLine = allLines[i + 1]?.line;
-                                                            const match = nextLine?.match(tyad107);
+                                                            const nextLineIndex = i + 1;
+                                                            let nextLine;
+                                                            if (nextLineIndex < allLines.length) {
+                                                                nextLine = allLines[nextLineIndex].line;
+                                                            } else {
+                                                                nextLine = undefined;
+                                                            }
+                                                            let match;
+                                                            if (nextLine) {
+                                                                match = nextLine.match(tyad107);
+                                                            } else {
+                                                                match = undefined;
+                                                            }
                                                             if (!match || match[1] !== dominantMatchedGroup) {
                                                                 diffCount++;
                                                             }
@@ -1390,12 +1401,18 @@
                                                         if (filteredMatchedGroups.length > 0) {
                                                             for (let i = allLines.length - 1; i >= 0; i--) {
                                                                 if (allLines[i].line.startsWith(tyad0)) {
-                                                                    const nextLine = allLines[i + 1]?.line;
-                                                                    const cleanedNextLine = nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '');
+                                                                    const nextLineIndex = i + 1;
+                                                                    let nextLine;
+                                                                    if (nextLineIndex < allLines.length) {
+                                                                        nextLine = allLines[nextLineIndex].line;
+                                                                    } else {
+                                                                        nextLine = undefined;
+                                                                    }
+                                                                    const cleanedNextLine = nextLine ? nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '') : '';
                                                                     if (!tyad10.test(cleanedNextLine)) {
-                                                                        const isFilteredMatched = filteredMatchedGroups.some(group=>nextLine.startsWith(group));
+                                                                        const isFilteredMatched = filteredMatchedGroups.some(group=>nextLine && nextLine.startsWith(group));
                                                                         if (isFilteredMatched) {
-                                                                            deletedLines.push(allLines[i + 1].line);
+                                                                            deletedLines.push(nextLine);
                                                                             deletedLines.push(allLines[i].line);
                                                                             allLines.splice(i, 2);
                                                                         }
@@ -1405,12 +1422,23 @@
                                                         } else {
                                                             for (let i = allLines.length - 1; i >= 0; i--) {
                                                                 if (allLines[i].line.startsWith(tyad0)) {
-                                                                    const nextLine = allLines[i + 1]?.line;
-                                                                    const cleanedNextLine = nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '');
-                                                                    const match = nextLine?.match(tyad107);
+                                                                    const nextLineIndex = i + 1;
+                                                                    let nextLine;
+                                                                    if (nextLineIndex < allLines.length) {
+                                                                        nextLine = allLines[nextLineIndex].line;
+                                                                    } else {
+                                                                        nextLine = undefined;
+                                                                    }
+                                                                    const cleanedNextLine = nextLine ? nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '') : '';
+                                                                    let match;
+                                                                    if (nextLine) {
+                                                                        match = nextLine.match(tyad107);
+                                                                    } else {
+                                                                        match = undefined;
+                                                                    }
                                                                     if (!match || match[1] !== dominantMatchedGroup) {
                                                                         if (!tyad10.test(cleanedNextLine)) {
-                                                                            deletedLines.push(allLines[i + 1].line);
+                                                                            deletedLines.push(nextLine);
                                                                             deletedLines.push(allLines[i].line);
                                                                             allLines.splice(i, 2);
                                                                         }
