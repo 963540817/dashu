@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250401
+// @version 20250403
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -32,7 +32,7 @@
                     configurable: false
                 });
             } catch (e) {}
-            let m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, spbfurl, ggtspd, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
+            let m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, spbfurl, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
             m3u8gglj = '';
             m3u8bflj = '';
             hhzz = '[\\n\\r\\u0085\\u2028\\u2029]';
@@ -724,7 +724,11 @@
                                                         while (i < lines.length) {
                                                             if (lines[i].includes(tyad0) && i + 1 < lines.length && lines[i + 1].trim().match(tyad5)) {
                                                                 const tsLine = lines[i + 1];
-                                                                if (!tsLine.startsWith(longestItem)) {
+                                                                const fileName = tsLine.split('/').pop();
+                                                                if (tyad14.test(fileName)) {
+                                                                    newLines.push(lines[i], lines[i + 1]);
+                                                                    i += 2;
+                                                                } else if (!tsLine.startsWith(longestItem)) {
                                                                     deletedLines.push(lines[i], lines[i + 1]);
                                                                     i += 2;
                                                                 } else {
