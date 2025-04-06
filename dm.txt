@@ -1,8 +1,11 @@
 ﻿[Adblock Plus 2.0]
 ! Title: 拦截 官方弹幕规则
-! Version: 202504005
+! Version: 963540817.20250406
 ! Expires: 1 day
 !-------------------------------------------------------------------------------!
+
+!拦截懒人优惠劵
+||api.typechrome.com^
 
 !拦截奇艺弹幕元素
 www.iqiyi.com##.iqp-barrage,.iqp-barrage-panel
