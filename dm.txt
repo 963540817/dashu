@@ -1,6 +1,6 @@
 ﻿[Adblock Plus 2.0]
 ! Title: 拦截 官方弹幕规则
-! Version: 963540817.20250406
+! Version: 963540817.20250407
 ! Expires: 1 day
 !-------------------------------------------------------------------------------!
 
@@ -23,7 +23,7 @@ v.qq.com##.barrage-control-v2,.thumbplayer-barrage
 www.bilibili.com##.bpx-player-dm-root,.bpx-player-video-info-dm,.danmaku-box,.bpx-player-render-dm-wrap
 
 !拦截抖音弹幕元素
-www.douyin.com##[data-e2e*="danmu"],[data-e2e*="danmaku"],[class*="danmu"],[id*="danmu"],[class*="danmaku"],[id*="danmaku"],[class*="positionBox"] a[href*="/live.douyin."][target*="_blank"][data-e2e*="hot"]
+www.douyin.com##[data-e2e*="danmu"],[data-e2e*="danmaku"],[class*="danmu"],[id*="danmu"],[class*="danmaku"],[id*="danmaku"],[class^="xgplayer-shop-anchor"],span[data-e2e*="ser-info-living"],img[alt*="iveIcon"]
 
 !拦截搜狐弹幕元素
 tv.sohu.com###rightBar,.x-danmu-panel
