@@ -3,7 +3,7 @@
 // @description 请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:en 手机不推荐用脚本，建议直接使用app。
 // @description:tw 脚本已经完善，更新告一段落。
-// @date 2025-04-20
+// @date 2025-04-21
 // @version 1
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
@@ -59,7 +59,7 @@
 {name:"农民",url:"http://23.225.148.100/ssszz.php?other_kkk217&q=",cjlx:"{lyhuicheng}{(?:vip|yzzy)\\d*?\\.play-cdn|playback}{bfengbf}{hhuus}{gsuus}{bfvvs}{lz-?cdn|cdnlz}{ffzy}{fentvoss}{qdhdcate}{fsvod}{wlcdn}{nikanba}{taopianplay}{bfikuncdn}{ukzy}{wxys}{huyall}{\\.m3u8}",jc:"https://d2.gqyy8.com/ne2/s$1.js",目标:"url",jxb:"原",json:"3",hc:"0",zd:"1",qp:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",px:"1",sj:"0",qc:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
 {name:"飞迅",url:"http://23.225.148.100/ssszz.php?other_kkk217&q=",cjlxbmd:"64.32.20.246|(?:jisuzyv|kuaioss|1080pzy|qqaku|gszy\\w*?|dowlz\\w+?|tlkqc|qoqkkhy|haiwaikan|szjal).c[on]|mkzy.vip|monidai|zoubuting|hbtvoss|kuaikan-play|kkzybf|(?:nf|iqiyi|cctv)m3u8|letvlist|letvoss|官源|\\$\\w+-",cjsj:"1",cjdi:"1",jc:"https://d2.gqyy8.com/ne2/s$1.js",目标:"url",jxb:"原",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",jj:"1",qc:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"360",url:"https://www.360zy.com/api.php/provide/vod/from/360zy",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
-{name:"酷播",url:"https://api.1080zyku.com/inc/apijson.php",jxb:"原",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzh:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jj:"1"},
+{name:"酷播",url:"https://api.codetabs.com/v1/proxy/?quest=https://api.yzzy-api.com/inc/apijson.php",jxb:"原",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzh:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jj:"1"},
 {name:"华为",url:"https://hw8.live/api.php/provide/vod/from/hw8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"木耳",url:"https://www.heimuer.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"如意",url:"https://cj.rycjapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
