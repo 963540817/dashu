@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name M3u8
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250403
+// @version 20250420
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -131,24 +131,29 @@
                       , tyad1049 = tyad1048 + tyad1 + '\\d+?\\.3{3,}\\s*?,'
                       , tyad1050 = tyad1046 + '(?:' + tyad1043 + tyad1044 + tyad1048 + ')'
                       , tyad1051 = new RegExp(tyad1010 + tyad13 + tyad5 + '(?:\\?' + bhhzz + '+?)?' + hhzz + '+?' + tyad1 + tyad13 + tyad7 + '\\s*?$','i')
+                      , tyad1052 = tyadb + tyad1017
                       , itemts = new RegExp(tyad5,'i')
                       , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                       , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
                       , itemspdgza = '(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){5,}'
                       , itemstygza = '(?<=(?:' + tyad1015 + tyad108 + tyad4 + hhzz + '+?){1,})' + tyad1014 + '(?:' + tyad1015 + '(?!' + tyad108 + tyad4 + ')' + tyada + '?){1,}' + tyad109
-                      , itemstygza1 = '(?<=' + tyad1020 + ')' + tyad1014 + tyadb + tyad1017 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1034 + '(?:' + tyadb + tyad1017 + tyad1049 + tyad1034 + tyad109
+                      , itemstygza1 = '(?<=' + tyad1020 + ')' + tyad1014 + tyad1052 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1034 + '(?:' + tyad1052 + tyad1049 + tyad1034 + tyad109
                       , itemstygza2 = new RegExp(tyad1032 + tyadb + '(\\\/' + bhhzz + '+?\\\/)[^\\\/]+?' + tyad1016 + '(?:' + tyadb + '\\2[^\\\/]+?' + tyad1016 + '){3,})' + tyad1014 + '#EXT-X-KEY\\s*?:\\s*?METHOD=NONE' + hhzz + '+?' + tyad1039 + tyad1016,'i')
                       , itemstygza3 = new RegExp(tyad1039 + tyad6,'igm')
                       , itemstygza4 = new RegExp(tyad1032 + '?:' + tyadb + '(?<!' + tyad105 + ')[a-z0-9\\\/]+?' + tyad6 + '?){3,}' + tyad1014 + '(?:' + tyad1039 + tyad6 + '){3,}','i')
                       , itemstygza5 = new RegExp('(?<=(?<=' + hhzz + '+)' + tyad1014 + tyadi + tyad1018 + tyad1050 + tyad2 + '(?:' + hhzz + '+?' + tyad1045 + '1,}(?:' + tyadi + '3{5}' + tyad1050 + '{2,}' + tyad1047,'gi')
                       , itemstygza6 = new RegExp('(?<=' + hhzz + '+)' + tyad1014 + '(?:#EXT-X-' + bhhzz + '+' + hhzz + '+){1,}(?=(?:' + tyad7 + '|' + tyad1 + '\\d))','gim')
-                      , itemstygza7 = new RegExp('(?<=' + tyadb + tyad1017 + ')(?:#EXT-X-(?!(?:DISCONTINUITY|ENDLIST))' + tyad1017 + '){1,}(?=(?:' + tyad2 + '|#EXT-X-|' + tyad1 + '\\d))','gim')
+                      , itemstygza7 = new RegExp('(?<=' + tyad1052 + ')(?:#EXT-X-(?!(?:DISCONTINUITY|ENDLIST))' + tyad1017 + '){1,}(?=(?:' + tyad2 + '|#EXT-X-|' + tyad1 + '\\d))','gim')
+                      , itemstygza8 = new RegExp(tyad1014 + tyad1036 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1035 + '(?:' + tyad1036 + tyad1049 + tyad1035 + '(?:' + tyad1036 + tyad1048 + tyad109,'gim')
+                      , itemstygpc1 = new RegExp(itemstygza1,'gim')
+                      , itemstygpc2 = new RegExp('(?:' + tyad1052 + '){7,}','gim')
+                      , itemstygpc3 = new RegExp('(?:' + tyad1052 + '){15,}','gim')
                       , itemsPaichu = [/*动态排除指定资源 正规则表达式,以达到智能删除插播广告的效果*/
                     new RegExp(tyad1031 + '(?![\\S\\s]*?(?:' + tyad1015 + '[a-z\\d]{10,}0{2}\\d+?' + tyad1016 + '){2,})[\\S\\s]*?' + tyad1014 + '(?:' + tyad1015 + '(?:[a-z]+?\\d+?|\\d+?[a-z]+?){10,}' + tyad1016 + '){2,}','i')]
                       , itemsHandle = [{
                         reUrl: wzm3u8,
-                        reAds: [new RegExp(itemsdpgza,'gim'), new RegExp(itemstygza,'gim'), new RegExp(itemstygza1,'gim'), new RegExp('(?<=' + tyad1031 + '(?:#EXT-X-(?!KEY)' + tyad1017 + '){1,})(?:' + tyad1021 + tyad1017 + '(?:' + tyad1014 + ')?){1,}(?=' + tyad1021 + ')','gim'), /*动态拼接采集资源 正规则表达式,以达到智能删除插播广告的效果*/
-                        new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp(tyad1014 + tyad1036 + tyad1 + '3\\.3{3,}\\s*?,' + tyad1035 + '(?:' + tyad1036 + tyad1049 + tyad1035 + '(?:' + tyad1036 + tyad1048 + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
+                        reAds: [new RegExp(itemsdpgza,'gim'), new RegExp(itemstygza,'gim'), itemstygpc1, itemstygza8, new RegExp('(?<=' + tyad1031 + '(?:#EXT-X-(?!KEY)' + tyad1017 + '){1,})(?:' + tyad1021 + tyad1017 + '(?:' + tyad1014 + ')?){1,}(?=' + tyad1021 + ')','gim'), /*动态拼接采集资源 正规则表达式,以达到智能删除插播广告的效果*/
+                        new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
                     }]
                       , itemsHandleby = [/*播放黑木耳采集资源的时候,额外增加该数组规则,避免其他的误杀*/
                     {
@@ -612,39 +617,47 @@
                                                 } catch (e) {
                                                     modifiedText = text;
                                                 }
-                                                for (const reAd of item.reAds) {
-                                                    const matches = modifiedText.match(reAd);
-                                                    if (matches) {
-                                                        matches.forEach(match=>{
-                                                            try {
-                                                                if (!dypd.test(打印开关)) {
-                                                                    try {
-                                                                        console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
-                                                                            if (!tsLink.startsWith('http')) {
-                                                                                if (m3u8gglj) {
-                                                                                    return new URL(tsLink,m3u8gglj).href;
-                                                                                } else {
-                                                                                    return tsLink;
-                                                                                }
-                                                                            } else {
-                                                                                return tsLink;
-                                                                            }
-                                                                        }
-                                                                        ), logysf, logysg, logysh, logysg, logysi);
-                                                                    } catch (e) {
+                                                try {
+                                                    for (const reAd of item.reAds) {
+                                                        try {
+                                                            modifiedText = modifiedText.replace(reAd, function(match) {
+                                                                try {
+                                                                    if (((reAd === itemstygpc1 || reAd === itemstygza5 || reAd === itemstygza8) && match.match(itemstygpc2)) || match.match(itemstygpc3)) {
+                                                                        return match;
+                                                                    } else {
                                                                         try {
                                                                             if (!dypd.test(打印开关)) {
-                                                                                console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                                try {
+                                                                                    console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                        if (!tsLink.startsWith('http')) {
+                                                                                            if (m3u8gglj) {
+                                                                                                return new URL(tsLink,m3u8gglj).href;
+                                                                                            } else {
+                                                                                                return tsLink;
+                                                                                            }
+                                                                                        } else {
+                                                                                            return tsLink;
+                                                                                        }
+                                                                                    }
+                                                                                    ), logysf, logysg, logysh, logysg, logysi);
+                                                                                } catch (e) {
+                                                                                    try {
+                                                                                        console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                                    } catch (e) {}
+                                                                                }
                                                                             }
                                                                         } catch (e) {}
+                                                                        return "";
                                                                     }
+                                                                } catch (e) {
+                                                                    return match;
                                                                 }
-                                                            } catch (e) {}
+                                                            });
+                                                        } catch (e) {
+                                                            continue;
                                                         }
-                                                        );
                                                     }
-                                                    modifiedText = modifiedText.replace(reAd, "");
-                                                }
+                                                } catch (e) {}
                                                 if (modifiedText.length < text.length) {
                                                     return endlist(modifiedText);
                                                 } else {
