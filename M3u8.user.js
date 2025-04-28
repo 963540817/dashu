@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250426
+// @version 20250428
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -305,70 +305,80 @@
                                                                           , tsPaths = text.match(new RegExp('(?:(?<=' + tyad1015 + '))?' + bhhzz + '+?(?=' + tyad1016 + ')','gi'))
                                                                           , matches = text.match(regexx)
                                                                           , paths = {};
-                                                                        if (!jxbgze || jxbgze == '空' || (Number.isInteger(Number(jxbgze)) && tsPaths && tsPaths.length < jxbgze)) {
-                                                                            for (let i = 0; i < matches.length; i++) {
-                                                                                const path = matches[i];
-                                                                                if (!paths[path]) {
-                                                                                    paths[path] = [];
-                                                                                }
-                                                                                paths[path].push(path);
-                                                                            }
-                                                                            let maxCount = 0
-                                                                              , maxPath = '';
-                                                                            for (const path in paths) {
-                                                                                if (paths[path].length > maxCount) {
-                                                                                    maxCount = paths[path].length;
-                                                                                    maxPath = path;
-                                                                                }
-                                                                            }
-                                                                            if (maxCount > matches.length * 0.66 && Object.keys(paths).length < matches.length * 0.66) {
-                                                                                let deleteCount = 0;
-                                                                                for (const path in paths) {
-                                                                                    if (path !== maxPath) {
-                                                                                        deleteCount += paths[path].length;
+                                                                        try {
+                                                                            if (!jxbgze || jxbgze == '空' || (Number.isInteger(Number(jxbgze)) && tsPaths && tsPaths.length < jxbgze)) {
+                                                                                if (matches && Array.isArray(matches)) {
+                                                                                    for (let i = 0; i < matches.length; i++) {
+                                                                                        const path = matches[i];
+                                                                                        if (!paths[path]) {
+                                                                                            paths[path] = [];
+                                                                                        }
+                                                                                        paths[path].push(path);
                                                                                     }
-                                                                                }
-                                                                                if (deleteCount <= maxCount) {
+                                                                                    let maxCount = 0
+                                                                                      , maxPath = '';
                                                                                     for (const path in paths) {
-                                                                                        if (path !== maxPath) {
-                                                                                            paths[path].forEach(p=>{
-                                                                                                /*console.log("排除测试：\n"+p);*/
-                                                                                                if (!jxbgzd.test(p)) {
-                                                                                                    text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
-                                                                                                        if (!dypd.test(打印开关)) {
-                                                                                                            try {
-                                                                                                                console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
-                                                                                                                    if (!tsLink.startsWith('http')) {
-                                                                                                                        if (m3u8gglj) {
-                                                                                                                            return new URL(tsLink,m3u8gglj).href;
-                                                                                                                        } else {
-                                                                                                                            return tsLink;
+                                                                                        if (paths[path].length > maxCount) {
+                                                                                            maxCount = paths[path].length;
+                                                                                            maxPath = path;
+                                                                                        }
+                                                                                    }
+                                                                                    if (maxCount > matches.length * 0.66 && Object.keys(paths).length < matches.length * 0.66) {
+                                                                                        let deleteCount = 0;
+                                                                                        for (const path in paths) {
+                                                                                            if (path !== maxPath) {
+                                                                                                deleteCount += paths[path].length;
+                                                                                            }
+                                                                                        }
+                                                                                        if (deleteCount <= maxCount) {
+                                                                                            for (const path in paths) {
+                                                                                                if (path !== maxPath) {
+                                                                                                    paths[path].forEach(p=>{
+                                                                                                        /*console.log("排除测试：\n"+p);*/
+                                                                                                        if (!jxbgzd.test(p)) {
+                                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
+                                                                                                                if (!dypd.test(打印开关)) {
+                                                                                                                    try {
+                                                                                                                        console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                                                            if (!tsLink.startsWith('http')) {
+                                                                                                                                if (m3u8gglj) {
+                                                                                                                                    return new URL(tsLink,m3u8gglj).href;
+                                                                                                                                } else {
+                                                                                                                                    return tsLink;
+                                                                                                                                }
+                                                                                                                            } else {
+                                                                                                                                return tsLink;
+                                                                                                                            }
                                                                                                                         }
-                                                                                                                    } else {
-                                                                                                                        return tsLink;
+                                                                                                                        ), logysf, logysg, logysh, logysg, logysi);
+                                                                                                                    } catch (e) {
+                                                                                                                        try {
+                                                                                                                            console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                                                                        } catch (e) {}
                                                                                                                     }
                                                                                                                 }
-                                                                                                                ), logysf, logysg, logysh, logysg, logysi);
-                                                                                                            } catch (e) {
-                                                                                                                try {
-                                                                                                                    console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
-                                                                                                                } catch (e) {}
+                                                                                                                return '';
                                                                                                             }
+                                                                                                            );
                                                                                                         }
-                                                                                                        return '';
                                                                                                     }
                                                                                                     );
                                                                                                 }
                                                                                             }
-                                                                                            );
+                                                                                        } else {
+                                                                                            return text;
                                                                                         }
                                                                                     }
                                                                                 } else {
                                                                                     return text;
                                                                                 }
                                                                             }
+                                                                        } catch (e) {
+                                                                            return text;
                                                                         }
-                                                                    } catch (e) {}
+                                                                    } catch (e) {
+                                                                        return text;
+                                                                    }
                                                                 }
                                                             }
                                                         }
