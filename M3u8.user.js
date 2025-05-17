@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250428
+// @version 20250517
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -173,16 +173,17 @@
                               , logysd = "的广告正则：\n%c"
                               , logyse = '\n%c已经删除的广告内容：\n'
                               , logysf = 'border-left:5px solid #A0B;color:#A0B;padding:3px'
-                              , logysg = 'color:blue;'
+                              , logysg = 'color:#03A9F4;'
                               , logysh = 'color:red;'
-                              , logysi = 'color:black;'
+                              , logysi = logysh
                               , logysj = '广告标识'
                               , logysk = '额外删除-具体内容] ✂%c'
                               , logysl = '时间差异-具体内容] ✂\n%c'
                               , logysm = '长度差异-具体内容] ✂\n%c'
                               , logysn = '长短差异-具体内容] ✂\n%c'
                               , logyso = '时间标识'
-                              , logysq = '名称差异-具体内容] ✂\n%c';
+                              , logysq = '名称差异-具体内容] ✂\n%c'
+                              , logysp = '-已经发现] ✂\n%c广告切片时间：%c';
                             /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
                             const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
                             const isValidM3U8Url = url=>{
@@ -519,6 +520,67 @@
                                 }
                             }
                             ;
+                            const extinfa = (text)=>{
+                                try {
+                                    if (!shouldStopExecution) {
+                                        if (text) {
+                                            if (!itemm3u8.test(text)) {
+                                                return text;
+                                            } else {
+                                                if (ggljbmd.test(text)) {
+                                                    shouldStopExecution = true;
+                                                    return text;
+                                                } else {
+                                                    if (!shouldStopExecution) {
+                                                        const replacer = (rawStr,g1,g2)=>{
+                                                            const i = g2.lastIndexOf(',');
+                                                            const timeLines = g2.slice(8, i).split(/,.{39,51}F:/is);
+                                                            const ADtime = timeLines.reduce((a,b)=>+b + a, 0);
+                                                            if (ADtime < 22) {
+                                                                try {
+                                                                    if (!dypd.test(打印开关)) {
+                                                                        try {
+                                                                            console.log(logysa + "资源广告" + logysp + ADtime + logyse + "%c" + rawStr.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                if (!tsLink.startsWith('http')) {
+                                                                                    if (m3u8gglj) {
+                                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                                                    } else {
+                                                                                        return tsLink;
+                                                                                    }
+                                                                                } else {
+                                                                                    return tsLink;
+                                                                                }
+                                                                            }
+                                                                            ), logysf, logysg, logysh, logysg, logysi);
+                                                                        } catch (e) {
+                                                                            try {
+                                                                                console.log(logysa + "资源广告" + logysp + ADtime + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
+                                                                            } catch (e) {}
+                                                                        }
+                                                                    }
+                                                                } catch (e) {}
+                                                                return '';
+                                                            }
+                                                            return rawStr.slice(21);
+                                                        }
+                                                        ;
+                                                        return text.replace(new RegExp('(' + tyad2 + '\\n)(.{211,433})\\1','gis'), replacer);
+                                                    } else {
+                                                        return text;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            return text;
+                                        }
+                                    } else {
+                                        return text;
+                                    }
+                                } catch (e) {
+                                    return text;
+                                }
+                            }
+                            ;
                             const proqca = (text,item)=>{
                                 try {
                                     if (!shouldStopExecution) {
@@ -579,7 +641,7 @@
                                                                         itemsHandle[0].reAds.push(itemstygza5);
                                                                     }
                                                                 } catch (e) {}
-                                                                modifiedText = text;
+                                                                modifiedText = extinfa(text);
                                                             } else {
                                                                 if (new RegExp(tyadb + bhhzz + '+?\\.(?:' + ggzlhx + ')\\?' + tyad1017,'i').test(text)) {
                                                                     modifiedText = text;
