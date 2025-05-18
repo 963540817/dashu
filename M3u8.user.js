@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250517
+// @version 20250518
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -182,8 +182,7 @@
                               , logysm = '长度差异-具体内容] ✂\n%c'
                               , logysn = '长短差异-具体内容] ✂\n%c'
                               , logyso = '时间标识'
-                              , logysq = '名称差异-具体内容] ✂\n%c'
-                              , logysp = '-已经发现] ✂\n%c广告切片时间：%c';
+                              , logysq = '名称差异-具体内容] ✂\n%c';
                             /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
                             const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
                             const isValidM3U8Url = url=>{
@@ -532,39 +531,82 @@
                                                     return text;
                                                 } else {
                                                     if (!shouldStopExecution) {
-                                                        const replacer = (rawStr,g1,g2)=>{
-                                                            const i = g2.lastIndexOf(',');
-                                                            const timeLines = g2.slice(8, i).split(/,.{39,51}F:/is);
-                                                            const ADtime = timeLines.reduce((a,b)=>+b + a, 0);
-                                                            if (ADtime < 22) {
-                                                                try {
-                                                                    if (!dypd.test(打印开关)) {
-                                                                        try {
-                                                                            console.log(logysa + "资源广告" + logysp + ADtime + logyse + "%c" + rawStr.replace(new RegExp(tyad1023,'gi'), tsLink=>{
-                                                                                if (!tsLink.startsWith('http')) {
-                                                                                    if (m3u8gglj) {
-                                                                                        return new URL(tsLink,m3u8gglj).href;
-                                                                                    } else {
-                                                                                        return tsLink;
-                                                                                    }
+                                                        let lines = text.split('\n');
+                                                        let discontinuityIndices = [];
+                                                        let endListIndex = -1;
+                                                        let deletions = [];
+                                                        for (let i = 0; i < lines.length; i++) {
+                                                            if (lines[i].includes(tyad2)) {
+                                                                discontinuityIndices.push(i);
+                                                            } else if (lines[i].includes(tyad7)) {
+                                                                endListIndex = i;
+                                                            }
+                                                        }
+                                                        let indicesToDelete = new Set();
+                                                        for (let i = 0; i < discontinuityIndices.length; i++) {
+                                                            let startIndex = discontinuityIndices[i];
+                                                            let endIndex = -1;
+                                                            if (i < discontinuityIndices.length - 1) {
+                                                                endIndex = discontinuityIndices[i + 1];
+                                                            } else if (endListIndex !== -1) {
+                                                                endIndex = endListIndex;
+                                                            }
+                                                            if (endIndex !== -1) {
+                                                                let block = lines.slice(startIndex + 1, endIndex);
+                                                                let extinfLines = block.filter(line=>line.includes(tyad0));
+                                                                let tsLines = block.filter(line=>line.match(itemts));
+                                                                if (extinfLines.length >= 4 && extinfLines.length <= 6) {
+                                                                    let totalExtinfValue = 0;
+                                                                    for (let extinf of extinfLines) {
+                                                                        const value = parseFloat(extinf.split(':')[1].split(',')[0]);
+                                                                        totalExtinfValue += value;
+                                                                    }
+                                                                    if (totalExtinfValue <= 25) {
+                                                                        let threeDigitEndCount = 0;
+                                                                        for (let extinf of extinfLines) {
+                                                                            const value = extinf.split(':')[1].split(',')[0];
+                                                                            if (value.match(/3{5,}\s*?$/)) {
+                                                                                threeDigitEndCount++;
+                                                                            }
+                                                                        }
+                                                                        if (threeDigitEndCount >= 2) {
+                                                                            deletions.push(lines.slice(startIndex + 1, endIndex).join('\n'));
+                                                                            for (let j = startIndex + 1; j < endIndex; j++) {
+                                                                                indicesToDelete.add(j);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                        let filteredLines = [];
+                                                        for (let i = 0; i < lines.length; i++) {
+                                                            if (!indicesToDelete.has(i)) {
+                                                                filteredLines.push(lines[i]);
+                                                            }
+                                                        }
+                                                        try {
+                                                            if (!dypd.test(打印开关)) {
+                                                                if (deletions.length > 0) {
+                                                                    console.log(logysa + logysl + deletions.reverse().map(line=>{
+                                                                        return line.replace(new RegExp(tyad1022,'gi'), tsLink=>{
+                                                                            if (!tsLink.startsWith('http')) {
+                                                                                if (m3u8gglj) {
+                                                                                    return new URL(tsLink,m3u8gglj).href;
                                                                                 } else {
                                                                                     return tsLink;
                                                                                 }
+                                                                            } else {
+                                                                                return tsLink;
                                                                             }
-                                                                            ), logysf, logysg, logysh, logysg, logysi);
-                                                                        } catch (e) {
-                                                                            try {
-                                                                                console.log(logysa + "资源广告" + logysp + ADtime + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
-                                                                            } catch (e) {}
                                                                         }
+                                                                        );
                                                                     }
-                                                                } catch (e) {}
-                                                                return '';
+                                                                    ).join('\n'), logysf, logysi);
+                                                                }
                                                             }
-                                                            return rawStr.slice(21);
-                                                        }
-                                                        ;
-                                                        return text.replace(new RegExp('(' + tyad2 + '\\n)(.{211,433})\\1','gis'), replacer);
+                                                        } catch (e) {}
+                                                        return filteredLines.join('\n');
                                                     } else {
                                                         return text;
                                                     }
