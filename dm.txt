@@ -1,6 +1,6 @@
 ﻿[Adblock Plus 2.0]
 ! Title: 拦截 官方弹幕规则
-! Version: 963540817.20250410
+! Version: 963540817.20250520
 !-------------------------------------------------------------------------------!
 
 !拦截懒人优惠劵
@@ -10,14 +10,13 @@
 www.iqiyi.com##.iqp-barrage,.iqp-barrage-panel
 
 !拦截芒果弹幕元素
-www.mgtv.com###danmuWrap
-www.mgtv.com##mango-debug-layer,mango-danmu-layer,mango-danmu-modal-layer
+www.mgtv.com###danmuWrap,##mango-debug-layer,mango-danmu-layer,mango-danmu-modal-layer
 
 !拦截优酷弹幕元素
 v.youku.com###youkubarrage-controller,#youkubarrage
 
 !拦截腾讯弹幕元素
-v.qq.com##.barrage-control-v2,.thumbplayer-barrage
+v.qq.com##iframe[src*="ideo"][src*="rame"][src*="ersion"][style*="opacity"],.barrage-control-v2,.thumbplayer-barrage
 
 !拦截B站弹幕元素
 www.bilibili.com##.bpx-player-dm-root,.bpx-player-video-info-dm,.danmaku-box,.bpx-player-render-dm-wrap
