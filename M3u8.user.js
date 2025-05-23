@@ -1148,7 +1148,7 @@
                                                             const line = lines[i];
                                                             if (tsType === 0) {
                                                                 if (line.startsWith(tyad2) && lines[i + 1] && lines[i + 2]) {
-                                                                    if (i > 0 && lines[i - 1].startsWith(tyad15)) {
+                                                                    if (i > 0 && lines[i - 1].startsWith('#EXT-X-')) {
                                                                         result.push(line);
                                                                         continue;
                                                                     } else {
