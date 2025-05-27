@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250520
+// @version 20250528
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -13,11 +13,11 @@
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
 // @include /^https?:\/\/.+?(?<!(?:refer(?:rer)?|ori(?:gin)?))[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?[\?&](?:url|rul)=(?!http).{5,}/
-// @include /^https?:\/\/[^\/]+?\/(?:play|share)\/[a-z0-9]+?\/?\s*?$/
-// @include /^https?:\/\/[^\/]+?\/vod(?:\/[^\/]+?(?:\/\d[^\/]+?\d)?\.html|detail\/\d[^\/]+?\d\.html)/
-// @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\/(?:index\.php\/vod\/detail\/id\/\d+?|p\/\d[^\.]+?\d)\.html/
+// @include /^https?:\/\/[^\/]+?\/{1,}(?:[pP]lay|[sS]hare)\/{1,}[a-zA-Z0-9]+?\/?\s*?$/
+// @include /^https?:\/\/[^\/]+?\/{1,}vod(?:\/{1,}[^\/]+?(?:\/{1,}\d[^\/]+?\d)?\.html|detail\/{1,}\d[^\/]+?\d\.html)/
+// @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\/{1,}(?:index\.php\/{1,}vod\/{1,}detail\/{1,}id\/{1,}\d+?|p\/{1,}\d[^\.]+?\d)\.html/
 // @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
-// @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)|(?:[^\/]+?\/(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/\d+?)$)/
+// @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/{1,}(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)|(?:[^\/]+?\/{1,}(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/{1,}\d+?)$)/
 // @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%3A%2F%2F)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
 // @run-at document-start
 // ==/UserScript==
@@ -136,7 +136,7 @@
                               , tyad1051 = new RegExp(tyad1010 + tyad13 + tyad5 + '(?:\\?' + bhhzz + '+?)?' + hhzz + '+?' + tyad1 + tyad13 + tyad7 + '\\s*?$','i')
                               , tyad1052 = tyadb + tyad1017
                               , tyad1053 = new RegExp(tyad1022,'gi')
-                              , tyad1054 = '3{5,}\\s*?$'
+                              , tyad1054 = '3{3,}\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
                               , itemts = new RegExp(tyad5,'i')
                               , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
@@ -800,7 +800,10 @@
                                                                     modifiedText = text;
                                                                 } else {
                                                                     if (m3u8text(text)) {
-                                                                        modifiedText = text;
+                                                                        modifiedText = extinfa(text);
+                                                                        try {
+                                                                            modifiedText = extinfb(text);
+                                                                        } catch (e) {}
                                                                     } else {
                                                                         try {
                                                                             if (text.match(itemstygza2)) {
