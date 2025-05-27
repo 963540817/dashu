@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250528
+// @version 20250529
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -138,6 +138,7 @@
                               , tyad1053 = new RegExp(tyad1022,'gi')
                               , tyad1054 = '3{3,}\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
+                              , tyad1056 = new RegExp('(?<!\\d)\\d\\.\\d(\\d)\\1{2,}(?!\\1)\\d\\s*?$','')
                               , itemts = new RegExp(tyad5,'i')
                               , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                               , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
@@ -626,7 +627,7 @@
                                 }
                             }
                             ;
-                            const extinfb = (text)=>{
+                            const extinfb = (text,exta,extb,extc,extd)=>{
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -675,12 +676,12 @@
                                                                     const durationStr = line.split(':')[1]?.split(',')[0];
                                                                     const duration = parseFloat(durationStr) || 0;
                                                                     totalDuration += duration;
-                                                                    if (tyad1055.test(durationStr)) {
+                                                                    if (exta.test(durationStr)) {
                                                                         threeEndCount++;
                                                                     }
                                                                 }
                                                             }
-                                                            if (extinfLinesCount >= 4 && extinfLinesCount <= 6 && totalDuration <= 25 && threeEndCount === 1) {
+                                                            if (extinfLinesCount >= extb && extinfLinesCount <= extc && totalDuration <= extd && threeEndCount === 1) {
                                                                 blockValid = true;
                                                             }
                                                             if (blockValid) {
@@ -793,7 +794,10 @@
                                                                 } catch (e) {}
                                                                 modifiedText = extinfa(text);
                                                                 try {
-                                                                    modifiedText = extinfb(text);
+                                                                    modifiedText = extinfb(text, tyad1055, 4, 6, 25);
+                                                                } catch (e) {}
+                                                                try {
+                                                                    modifiedText = extinfb(text, tyad1056, 1, 2, 15);
                                                                 } catch (e) {}
                                                             } else {
                                                                 if (new RegExp(tyadb + bhhzz + '+?\\.(?:' + ggzlhx + ')\\?' + tyad1017,'i').test(text)) {
@@ -802,7 +806,10 @@
                                                                     if (m3u8text(text)) {
                                                                         modifiedText = extinfa(text);
                                                                         try {
-                                                                            modifiedText = extinfb(text);
+                                                                            modifiedText = extinfb(text, tyad1055, 4, 6, 25);
+                                                                        } catch (e) {}
+                                                                        try {
+                                                                            modifiedText = extinfb(text, tyad1056, 1, 2, 15);
                                                                         } catch (e) {}
                                                                     } else {
                                                                         try {
