@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250529
+// @version 20250530
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -565,7 +565,7 @@
                                                                         const value = parseFloat(extinf.split(':')[1].split(',')[0]);
                                                                         totalExtinfValue += value;
                                                                     }
-                                                                    if (totalExtinfValue <= 25) {
+                                                                    if (totalExtinfValue <= 25 && (totalExtinfValue < 18 || totalExtinfValue >= 19)) {
                                                                         let threeDigitEndCount = 0;
                                                                         for (let extinf of extinfLines) {
                                                                             const value = extinf.split(':')[1].split(',')[0];
@@ -784,7 +784,6 @@
                                                                 }
                                                             }
                                                         } catch (e) {}
-                                                        let modifiedText;
                                                         try {
                                                             if (itemsPaichu.some(regex=>regex.test(text))) {
                                                                 try {
@@ -792,24 +791,22 @@
                                                                         itemsHandle[0].reAds.push(itemstygza5);
                                                                     }
                                                                 } catch (e) {}
-                                                                modifiedText = extinfa(text);
+                                                                text = extinfa(text);
                                                                 try {
-                                                                    modifiedText = extinfb(text, tyad1055, 4, 6, 25);
+                                                                    text = extinfb(text, tyad1055, 4, 6, 25);
                                                                 } catch (e) {}
                                                                 try {
-                                                                    modifiedText = extinfb(text, tyad1056, 1, 2, 15);
+                                                                    text = extinfb(text, tyad1056, 1, 2, 15);
                                                                 } catch (e) {}
                                                             } else {
-                                                                if (new RegExp(tyadb + bhhzz + '+?\\.(?:' + ggzlhx + ')\\?' + tyad1017,'i').test(text)) {
-                                                                    modifiedText = text;
-                                                                } else {
+                                                                if (new RegExp(tyadb + bhhzz + '+?' + tyad5 + '\\?' + tyad1017,'i').test(text)) {} else {
                                                                     if (m3u8text(text)) {
-                                                                        modifiedText = extinfa(text);
+                                                                        text = extinfa(text);
                                                                         try {
-                                                                            modifiedText = extinfb(text, tyad1055, 4, 6, 25);
+                                                                            text = extinfb(text, tyad1055, 4, 6, 25);
                                                                         } catch (e) {}
                                                                         try {
-                                                                            modifiedText = extinfb(text, tyad1056, 1, 2, 15);
+                                                                            text = extinfb(text, tyad1056, 1, 2, 15);
                                                                         } catch (e) {}
                                                                     } else {
                                                                         try {
@@ -825,40 +822,36 @@
                                                                                             );
                                                                                         }
                                                                                     } catch (e) {}
-                                                                                    modifiedText = text.replace(itemstygza3, '');
+                                                                                    text = text.replace(itemstygza3, '');
                                                                                 } else {
-                                                                                    modifiedText = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
+                                                                                    text = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
                                                                                 }
                                                                             } else {
-                                                                                modifiedText = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
+                                                                                text = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
                                                                             }
-                                                                        } catch (e) {
-                                                                            modifiedText = text;
-                                                                        }
+                                                                        } catch (e) {}
                                                                         try {
                                                                             if (!text.match(itemstygza4)) {
-                                                                                modifiedText = deleteAbnormalTs(modifiedText, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称');
+                                                                                text = deleteAbnormalTs(text, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称');
                                                                             }
                                                                         } catch (e) {}
                                                                         try {
-                                                                            modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '\\w+(?=\\d{3})', '名称', '空', 100);
+                                                                            text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{3})', '名称', '空', 100);
                                                                         } catch (e) {}
                                                                         try {
-                                                                            modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '\\w+(?=\\d{4})', '名称', '空');
+                                                                            text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{4})', '名称', '空');
                                                                         } catch (e) {}
                                                                         try {
-                                                                            modifiedText = deleteAbnormalTs(modifiedText, '\\d+?', '[^0]\\d+[^0]0{2,}\\d0', '名称', /(?<=[^0]0{3,})\d+$/);
+                                                                            text = deleteAbnormalTs(text, '\\d+?', '[^0]\\d+[^0]0{2,}\\d0', '名称', /(?<=[^0]0{3,})\d+$/);
                                                                         } catch (e) {}
                                                                     }
                                                                 }
                                                             }
-                                                        } catch (e) {
-                                                            modifiedText = text;
-                                                        }
+                                                        } catch (e) {}
                                                         try {
                                                             for (const reAd of item.reAds) {
                                                                 try {
-                                                                    modifiedText = modifiedText.replace(reAd, function(match) {
+                                                                    text = text.replace(reAd, function(match) {
                                                                         try {
                                                                             if (((reAd === itemstygpc1 || reAd === itemstygza5 || reAd === itemstygza8) && match.match(itemstygpc2)) || match.match(itemstygpc3)) {
                                                                                 return match;
@@ -896,8 +889,8 @@
                                                                 }
                                                             }
                                                         } catch (e) {}
-                                                        if (modifiedText.length < text.length) {
-                                                            return endlist(modifiedText);
+                                                        if (text.length < text.length) {
+                                                            return endlist(text);
                                                         } else {
                                                             return text;
                                                         }
@@ -1797,6 +1790,45 @@
                                 }
                             }
                             ;
+                            const m3u8adgl = (textout)=>{
+                                try {
+                                    try {
+                                        textout = proqcb(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = proqcc(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = prunerm3u8(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8e(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8b(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8c(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8d(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = durationtaragt(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = taragtduration(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = endlist(textout);
+                                    } catch (e) {}
+                                    /*console.log("测试广告：\n"+textout);*/
+                                    return textout;
+                                } catch (e) {
+                                    return textout;
+                                }
+                            }
+                            ;
                             let realFetch = self.fetch;
                             self.fetch = new Proxy(self.fetch,{
                                 apply: function(target, thisArg, args) {
@@ -1837,36 +1869,8 @@
                                                                                 } else {
                                                                                     let textout = proqca(textin, item);
                                                                                     try {
-                                                                                        textout = proqcb(textout);
+                                                                                        textout = m3u8adgl(textout);
                                                                                     } catch (e) {}
-                                                                                    try {
-                                                                                        textout = proqcc(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = prunerm3u8(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = removeprunerm3u8e(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = removeprunerm3u8b(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = removeprunerm3u8c(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = removeprunerm3u8d(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = durationtaragt(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = taragtduration(textout);
-                                                                                    } catch (e) {}
-                                                                                    try {
-                                                                                        textout = endlist(textout);
-                                                                                    } catch (e) {}
-                                                                                    /*console.log("realFetch测试广告：\n"+textout);*/
                                                                                     try {
                                                                                         if (M3umatch(textout)) {
                                                                                             return realResponse;
@@ -1953,36 +1957,8 @@
                                                                             } else {
                                                                                 let textout = proqca(textin, item);
                                                                                 try {
-                                                                                    textout = proqcb(textout);
+                                                                                    textout = m3u8adgl(textout);
                                                                                 } catch (e) {}
-                                                                                try {
-                                                                                    textout = proqcc(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = prunerm3u8(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = removeprunerm3u8e(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = removeprunerm3u8b(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = removeprunerm3u8c(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = removeprunerm3u8d(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = durationtaragt(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = taragtduration(textout);
-                                                                                } catch (e) {}
-                                                                                try {
-                                                                                    textout = endlist(textout);
-                                                                                } catch (e) {}
-                                                                                /*console.log("originalOpen测试广告：\n"+textout);*/
                                                                                 try {
                                                                                     if (M3umatch(textout)) {
                                                                                         return;
