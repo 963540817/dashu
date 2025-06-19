@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250615
+// @version 20250619
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -136,7 +136,7 @@
                               , tyad1051 = new RegExp(tyad1010 + tyad13 + tyad5 + '(?:\\?' + bhhzz + '+?)?' + hhzz + '+?' + tyad1 + tyad13 + tyad7 + '\\s*?$','i')
                               , tyad1052 = tyadb + tyad1017
                               , tyad1053 = new RegExp(tyad1022,'gi')
-                              , tyad1054 = '(?<=^\\s*?\\d\\.\\d)3{3,}\\s*?$'
+                              , tyad1054 = '^\\s*?(?:\\d\\.\\d3{3,}|3\\.3{3,})\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
                               , tyad1056 = new RegExp('(?<!\\d)\\d\\.\\d(\\d)\\1{2,}(?!\\1)\\d\\s*?$','')
                               , itemts = new RegExp(tyad5,'i')
