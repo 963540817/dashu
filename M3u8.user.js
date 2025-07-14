@@ -2,14 +2,14 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250620
+// @version 20250713
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
 // @include /\/[pP]lay(?:er)?(?:\/|\?id=\d)/
 // @include /(?:lay|ideo).*?\.html/
 // @include /\.m3u8(?:\?(?!.+?&)|$)/
-// @include /^https?:\/\/[^\/]+?\/$/
+// @include /^https?:\/\/[^\/]+?\/(?:[vV]ideos?\/[^\/]+?\/)?$/
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
 // @include /^https?:\/\/.+?(?<!(?:refer(?:rer)?|ori(?:gin)?))[&#=\?]https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?[\?&](?:url|rul)=(?!http).{5,}/
@@ -20,6 +20,7 @@
 // @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
 // @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/{1,}(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)|(?:[^\/]+?\/{1,}(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/{1,}\d+?)$)/
 // @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
+// @exclude /^https?:\/\/(?:(?:v(?:-wb)?|m)\.youku\.com\/(?:.+?\/id_|video\?)|\w+?\.wasu\.c.+?\/(?:[^\/]+?-detail|[pP]lay\/show\/id)\/\d|www\.miguvideo\.com\/.+?\/detail\.html\?cid=\d|[^\/]+?\.tudou\.com\/(?:v\/|.+?\/id_)|v\.qq\.com\/(?:x\/(?:cover|page)|.+?\/p\/topic)\/|(?:3g|m)\.v\.qq\.com|w(?:ww)?\.mgtv\.com\/[a-z]\/|www\.mgtv\.com\/act\/|m\.mgtv\.com\/b\/|www\.iqiyi\.com\/(?:[vw]_|kszt\/)|m\.iqiyi\.com\/(?:v_|$)|tw\.iqiyi\.com\/v_|tv\.sohu\.com\/v\/|m\.tv\.sohu\.com\/(?:u\/|v|phone_play_film\?aid=)|film\.sohu\.com\/album\/|www\.le\.com\/ptv\/vplay\/|m\.le\.com\/vplay_|[vm]\.pptv\.com\/show\/|vip\.1905\.com\/play\/|www\.ixigua\.com\/|(?:player|live)\.bilibili\.com\/|www\.bilibili\.com\/(?:(?:cheese|bangumi)\/play|blackboard|.*?video)\/|m\.bilibili\.com\/bangumi\/play\/|www\.acfun\.cn\/(?:.+?\/ac|bangumi\/)|m\.acfun\.cn\/v\/)/
 // @run-at document-start
 // ==/UserScript==
 
@@ -140,6 +141,8 @@
                               , tyad1054 = '^\\s*?(?:\\d\\.\\d3{3,}|3\\.3{3,})\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
                               , tyad1056 = new RegExp('(?<!\\d)\\d\\.\\d(\\d)\\1{2,}(?!\\1)\\d\\s*?$','')
+                              , tyad1057 = tyad1021 + bhhzz + '+?\\.key' + bhhzz + '+'
+                              , tyad1058 = tyad1014 + tyad1057 + '?' + hhzz + '+?'
                               , itemts = new RegExp(tyad5,'i')
                               , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                               , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
@@ -189,17 +192,17 @@
                               , logyso = '时间标识'
                               , logysq = '名称差异-具体内容] ✂\n%c';
                             /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
-                            const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
-                            const isValidM3U8Url = url=>{
+                            const urlFromArg = arg => typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
+                            const isValidM3U8Url = url => {
                                 return (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url));
                             }
                             ;
-                            const matchM3u = url=>{
+                            const matchM3u = url => {
                                 try {
                                     if (isValidM3U8Url(url)) {
                                         spbfurl = url;
-                                        const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && isValidM3U8Url(url) && !ggbmd.test(url));
-                                        itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && isValidM3U8Url(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
+                                        const matchedItem = itemsHandle.find(item => item.reUrl.test(url) && isValidM3U8Url(url) && !ggbmd.test(url));
+                                        itemsHandleby.forEach(byItem => byItem.reUrl.test(url) && isValidM3U8Url(url) && byItem.reAds.forEach(newReAd => matchedItem.reAds.find(ad => ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
                                         return matchedItem;
                                     } else {
                                         return null;
@@ -209,7 +212,7 @@
                                 }
                             }
                             ;
-                            const M3umatch = text=>{
+                            const M3umatch = text => {
                                 try {
                                     if (!text || !itemts.test(text) || !itemm3u8.test(text)) {
                                         return true;
@@ -221,13 +224,13 @@
                                 }
                             }
                             ;
-                            const M3umatchu3M = (array,regExp)=>{
+                            const M3umatchu3M = (array, regExp) => {
                                 return array.some(function(item) {
                                     return item.toString() === regExp.toString();
                                 });
                             }
                             ;
-                            const m3u8text = (text)=>{
+                            const m3u8text = (text) => {
                                 try {
                                     const regex = /^[a-z\d]{20,}/i;
                                     const lines = text.split('\n');
@@ -257,7 +260,7 @@
                                 }
                             }
                             ;
-                            const endlist = (text)=>{
+                            const endlist = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -282,7 +285,7 @@
                                 }
                             }
                             ;
-                            const deleteAbnormalTs = (text,jxbgza,jxbgzb,jxbgzc,jxbgzd,jxbgze)=>{
+                            const deleteAbnormalTs = (text, jxbgza, jxbgzb, jxbgzc, jxbgzd, jxbgze) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -338,13 +341,13 @@
                                                                                         if (deleteCount <= maxCount) {
                                                                                             for (const path in paths) {
                                                                                                 if (path !== maxPath) {
-                                                                                                    paths[path].forEach(p=>{
+                                                                                                    paths[path].forEach(p => {
                                                                                                         /*console.log("排除测试：\n"+p);*/
                                                                                                         if (!jxbgzd.test(p)) {
-                                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
+                                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match) => {
                                                                                                                 if (!dypd.test(打印开关)) {
                                                                                                                     try {
-                                                                                                                        console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                                                        console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink => {
                                                                                                                             if (!tsLink.startsWith('http')) {
                                                                                                                                 if (m3u8gglj) {
                                                                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -404,7 +407,7 @@
                                 }
                             }
                             ;
-                            const durationtaragt = (text)=>{
+                            const durationtaragt = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -464,7 +467,7 @@
                                 }
                             }
                             ;
-                            const taragtduration = (text)=>{
+                            const taragtduration = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -524,7 +527,7 @@
                                 }
                             }
                             ;
-                            const extinfa = (text)=>{
+                            const extinfa = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -558,8 +561,8 @@
                                                             }
                                                             if (endIndex !== -1) {
                                                                 let block = lines.slice(startIndex + 1, endIndex);
-                                                                let extinfLines = block.filter(line=>line.includes(tyad0));
-                                                                let tsLines = block.filter(line=>line.match(itemts));
+                                                                let extinfLines = block.filter(line => line.includes(tyad0));
+                                                                let tsLines = block.filter(line => line.match(itemts));
                                                                 if (extinfLines.length >= 4 && extinfLines.length <= 6) {
                                                                     let totalExtinfValue = 0;
                                                                     for (let extinf of extinfLines) {
@@ -593,8 +596,8 @@
                                                         try {
                                                             if (!dypd.test(打印开关)) {
                                                                 if (deletions.length > 0) {
-                                                                    console.log(logysa + logysl + deletions.reverse().map(line=>{
-                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                    console.log(logysa + logysl + deletions.reverse().map(line => {
+                                                                        return line.replace(tyad1053, tsLink => {
                                                                             if (!tsLink.startsWith('http')) {
                                                                                 if (m3u8gglj) {
                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -628,7 +631,7 @@
                                 }
                             }
                             ;
-                            const extinfb = (text,exta,extb,extc,extd)=>{
+                            const extinfb = (text, exta, extb, extc, extd) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -694,12 +697,12 @@
                                                                 }
                                                             }
                                                         }
-                                                        let cleanedLines = lines.filter(line=>line !== null).join('\n');
+                                                        let cleanedLines = lines.filter(line => line !== null).join('\n');
                                                         try {
                                                             if (!dypd.test(打印开关)) {
                                                                 if (deletedEntries.length > 0) {
-                                                                    console.log(logysa + logysl + deletedEntries.map(line=>{
-                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                    console.log(logysa + logysl + deletedEntries.map(line => {
+                                                                        return line.replace(tyad1053, tsLink => {
                                                                             if (!tsLink.startsWith('http')) {
                                                                                 if (m3u8gglj) {
                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -733,7 +736,7 @@
                                 }
                             }
                             ;
-                            const proqca = (text,item)=>{
+                            const proqca = (text, item) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -749,8 +752,8 @@
                                                             gggzdp = true;
                                                         } else {
                                                             try {
-                                                                itemsHandle.forEach(item=>{
-                                                                    item.reAds = item.reAds.filter(re=>re.source !== itemsdpgza);
+                                                                itemsHandle.forEach(item => {
+                                                                    item.reAds = item.reAds.filter(re => re.source !== itemsdpgza);
                                                                 }
                                                                 );
                                                             } catch (e) {}
@@ -765,16 +768,16 @@
                                                                 gggzpd = true;
                                                                 try {
                                                                     if (new RegExp(itemspdgza,'i').test(text) && new RegExp(itemstygza1,'i').test(text)) {
-                                                                        itemsHandle.forEach(item=>{
-                                                                            item.reAds = item.reAds.filter(re=>re.source !== itemstygza1);
+                                                                        itemsHandle.forEach(item => {
+                                                                            item.reAds = item.reAds.filter(re => re.source !== itemstygza1);
                                                                         }
                                                                         );
                                                                     }
                                                                 } catch (e) {}
                                                                 try {
                                                                     if (!(new RegExp(itemspdgza,'i').test(text) && new RegExp(itemstygza,'i').test(text))) {
-                                                                        itemsHandle.forEach(item=>{
-                                                                            item.reAds = item.reAds.filter(re=>re.source !== itemstygza);
+                                                                        itemsHandle.forEach(item => {
+                                                                            item.reAds = item.reAds.filter(re => re.source !== itemstygza);
                                                                         }
                                                                         );
                                                                     }
@@ -786,7 +789,7 @@
                                                             }
                                                         } catch (e) {}
                                                         try {
-                                                            if (itemsPaichu.some(regex=>regex.test(text))) {
+                                                            if (itemsPaichu.some(regex => regex.test(text))) {
                                                                 try {
                                                                     if (!M3umatchu3M(itemsHandle[0].reAds, itemstygza5)) {
                                                                         itemsHandle[0].reAds.push(itemstygza5);
@@ -817,7 +820,7 @@
                                                                                     try {
                                                                                         if (!dypd.test(打印开关)) {
                                                                                             console.log(logysa + "资源广告" + logysc + itemstygza3 + logyse, logysf, logysg, logysh, logysg);
-                                                                                            matchessc.forEach(match=>{
+                                                                                            matchessc.forEach(match => {
                                                                                                 console.log(match);
                                                                                             }
                                                                                             );
@@ -840,7 +843,7 @@
                                                                             text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{3})', '名称', '空', 100);
                                                                         } catch (e) {}
                                                                         try {
-                                                                            text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{4})', '名称', '空');
+                                                                            text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{4})', '名称');
                                                                         } catch (e) {}
                                                                         try {
                                                                             text = deleteAbnormalTs(text, '\\d+?', '[^0]\\d+[^0]0{2,}\\d0', '名称', /(?<=[^0]0{3,})\d+$/);
@@ -860,7 +863,7 @@
                                                                                 try {
                                                                                     if (!dypd.test(打印开关)) {
                                                                                         try {
-                                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink => {
                                                                                                 if (!tsLink.startsWith('http')) {
                                                                                                     if (m3u8gglj) {
                                                                                                         return new URL(tsLink,m3u8gglj).href;
@@ -911,7 +914,7 @@
                                 }
                             }
                             ;
-                            const proqcb = (text)=>{
+                            const proqcb = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -924,12 +927,12 @@
                                                 } else {
                                                     if (!shouldStopExecution) {
                                                         const lines = text.split('\n');
-                                                        const tsLines = lines.filter(line=>line.trim().match(tyad5));
-                                                        const tsLinesWith00 = tsLines.filter(line=>line.includes('00'));
+                                                        const tsLines = lines.filter(line => line.trim().match(tyad5));
+                                                        const tsLinesWith00 = tsLines.filter(line => line.includes('00'));
                                                         const totalTsLines = tsLines.length;
                                                         const tsLinesWith00Count = tsLinesWith00.length;
                                                         if (tsLinesWith00Count / totalTsLines >= 0.666) {
-                                                            const prefixes = tsLinesWith00.map(line=>{
+                                                            const prefixes = tsLinesWith00.map(line => {
                                                                 const index = line.indexOf('00');
                                                                 return line.substring(0, index + 2);
                                                             }
@@ -958,7 +961,7 @@
                                                                     longestItem = item;
                                                                 }
                                                             }
-                                                            const tsLinesToDelete = tsLines.filter(line=>!line.startsWith(longestItem));
+                                                            const tsLinesToDelete = tsLines.filter(line => !line.startsWith(longestItem));
                                                             const tsLinesToDeleteCount = tsLinesToDelete.length;
                                                             if (tsLinesToDeleteCount / totalTsLines > 0.666) {
                                                                 return text;
@@ -989,8 +992,8 @@
                                                                     if (!dypd.test(打印开关)) {
                                                                         if (deletedLines.length > 0) {
                                                                             try {
-                                                                                console.log(logysa + logysq + deletedLines.reverse().map(line=>{
-                                                                                    return line.replace(tyad1053, tsLink=>{
+                                                                                console.log(logysa + logysq + deletedLines.reverse().map(line => {
+                                                                                    return line.replace(tyad1053, tsLink => {
                                                                                         if (!tsLink.startsWith('http')) {
                                                                                             if (m3u8gglj) {
                                                                                                 return new URL(tsLink,m3u8gglj).href;
@@ -1029,273 +1032,7 @@
                                 }
                             }
                             ;
-                            const proqcc = (text)=>{
-                                try {
-                                    if (!shouldStopExecution) {
-                                        if (text) {
-                                            if (!itemm3u8.test(text)) {
-                                                return text;
-                                            } else {
-                                                if (ggljbmd.test(text)) {
-                                                    shouldStopExecution = true;
-                                                    return text;
-                                                } else {
-                                                    if (!shouldStopExecution) {
-                                                        let tsFileNameLength = 0;
-                                                        let tsFileNameLengthTolerance = 1;
-                                                        let firstExtInfRow = '';
-                                                        let extInfJudgeRowCounter = 0;
-                                                        let sameExtInfNameCounter = 0;
-                                                        let extInfBenchmarkCounter = 5;
-                                                        let previousTsNameIndex = -1;
-                                                        let firstTsNameIndex = -1;
-                                                        let tsType = 0;
-                                                        let extXMode = 0;
-                                                        let violentFilterModeFlag = false;
-                                                        let result = [];
-                                                        let deletedLines = [];
-                                                        const numberBeforeTsRegex = new RegExp('(\\d+)' + tyad5,'i');
-                                                        const tsExtensionRegex = new RegExp(tyad5,'i');
-                                                        const lines = text.split('\n');
-                                                        function extractNumberBeforeTs(str) {
-                                                            const match = numberBeforeTsRegex.exec(str);
-                                                            if (match) {
-                                                                return parseInt(match[1], 10);
-                                                            }
-                                                            return null;
-                                                        }
-                                                        ;function getTsIndex(str) {
-                                                            const match = tsExtensionRegex.exec(str);
-                                                            if (match) {
-                                                                return match.index;
-                                                            }
-                                                            return -1;
-                                                        }
-                                                        ;if (violentFilterModeFlag) {
-                                                            tsType = 2;
-                                                        } else {
-                                                            let normalIntTsCounter = 0;
-                                                            let diffIntTsCounter = 0;
-                                                            let lastTsNameLength = 0;
-                                                            for (let i = 0; i < lines.length; i++) {
-                                                                const line = lines[i];
-                                                                if (extInfJudgeRowCounter === 0 && line.startsWith(tyad0)) {
-                                                                    firstExtInfRow = line;
-                                                                    extInfJudgeRowCounter++;
-                                                                } else if (extInfJudgeRowCounter === 1 && line.startsWith(tyad0)) {
-                                                                    if (line !== firstExtInfRow) {
-                                                                        firstExtInfRow = '';
-                                                                    }
-                                                                    extInfJudgeRowCounter++;
-                                                                }
-                                                                let currentTsNameLength = getTsIndex(line);
-                                                                if (currentTsNameLength > 0) {
-                                                                    if (extInfJudgeRowCounter === 1) {
-                                                                        tsFileNameLength = currentTsNameLength;
-                                                                    }
-                                                                    lastTsNameLength = currentTsNameLength;
-                                                                    let tsNameIndex = extractNumberBeforeTs(line);
-                                                                    if (tsNameIndex === null) {
-                                                                        if (extInfJudgeRowCounter === 1) {
-                                                                            tsType = 1;
-                                                                        } else if (extInfJudgeRowCounter === 2 && (tsType === 1 || currentTsNameLength === tsFileNameLength)) {
-                                                                            tsType = 1;
-                                                                            break;
-                                                                        } else {
-                                                                            diffIntTsCounter++;
-                                                                        }
-                                                                    } else {
-                                                                        if (normalIntTsCounter === 0) {
-                                                                            previousTsNameIndex = tsNameIndex;
-                                                                            firstTsNameIndex = tsNameIndex;
-                                                                            previousTsNameIndex = firstTsNameIndex - 1;
-                                                                        }
-                                                                        if (currentTsNameLength !== tsFileNameLength) {
-                                                                            if (currentTsNameLength === lastTsNameLength + 1 && tsNameIndex === previousTsNameIndex + 1) {
-                                                                                if (diffIntTsCounter) {
-                                                                                    if (tsNameIndex === previousTsNameIndex + 1) {
-                                                                                        tsType = 0;
-                                                                                        previousTsNameIndex = firstTsNameIndex - 1;
-                                                                                        break;
-                                                                                    } else {
-                                                                                        tsType = 2;
-                                                                                        break;
-                                                                                    }
-                                                                                }
-                                                                                normalIntTsCounter++;
-                                                                                previousTsNameIndex = tsNameIndex;
-                                                                            } else {
-                                                                                diffIntTsCounter++;
-                                                                            }
-                                                                        } else {
-                                                                            if (diffIntTsCounter) {
-                                                                                if (tsNameIndex === previousTsNameIndex + 1) {
-                                                                                    tsType = 0;
-                                                                                    previousTsNameIndex = firstTsNameIndex - 1;
-                                                                                    break;
-                                                                                } else {
-                                                                                    tsType = 2;
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                            normalIntTsCounter++;
-                                                                            previousTsNameIndex = tsNameIndex;
-                                                                        }
-                                                                    }
-                                                                }
-                                                                if (i === lines.length - 1) {
-                                                                    tsType = 2;
-                                                                }
-                                                            }
-                                                        }
-                                                        for (let i = 0; i < lines.length; i++) {
-                                                            const line = lines[i];
-                                                            if (tsType === 0) {
-                                                                if (line.startsWith(tyad2) && lines[i + 1] && lines[i + 2]) {
-                                                                    if (i > 0 && lines[i - 1].startsWith('#EXT-X-')) {
-                                                                        result.push(line);
-                                                                        continue;
-                                                                    } else {
-                                                                        let currentTsNameLength = getTsIndex(lines[i + 2]);
-                                                                        if (currentTsNameLength > 0) {
-                                                                            if (currentTsNameLength - tsFileNameLength > tsFileNameLengthTolerance) {
-                                                                                if (lines[i + 3] && lines[i + 3].startsWith(tyad2)) {
-                                                                                    deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
-                                                                                    i += 3;
-                                                                                } else {
-                                                                                    deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
-                                                                                    i += 2;
-                                                                                }
-                                                                                continue;
-                                                                            } else {
-                                                                                tsFileNameLength = currentTsNameLength;
-                                                                            }
-                                                                            let currentTsNameIndex = extractNumberBeforeTs(lines[i + 2]);
-                                                                            if (currentTsNameIndex !== previousTsNameIndex + 1) {
-                                                                                if (lines[i + 3] && lines[i + 3].startsWith(tyad2)) {
-                                                                                    deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
-                                                                                    i += 3;
-                                                                                } else {
-                                                                                    deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
-                                                                                    i += 2;
-                                                                                }
-                                                                                continue;
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                                if (line.startsWith(tyad0) && lines[i + 1]) {
-                                                                    let currentTsNameLength = getTsIndex(lines[i + 1]);
-                                                                    if (currentTsNameLength > 0) {
-                                                                        if (currentTsNameLength - tsFileNameLength > tsFileNameLengthTolerance) {
-                                                                            if (lines[i + 2] && lines[i + 2].startsWith(tyad2)) {
-                                                                                deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
-                                                                                i += 2;
-                                                                            } else {
-                                                                                deletedLines.push(lines[i], lines[i + 1]);
-                                                                                i += 1;
-                                                                            }
-                                                                            continue;
-                                                                        } else {
-                                                                            tsFileNameLength = currentTsNameLength;
-                                                                        }
-                                                                        let currentTsNameIndex = extractNumberBeforeTs(lines[i + 1]);
-                                                                        if (currentTsNameIndex === previousTsNameIndex + 1) {
-                                                                            previousTsNameIndex++;
-                                                                        } else {
-                                                                            if (lines[i + 2].startsWith(tyad2)) {
-                                                                                deletedLines.push(lines[i], lines[i + 1], lines[i + 2]);
-                                                                                i += 2;
-                                                                            } else {
-                                                                                deletedLines.push(lines[i], lines[i + 1]);
-                                                                                i += 1;
-                                                                            }
-                                                                            continue;
-                                                                        }
-                                                                    }
-                                                                }
-                                                            } else if (tsType === 1) {
-                                                                if (line.startsWith(tyad0)) {
-                                                                    if (line === firstExtInfRow && sameExtInfNameCounter <= extInfBenchmarkCounter && extXMode === 0) {
-                                                                        sameExtInfNameCounter++;
-                                                                    } else {
-                                                                        extXMode = 1;
-                                                                    }
-                                                                    if (sameExtInfNameCounter > extInfBenchmarkCounter) {
-                                                                        extXMode = 1;
-                                                                    }
-                                                                }
-                                                                if (line.startsWith(tyad2)) {
-                                                                    if (i > 0 && lines[i - 1].startsWith(tyad15)) {
-                                                                        result.push(line);
-                                                                        continue;
-                                                                    } else {
-                                                                        if (lines[i + 1] && lines[i + 1].startsWith(tyad0) && lines[i + 2] && getTsIndex(lines[i + 2]) > 0) {
-                                                                            let extXDiscontinuityConditionFlag = false;
-                                                                            if (extXMode === 1) {
-                                                                                extXDiscontinuityConditionFlag = lines[i + 1] !== firstExtInfRow && sameExtInfNameCounter > extInfBenchmarkCounter;
-                                                                            }
-                                                                            if (lines[i + 3] && lines[i + 3].startsWith(tyad2) && extXDiscontinuityConditionFlag) {
-                                                                                deletedLines.push(lines[i], lines[i + 1], lines[i + 2], lines[i + 3]);
-                                                                                i += 3;
-                                                                            }
-                                                                            continue;
-                                                                        }
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                if (line.startsWith(tyad2)) {
-                                                                    if (i > 0 && lines[i - 1].startsWith(tyad15)) {
-                                                                        result.push(line);
-                                                                        continue;
-                                                                    } else {
-                                                                        continue;
-                                                                    }
-                                                                }
-                                                            }
-                                                            result.push(line);
-                                                        }
-                                                        try {
-                                                            if (!dypd.test(打印开关)) {
-                                                                if (deletedLines.length > 0) {
-                                                                    try {
-                                                                        console.log(logysa + logysq + deletedLines.reverse().map(line=>{
-                                                                            return line.replace(tyad1053, tsLink=>{
-                                                                                if (!tsLink.startsWith('http')) {
-                                                                                    if (m3u8gglj) {
-                                                                                        return new URL(tsLink,m3u8gglj).href;
-                                                                                    } else {
-                                                                                        return tsLink;
-                                                                                    }
-                                                                                } else {
-                                                                                    return tsLink;
-                                                                                }
-                                                                            }
-                                                                            );
-                                                                        }
-                                                                        ).join('\n'), logysf, logysi);
-                                                                    } catch (e) {}
-                                                                }
-                                                            }
-                                                        } catch (e) {}
-                                                        return endlist(result.join('\n'));
-                                                    } else {
-                                                        return text;
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            return text;
-                                        }
-                                    } else {
-                                        return text;
-                                    }
-                                } catch (e) {
-                                    return text;
-                                }
-                            }
-                            ;
-                            const removeprunerm3u8a = (text)=>{
+                            const removeprunerm3u8a = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1307,7 +1044,7 @@
                                                     return text;
                                                 } else {
                                                     let deletedContent = '';
-                                                    text = text.replace(itemstygza6, (match)=>{
+                                                    text = text.replace(itemstygza6, (match) => {
                                                         deletedContent += match + '\n';
                                                         return '';
                                                     }
@@ -1333,7 +1070,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8b = (text)=>{
+                            const removeprunerm3u8b = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1346,7 +1083,7 @@
                                                 } else {
                                                     let deletedContent = '';
                                                     let addedMatches = new Set();
-                                                    text = text.replace(itemstygza7, (match)=>{
+                                                    text = text.replace(itemstygza7, (match) => {
                                                         match = match.trim();
                                                         if (!addedMatches.has(match) && match !== '') {
                                                             deletedContent += match + '\n';
@@ -1376,7 +1113,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8c = (text)=>{
+                            const removeprunerm3u8c = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1388,15 +1125,15 @@
                                                     return text;
                                                 } else {
                                                     const lines = text.split('\n');
-                                                    const extinfLines = lines.filter(line=>tyad11.test(line));
-                                                    const extinfValues = extinfLines.map(line=>parseFloat(line.split(':')[1].split(',')[0]));
-                                                    const valueCounts = extinfValues.reduce((acc,value)=>{
+                                                    const extinfLines = lines.filter(line => tyad11.test(line));
+                                                    const extinfValues = extinfLines.map(line => parseFloat(line.split(':')[1].split(',')[0]));
+                                                    const valueCounts = extinfValues.reduce( (acc, value) => {
                                                         acc[value] = (acc[value] || 0) + 1;
                                                         return acc;
                                                     }
                                                     , {});
                                                     const maxCount = Math.max(...Object.values(valueCounts));
-                                                    const maxValue = Object.keys(valueCounts).find(key=>valueCounts[key] === maxCount);
+                                                    const maxValue = Object.keys(valueCounts).find(key => valueCounts[key] === maxCount);
                                                     const maxValueRatio = maxCount / extinfValues.length;
                                                     let deletedLines = [];
                                                     if (maxValueRatio > 0.987) {
@@ -1437,8 +1174,8 @@
                                                     try {
                                                         if (deletedLines.length > 0) {
                                                             if (!dypd.test(打印开关)) {
-                                                                console.log(logysa + logysl + deletedLines.map(line=>{
-                                                                    return line.replace(tyad1053, tsLink=>{
+                                                                console.log(logysa + logysl + deletedLines.map(line => {
+                                                                    return line.replace(tyad1053, tsLink => {
                                                                         if (!tsLink.startsWith('http')) {
                                                                             if (m3u8gglj) {
                                                                                 return new URL(tsLink,m3u8gglj).href;
@@ -1469,7 +1206,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8d = (text)=>{
+                            const removeprunerm3u8d = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1483,7 +1220,7 @@
                                                     const lines = text.split('\n');
                                                     const urlLengths = [];
                                                     const urlsWithIndex = [];
-                                                    lines.forEach((line,index)=>{
+                                                    lines.forEach( (line, index) => {
                                                         const match = line.match(new RegExp(tyad5 + '\\s*?$','i'));
                                                         if (match) {
                                                             urlsWithIndex.push({
@@ -1494,7 +1231,7 @@
                                                         }
                                                     }
                                                     );
-                                                    const lengthCounts = urlLengths.reduce((acc,length)=>{
+                                                    const lengthCounts = urlLengths.reduce( (acc, length) => {
                                                         acc[length] = (acc[length] || 0) + 1;
                                                         return acc;
                                                     }
@@ -1509,7 +1246,7 @@
                                                     }
                                                     let deletedUrls = [];
                                                     if (dominantLength !== null) {
-                                                        urlsWithIndex.forEach(({url, index})=>{
+                                                        urlsWithIndex.forEach( ({url, index}) => {
                                                             if (url.length !== dominantLength && !tyad14.test(url)) {
                                                                 deletedUrls.push(url);
                                                             }
@@ -1518,8 +1255,8 @@
                                                         if (deletedUrls.length > lengthCounts[dominantLength]) {
                                                             return text;
                                                         } else {
-                                                            deletedUrls.forEach((url)=>{
-                                                                const {index} = urlsWithIndex.find(u=>u.url === url);
+                                                            deletedUrls.forEach( (url) => {
+                                                                const {index} = urlsWithIndex.find(u => u.url === url);
                                                                 if (index >= 0) {
                                                                     lines.splice(index, 1);
                                                                     if (index - 1 >= 0 && !new RegExp(tyad7,'i').test(lines[index - 1])) {
@@ -1532,8 +1269,8 @@
                                                     }
                                                     if (deletedUrls.length > 0) {
                                                         if (!dypd.test(打印开关)) {
-                                                            console.log(logysa + logysm + deletedUrls.map(line=>{
-                                                                return line.replace(tyad1053, tsLink=>{
+                                                            console.log(logysa + logysm + deletedUrls.map(line => {
+                                                                return line.replace(tyad1053, tsLink => {
                                                                     if (!tsLink.startsWith('http')) {
                                                                         if (m3u8gglj) {
                                                                             return new URL(tsLink,m3u8gglj).href;
@@ -1563,7 +1300,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8e = (text)=>{
+                            const removeprunerm3u8e = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1576,11 +1313,11 @@
                                                 } else {
                                                     const lines = text.split('\n');
                                                     const matchedLines = [];
-                                                    const allLines = lines.map((line,index)=>({
+                                                    const allLines = lines.map( (line, index) => ({
                                                         line,
                                                         index
                                                     }));
-                                                    allLines.forEach(item=>{
+                                                    allLines.forEach(item => {
                                                         const match = item.line.match(tyad107);
                                                         if (match) {
                                                             matchedLines.push({
@@ -1594,13 +1331,13 @@
                                                         return text;
                                                     } else {
                                                         const matchedGroupCounts = {};
-                                                        matchedLines.forEach(item=>{
+                                                        matchedLines.forEach(item => {
                                                             matchedGroupCounts[item.matchedGroup] = (matchedGroupCounts[item.matchedGroup] || 0) + 1;
                                                         }
                                                         );
                                                         const minCount = Math.min(...Object.values(matchedGroupCounts));
-                                                        const lessFrequentMatchedGroups = Object.keys(matchedGroupCounts).filter(group=>matchedGroupCounts[group] === minCount);
-                                                        let filteredMatchedGroups = lessFrequentMatchedGroups.map(group=>{
+                                                        const lessFrequentMatchedGroups = Object.keys(matchedGroupCounts).filter(group => matchedGroupCounts[group] === minCount);
+                                                        let filteredMatchedGroups = lessFrequentMatchedGroups.map(group => {
                                                             const lastSlashIndex = group.lastIndexOf('/');
                                                             if (lastSlashIndex !== -1) {
                                                                 group = group.substring(0, lastSlashIndex + 1);
@@ -1610,7 +1347,7 @@
                                                             }
                                                             return group;
                                                         }
-                                                        ).filter(group=>group !== null);
+                                                        ).filter(group => group !== null);
                                                         const totalMatched = matchedLines.length;
                                                         let dominantMatchedGroup;
                                                         for (const matchedGroup in matchedGroupCounts) {
@@ -1659,7 +1396,7 @@
                                                                             }
                                                                             const cleanedNextLine = nextLine ? nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '') : '';
                                                                             if (!tyad10.test(cleanedNextLine)) {
-                                                                                const isFilteredMatched = filteredMatchedGroups.some(group=>nextLine && nextLine.startsWith(group));
+                                                                                const isFilteredMatched = filteredMatchedGroups.some(group => nextLine && nextLine.startsWith(group));
                                                                                 if (isFilteredMatched) {
                                                                                     deletedLines.push(nextLine);
                                                                                     deletedLines.push(allLines[i].line);
@@ -1703,8 +1440,8 @@
                                                                         if (deletedLines.length > 0) {
                                                                             try {
                                                                                 if (!dypd.test(打印开关)) {
-                                                                                    console.log(logysa + logysn + deletedLines.reverse().map(line=>{
-                                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                                    console.log(logysa + logysn + deletedLines.reverse().map(line => {
+                                                                                        return line.replace(tyad1053, tsLink => {
                                                                                             if (!tsLink.startsWith('http')) {
                                                                                                 if (m3u8gglj) {
                                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -1722,7 +1459,7 @@
                                                                             } catch (e) {}
                                                                         }
                                                                     } catch (e) {}
-                                                                    return endlist(allLines.map(item=>item.line).join('\n'));
+                                                                    return endlist(allLines.map(item => item.line).join('\n'));
                                                                 }
                                                             }
                                                         }
@@ -1740,7 +1477,85 @@
                                 }
                             }
                             ;
-                            const prunerm3u8 = (text)=>{
+                            const removeprunerm3u8f = (text) => {
+                                try {
+                                    if (!shouldStopExecution) {
+                                        if (text) {
+                                            if (!itemm3u8.test(text)) {
+                                                return text;
+                                            } else {
+                                                if (ggljbmd.test(text)) {
+                                                    shouldStopExecution = true;
+                                                    return text;
+                                                } else {
+                                                    if (new RegExp(tyad1021,'i').test(text)) {
+                                                        const regex1 = new RegExp(tyad1058 + '(?=#EXT-X-)','gi');
+                                                        let removedContent = [];
+                                                        text = text.replace(regex1, (match) => {
+                                                            removedContent.push(match);
+                                                            return '';
+                                                        }
+                                                        );
+                                                        const firstKeyMatch = text.match(new RegExp(tyad1057,'im'));
+                                                        let firstKeyLine = '';
+                                                        if (firstKeyMatch) {
+                                                            firstKeyLine = firstKeyMatch[0];
+                                                        }
+                                                        const regex2 = new RegExp(tyad1058 + '(?=' + tyad1 + ')','gi');
+                                                        text = text.replace(regex2, (match) => {
+                                                            let keyLine = '';
+                                                            const keyMatch = match.match(new RegExp(tyad1057,'i'));
+                                                            if (keyMatch) {
+                                                                keyLine = keyMatch[0];
+                                                            }
+                                                            if (keyLine === firstKeyLine) {
+                                                                removedContent.push(keyLine);
+                                                                return match.replace(keyLine, '');
+                                                            }
+                                                            return match;
+                                                        }
+                                                        );
+                                                        try {
+                                                            if (removedContent.length > 0) {
+                                                                try {
+                                                                    if (!dypd.test(打印开关)) {
+                                                                        console.log(logysa + logysk + removedContent.reverse().map(line => {
+                                                                            return line.replace(tyad1053, tsLink => {
+                                                                                if (!tsLink.startsWith('http')) {
+                                                                                    if (m3u8gglj) {
+                                                                                        return new URL(tsLink,m3u8gglj).href;
+                                                                                    } else {
+                                                                                        return tsLink;
+                                                                                    }
+                                                                                } else {
+                                                                                    return tsLink;
+                                                                                }
+                                                                            }
+                                                                            );
+                                                                        }
+                                                                        ).join('\n'), logysf, logysi);
+                                                                    }
+                                                                } catch (e) {}
+                                                            }
+                                                        } catch (e) {}
+                                                        return endlist(text);
+                                                    } else {
+                                                        return text;
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                            return text;
+                                        }
+                                    } else {
+                                        return text;
+                                    }
+                                } catch (e) {
+                                    return text;
+                                }
+                            }
+                            ;
+                            const prunerm3u8 = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1753,12 +1568,12 @@
                                                 } else {
                                                     if (!shouldStopExecution) {
                                                         const lines = text.split('\n');
-                                                        const keyCount = lines.filter(line=>new RegExp(tyad1021,'i').test(line)).length;
+                                                        const keyCount = lines.filter(line => new RegExp(tyad1021,'i').test(line)).length;
                                                         if (keyCount >= 2) {
                                                             return text;
                                                         } else {
                                                             let discontinuityCount = 0;
-                                                            const filteredLines = lines.filter(line=>{
+                                                            const filteredLines = lines.filter(line => {
                                                                 if (new RegExp(tyad2,'i').test(line)) {
                                                                     discontinuityCount++;
                                                                     return false;
@@ -1791,13 +1606,10 @@
                                 }
                             }
                             ;
-                            const m3u8adgl = (textout)=>{
+                            const m3u8adgl = (textout) => {
                                 try {
                                     try {
                                         textout = proqcb(textout);
-                                    } catch (e) {}
-                                    try {
-                                        textout = proqcc(textout);
                                     } catch (e) {}
                                     try {
                                         textout = prunerm3u8(textout);
@@ -1813,6 +1625,9 @@
                                     } catch (e) {}
                                     try {
                                         textout = removeprunerm3u8d(textout);
+                                    } catch (e) {}
+                                    try {
+                                        textout = removeprunerm3u8f(textout);
                                     } catch (e) {}
                                     try {
                                         textout = durationtaragt(textout);
@@ -1852,12 +1667,12 @@
                                                     }
                                                 } catch (e) {}
                                                 if (!shouldStopExecution) {
-                                                    return realFetch.apply(thisArg, args).then(realResponse=>{
+                                                    return realFetch.apply(thisArg, args).then(realResponse => {
                                                         try {
                                                             if (!realResponse || !realResponse.ok) {
                                                                 return realResponse;
                                                             } else {
-                                                                return realResponse.text().then(textin=>{
+                                                                return realResponse.text().then(textin => {
                                                                     try {
                                                                         if (M3umatch(textin)) {
                                                                             return realResponse;
