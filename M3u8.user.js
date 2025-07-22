@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250721
+// @version 20250722
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$/
 // @include /\/\?id=[a-zA-Z\d]+?$/
@@ -67,7 +67,7 @@
                               , tyad5 = '\\.' + tyad4
                               , tyad6 = tyad5 + hhzz + '+'
                               , tyad7 = '#EXT-X-ENDLIST'
-                              , tyad8 = '(?:(?:[a-z\\d]+?(?:\\s*?[\\_\\-]\\s*?)?)?\\d+?|https?:\\\/\\\/(?:[^\\\/]+?\\\/){1,})'
+                              , tyad8 = '(?:[a-z\\d]+?(?:\\s*?[\\_\\-]\\s*?)?)?\\d+?'
                               , tyad9 = '#EXT-X-TARGETDURATION'
                               , tyad10 = new RegExp('^\\s*?(?:(?!.*?0{3,})[a-z\\d]+?|' + tyad8 + '|https?:\\\/\\\/' + bhhzz + '+?0{3,}\\d+?)\\s*?$','i')
                               , tyad11 = new RegExp('^' + tyad0,'i')
@@ -141,8 +141,6 @@
                               , tyad1054 = '^\\s*?(?:\\d\\.\\d3{3,}|3\\.3{3,})\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
                               , tyad1056 = new RegExp('(?<!\\d)\\d\\.\\d(\\d)\\1{2,}(?!\\1)\\d\\s*?$','')
-                              , tyad1057 = tyad1021 + bhhzz + '+?\\.key' + bhhzz + '+'
-                              , tyad1058 = tyad1014 + tyad1057 + '?' + hhzz + '+?'
                               , itemts = new RegExp(tyad5,'i')
                               , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                               , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
@@ -1477,84 +1475,6 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8f = (text) => {
-                                try {
-                                    if (!shouldStopExecution) {
-                                        if (text) {
-                                            if (!itemm3u8.test(text)) {
-                                                return text;
-                                            } else {
-                                                if (ggljbmd.test(text)) {
-                                                    shouldStopExecution = true;
-                                                    return text;
-                                                } else {
-                                                    if (new RegExp(tyad1021,'i').test(text)) {
-                                                        const regex1 = new RegExp(tyad1058 + '(?=#EXT-X-)','gi');
-                                                        let removedContent = [];
-                                                        text = text.replace(regex1, (match) => {
-                                                            removedContent.push(match);
-                                                            return '';
-                                                        }
-                                                        );
-                                                        const firstKeyMatch = text.match(new RegExp(tyad1057,'im'));
-                                                        let firstKeyLine = '';
-                                                        if (firstKeyMatch) {
-                                                            firstKeyLine = firstKeyMatch[0];
-                                                        }
-                                                        const regex2 = new RegExp(tyad1058 + '(?=' + tyad1 + ')','gi');
-                                                        text = text.replace(regex2, (match) => {
-                                                            let keyLine = '';
-                                                            const keyMatch = match.match(new RegExp(tyad1057,'i'));
-                                                            if (keyMatch) {
-                                                                keyLine = keyMatch[0];
-                                                            }
-                                                            if (keyLine === firstKeyLine) {
-                                                                removedContent.push(keyLine);
-                                                                return match.replace(keyLine, '');
-                                                            }
-                                                            return match;
-                                                        }
-                                                        );
-                                                        try {
-                                                            if (removedContent.length > 0) {
-                                                                try {
-                                                                    if (!dypd.test(打印开关)) {
-                                                                        console.log(logysa + logysk + removedContent.reverse().map(line => {
-                                                                            return line.replace(tyad1053, tsLink => {
-                                                                                if (!tsLink.startsWith('http')) {
-                                                                                    if (m3u8gglj) {
-                                                                                        return new URL(tsLink,m3u8gglj).href;
-                                                                                    } else {
-                                                                                        return tsLink;
-                                                                                    }
-                                                                                } else {
-                                                                                    return tsLink;
-                                                                                }
-                                                                            }
-                                                                            );
-                                                                        }
-                                                                        ).join('\n'), logysf, logysi);
-                                                                    }
-                                                                } catch (e) {}
-                                                            }
-                                                        } catch (e) {}
-                                                        return endlist(text);
-                                                    } else {
-                                                        return text;
-                                                    }
-                                                }
-                                            }
-                                        } else {
-                                            return text;
-                                        }
-                                    } else {
-                                        return text;
-                                    }
-                                } catch (e) {
-                                    return text;
-                                }
-                            }
-                            ;
                             const prunerm3u8 = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
@@ -1625,9 +1545,6 @@
                                     } catch (e) {}
                                     try {
                                         textout = removeprunerm3u8d(textout);
-                                    } catch (e) {}
-                                    try {
-                                        textout = removeprunerm3u8f(textout);
                                     } catch (e) {}
                                     try {
                                         textout = durationtaragt(textout);
