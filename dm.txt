@@ -1,28 +1,29 @@
 ﻿[Adblock Plus 2.0]
 ! Title: 拦截 官方弹幕规则
-! Version: 963540817.20250520
+! Version: 963540817.20250723
+! Expires: 1 day
 !-------------------------------------------------------------------------------!
 
 !拦截懒人优惠劵
 ||api.typechrome.com^
 
 !拦截奇艺弹幕元素
-www.iqiyi.com##.iqp-barrage,.iqp-barrage-panel
+www.iqiyi.com##[class^="danmaku-"],[id^="danmaku-"],[class^="player-buttons_danmu"],[class^="iqp-barrage"],[id^="iqp-barrage"]
 
 !拦截芒果弹幕元素
-www.mgtv.com###danmuWrap,##mango-debug-layer,mango-danmu-layer,mango-danmu-modal-layer
+www.mgtv.com##div#danmuWrap,mango-debug-layer,mango-danmu-layer,mango-danmu-modal-layer
 
 !拦截优酷弹幕元素
 v.youku.com###youkubarrage-controller,#youkubarrage
 
 !拦截腾讯弹幕元素
-v.qq.com##iframe[src*="ideo"][src*="rame"][src*="ersion"][style*="opacity"],.barrage-control-v2,.thumbplayer-barrage
+v.qq.com##.barrage-control-v2,.thumbplayer-barrage
 
 !拦截B站弹幕元素
 www.bilibili.com##.bpx-player-dm-root,.bpx-player-video-info-dm,.danmaku-box,.bpx-player-render-dm-wrap
 
 !拦截抖音弹幕元素
-www.douyin.com##[data-e2e*="danmu"],[data-e2e*="danmaku"],[class*="danmu"],[id*="danmu"],[class*="danmaku"],[id*="danmaku"],[class^="xgplayer-shop-anchor"],span[data-e2e*="ser-info-living"],img[alt*="iveIcon"]
+www.douyin.com##[data-e2e*="danmu"],[data-e2e*="danmaku"],[class*="danmu"],[id*="danmu"],[class*="danmaku"],[id*="danmaku"],[class*="positionBox"] a[href*="/live.douyin."][target*="_blank"][data-e2e*="hot"]
 
 !拦截搜狐弹幕元素
 tv.sohu.com###rightBar,.x-danmu-panel
