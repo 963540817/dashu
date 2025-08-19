@@ -1,1 +1,247 @@
-﻿有缘江湖再见
+﻿脚本安装地址：
+（因为作者不喜欢图标，所以本脚本有隐藏图标功能，如果你不小心隐藏了图标，电脑端 鼠标移动 到 图标原来的位置，图标会临时自动显示也可以按快捷键 Alt+/ 恢复，手机端可以点击图标原来的位置，图标会临时自动显示）
+
+
+注意，油猴脚本如果提示跨域请求，请点击最下方的橙色按钮（总是允许全部域名）。
+
+如果 腾讯出现连续跳集的问题，请自行把 右上角 的 “弹” 菜单里面的 “跳集正常” 这个选项点一下即可
+（这是腾讯官方新出的反解析手段）
+
+在线群公告地址：
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/1.txt
+https://raw.githubusercontent.com/963540817/dashu/main/1.txt
+
+
+在线播放器 和 野鸡网站 通用过滤 采集资源 插播广告脚本:
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/M3u8.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/M3u8.user.js
+
+
+VIP解析 && 资源采集 -- 主脚本（自动更新版）:
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/jxb.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/jxb.user.js
+
+VIP解析 && 资源采集 -- 主脚本（手动更新版本）:
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/Freemovies.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/Freemovies.user.js
+
+
+
+jxb.user.js 和 Freemovies.user.js 脚本代码都是一样的，看需要哪个安装哪个，不要同时安装
+
+111辅助脚本(以下地址随便选择一个安装)：
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/111.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/111.user.js
+
+
+222辅助增强脚本（进阶版，可以跟之前的辅助脚本共存，主要是可以 自定义禁止爬虫 指定接口）(以下地址随便选择一个安装)：
+https://gh.llkk.cc/https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+https://slink.ltd/https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+https://api.codetabs.com/v1/proxy/?quest=https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+https://gcore.jsdelivr.net/gh/963540817/dashu@master/222.user.js
+https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
+
+
+
+说明：辅助脚本 是自定义接口用的，如果不需要 自定义接口，无需安装 辅助脚本
+
+
+
+
+网站规则自定义写法如下例子:
+
+{
+网站名称:"优酷",
+网站域名:"v.youku.com",
+电脑json全局播放器:"https://auete.com/api/dp.php?url=",
+禁止爬虫的接口名称:"九三|一只",
+全局自定义屏蔽接口:"布米米",
+},
+{
+网站域名:"mgtv.com",
+电脑json全局播放器:"chrome-extension://odmcmemhohlknciifpnlidadbdoeoghc/play.html#",
+}
+
+
+手机 kiwi浏览器 视频全屏：
+https://greasyfork.org/zh-CN/scripts/375806
+
+
+
+
+
+
+在线播放器自定义：
+{name:"在A",url:"https://www.guangsujx.com/m3u8/?url=",vip:"播放器",diy:"darkorange"},
+{name:"在B",url:"https:///v2.shenjw.com:4438/wap.php?url=",vip:"播放器",diy:"darkorange"},
+{name:"在C",url:"https://www.chenyutv.com/bbjx/player/?url=",vip:"播放器",diy:"darkorange"},
+{name:"在D",url:"https://bfq.cddys.me/nimasile2/?url=",vip:"播放器",diy:"darkorange"},
+{name:"在E",url:"https://jx.oftens.top/player/?url=",vip:"播放器",diy:"darkorange"},
+{name:"在F",url:"https://jiexi.kczyapi.com/m3u8/?url=",vip:"播放器",diy:"darkorange"},
+
+
+采集播放自定义：
+{name:"光速",url:"https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
+{name:"红牛",url:"https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
+{name:"飘花",url:"http://www.zzrhgg.com/api.php/provide/vod/from/kbm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
+{name:"ikun",url:"https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"非凡",url:"http://cj.ffzyapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"量子",url:"https://cj.lziapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"高清",url:"https://api.1080zyku.com/inc/apijson.php/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"闪电",url:"https://sdzyapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"樱花",url:"https://m3u8.apiyhzy.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+
+
+
+
+
+采集广告过滤方法：
+
+{name:"量子",url:"http://cj.lziapi.com/api.php/provide/vod/from/lzm3u8",json:"3",diy:"cyan",cjdiy:"#33CC99",过滤广告:"http://124.71.8.170:3389/?url="},  
+{name:"量子",url:"http://cj.lziapi.com/api.php/provide/vod/from/lzm3u8",json:"3",diy:"cyan",cjdiy:"#33CC99",cjjx:"http://124.71.8.170:3389/?url=",gg:"1"},
+
+其它采集以此推论
+这两种自定义写法都可以去除 在线播放器 或者 插件播放器 的 采集资源插播广告
+这里的 http://124.71.8.170:3389/?url= 不是解析口，而是专门处理采集广告的接口，如果失效了你可以自己还其他同类型的
+
+如果你是使用插件播放器，有没有用这种写法都可以去除 采集资源插播广告，因为插件播放器自带了 全局采集资源过滤广告 功能
+
+
+
+
+
+这里是 接口高级自定义参数
+https://docs.qq.com/sheet/DUGtRbWFBVEtxU29Q
+
+qc:"0" 
+关闭接口自动去重
+hs:"0" 
+关闭接口耗时提示
+qm:"1" 
+是该接口放在接口列表最前面
+dm:"1"
+是不再默认关闭该接口的弹幕功能
+jyjk:"0"
+是不记忆使用该接口不记忆使用该接口
+hc:"0"
+是使用在线接口或在线播放器的时候，该接口视频卡住的时候，禁止自动重新从卡住的时间继续播放
+jxthsj:"0"
+是使用在线接口或在线播放器的时候，禁止该接口自动跳过片头片尾
+jxkjj:"0"
+是使用在线接口或在线播放器的时候，禁止使用脚本片头片尾快捷键
+jxcss:"0"
+是使用在线接口或在线播放器的时候，禁止往接口注入脚本CSS
+jk:"1"
+是使用在线接口或在线播放器的时候，禁止往接口注入脚本代码
+
+
+cjjk:"1"
+采集资源自带接口
+gy:"1" 
+在没有指定采集 cjlx 参数类型的情况下，默认取消会采集到官源（加 ,gy:"1" 参数就会采集到 官源）
+px:"1"
+开启 成功 采集到的资源 进行 自动排序
+cjlx:"官源"
+新增优先采集官源类型
+cjlxbmd:"官源"
+新增排除采集指定采集类型
+cjjx:"{资源：weiyun-接口：http://42.157.128.109:2323/CH/app/tv.php?url=}{资源：官源接口：http://newjiexi.gotto.xyz/keyu4.php?url=请求头：okhttp/4.1.0}"
+新增采集指定资源类型使用指定接口
+
+
+bs:"这里填你想锁定的视频倍速数字"
+是使用在线接口或插件播放器的时候，自动修改倍速播放
+
+
+
+http:"1"是httpj接口强制 原网页解析
+注意：需要谷歌内核类型的浏览器加启动参数 --test-type --ignore-certificate-errors --autoplay-policy=no-user-gesture-required
+浏览器加启动参数教程 https://baijiahao.baidu.com/s?id=1680095329272053070&wfr=spider&for=pc
+
+
+
+不懂参数的，不需要记住任何参数，参数是强迫症用户使用
+
+
+解析接口通用格式写法:（适合不懂参数的用户）
+{name:"这里填接口名称",url:"这里填接口地址",jxb:"原",zd:"1",qp:"1"},
+
+
+
+普通接口-自定义写法:
+{name:"这里填 普通接口 名称",url:"这里填 普通接口 地址",jxb:"原",zd:"1",qp:"1"},
+
+Json接口-自定义写法（GET）:
+{name:"这里填 Json接口 名称",url:"这里填 Json接口 地址",json:"1",jxb:"原",zd:"1",qp:"1"},
+
+Json接口-轮询并发写法（GET）:
+{name:"这里填 Json接口 名称",url:"这里填 Json接口 地址1|这里填 Json接口 地址2|这里填 Json接口 地址3",json:"1",jxb:"原",zd:"1",qp:"1"},
+
+Json接口-自定义写法（POST）:
+{name:"这里填 Json接口 名称",url:"这里填 Json接口 地址",json:"2",data:"url=网址&ac=jx",jxb:"原",zd:"1",qp:"1"},
+
+采集源解析
+{name:"这里填 采集源 名称",url:"这里填 采集源 地址",json:"3",jxb:"原",zd:"1",qp:"1"},
+
+影视搜索-自定义写法:
+{name:"这里填 你喜欢的名称",url:"这里填搜索串地址 %s 代表关键字：比如：http://www.huamaotv.com/index.php?m=vod-search&wd=%s",vip:"强制搜索"},
+
+套壳脚本-自定义写法:
+{name:"这里填 爬虫源 名称",url:"这里填 脚本地址",vip:"套壳脚本"},
+
+
+爬虫-手动更新自定义写法:
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址",vip:"爬虫接口"},
+
+爬虫-自动更新自定义写法:
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址",vip:"爬虫接口",gx:"1"},
+
+覆盖爬虫-自定义写法:（支持爬虫多个订阅源）
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址",vip:"爬虫接口",gx:"2"},
+
+隐藏爬虫接口-自定义写法:（电脑和手机全部隐藏）
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址?全部透明",vip:"爬虫接口"},
+
+隐藏爬虫接口-自定义写法:（只有电脑全部隐藏）
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址?电脑透明",vip:"爬虫接口"},
+
+隐藏爬虫接口-自定义写法:（只有手机全部隐藏）
+{name:"这里填 爬虫源 名称",url:"这里填 爬虫源 地址?手机透明",vip:"爬虫接口"},
+
+快捷键 a 手动输入片头跳过时间
+快捷键 s 手动输入片尾跳过时间
+快捷键 z 以当前的视频时间自动当片头跳过时间
+快捷键 x 以当前的视频时间自动当片尾跳过时间
+快捷键 c 清除你设置的片头片尾时间
+快捷键 d 清除你爬虫的接口
+
+片头片尾设置的只对同一个剧有效
+其他剧不受影响，需要重新设置
+设置有效期是 半年
