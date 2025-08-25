@@ -3,8 +3,8 @@
 // @description 公益脚本，请勿上当受骗购买，请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:en 手机不推荐用脚本，建议直接使用app。
 // @description:tw 脚本已经完善，更新告一段落。
-// @date 2025-08-25
-// @version 20250825
+// @date 2025-08-26
+// @version 20250826
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
 // @icon https://greasyfork.s3.us-east-2.amazonaws.com/fzgc3knu3rtw0gbanqqug1gmpin9
@@ -62,8 +62,6 @@
 {name:"酷播",url:"https://api.yzzy-api.com/inc/apijson.php",jxb:"原",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzh:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jj:"1"},
 {name:"茅台",url:"https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"期颐",url:"https://iqiyizyapi.com/api.php/provide/vod/from/iqym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
-{name:"华为",url:"https://hw8.live/api.php/provide/vod/from/hw8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
-{name:"猫眼",url:"https://api.maoyanapi.top/api.php/provide/vod/from/mym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"木耳",url:"https://www.heimuer.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"大鹏",url:"https://caiji.dbzy.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"如意",url:"https://cj.rycjapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
