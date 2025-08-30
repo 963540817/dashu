@@ -2,10 +2,10 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250827
+// @version 20250829
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?id=\d)/
-// @include /(?:lay|ideo)(?:.*?\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
+// @include /(?:lay|ideo)(?:.*?(?<!\/vod.*?)\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
 // @include /^https?:\/\/iframe\..+?\/embed\//
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
 // @include /^https?:\/\/.+?(?<!(?:refer(?:rer)?|ori(?:gin)?))[&#=\?]https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)/
@@ -21,6 +21,7 @@
 // @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/{1,}(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)|(?:[^\/]+?\/{1,}(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/{1,}(?!\d{4,8})\d+?)$)/
 // @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
 // @exclude /^https?:\/\/(?:(?:v(?:-wb)?|m)\.youku\.com\/(?:.+?\/id_|video\?)|\w+?\.wasu\.c.+?\/(?:[^\/]+?-detail|[pP]lay\/show\/id)\/\d|www\.miguvideo\.com\/.+?\/detail\.html\?cid=\d|[^\/]+?\.tudou\.com\/(?:v\/|.+?\/id_)|v\.qq\.com\/(?:x\/(?:cover|page)|.+?\/p\/topic)\/|(?:3g|m)\.v\.qq\.com|w(?:ww)?\.mgtv\.com\/[a-z]\/|www\.mgtv\.com\/act\/|m\.mgtv\.com\/b\/|www\.iqiyi\.com\/(?:[vw]_|kszt\/)|m\.iqiyi\.com\/(?:v_|$)|tw\.iqiyi\.com\/v_|tv\.sohu\.com\/v\/|m\.tv\.sohu\.com\/(?:u\/|v|phone_play_film\?aid=)|film\.sohu\.com\/album\/|www\.le\.com\/ptv\/vplay\/|m\.le\.com\/vplay_|[vm]\.pptv\.com\/show\/|vip\.1905\.com\/play\/|www\.ixigua\.com\/|(?:player|live)\.bilibili\.com\/|www\.bilibili\.com\/(?:(?:cheese|bangumi)\/play|blackboard|.*?video)\/|m\.bilibili\.com\/bangumi\/play\/|www\.acfun\.cn\/(?:.+?\/ac|bangumi\/)|m\.acfun\.cn\/v\/)/
+// @exclude /\/activity\/.+?\.s?html/
 // @run-at document-start
 // ==/UserScript==
 
@@ -190,17 +191,17 @@
                               , logyso = '时间标识'
                               , logysq = '名称差异-具体内容] ✂\n%c';
                             /*以上是 M3U8 插播广告 过滤核心代码 不懂勿动*/
-                            const urlFromArg = arg=>typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
-                            const isValidM3U8Url = url=>{
+                            const urlFromArg = arg => typeof arg === 'string' ? arg : arg instanceof Request ? arg.url : String(arg);
+                            const isValidM3U8Url = url => {
                                 return (wzm3u8.test(url) && m3u8wz.test(url) && !mp4wz.test(url) && !flvwz.test(url) && !tswz.test(url) && !playsharewz.test(url));
                             }
                             ;
-                            const matchM3u = url=>{
+                            const matchM3u = url => {
                                 try {
                                     if (isValidM3U8Url(url)) {
                                         spbfurl = url;
-                                        const matchedItem = itemsHandle.find(item=>item.reUrl.test(url) && isValidM3U8Url(url) && !ggbmd.test(url));
-                                        itemsHandleby.forEach(byItem=>byItem.reUrl.test(url) && isValidM3U8Url(url) && byItem.reAds.forEach(newReAd=>matchedItem.reAds.find(ad=>ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
+                                        const matchedItem = itemsHandle.find(item => item.reUrl.test(url) && isValidM3U8Url(url) && !ggbmd.test(url));
+                                        itemsHandleby.forEach(byItem => byItem.reUrl.test(url) && isValidM3U8Url(url) && byItem.reAds.forEach(newReAd => matchedItem.reAds.find(ad => ad.source === newReAd.source && ad.flags === newReAd.flags) || matchedItem.reAds.push(newReAd)));
                                         return matchedItem;
                                     } else {
                                         return null;
@@ -210,7 +211,7 @@
                                 }
                             }
                             ;
-                            const M3umatch = text=>{
+                            const M3umatch = text => {
                                 try {
                                     if (!text || !itemts.test(text) || !itemm3u8.test(text)) {
                                         return true;
@@ -222,13 +223,13 @@
                                 }
                             }
                             ;
-                            const M3umatchu3M = (array,regExp)=>{
+                            const M3umatchu3M = (array, regExp) => {
                                 return array.some(function(item) {
                                     return item.toString() === regExp.toString();
                                 });
                             }
                             ;
-                            const m3u8text = (text)=>{
+                            const m3u8text = (text) => {
                                 try {
                                     const regex = /^[a-z\d]{20,}/i;
                                     const lines = text.split('\n');
@@ -258,7 +259,7 @@
                                 }
                             }
                             ;
-                            const endlist = (text)=>{
+                            const endlist = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -283,7 +284,7 @@
                                 }
                             }
                             ;
-                            const deleteAbnormalTs = (text,jxbgza,jxbgzb,jxbgzc,jxbgzd,jxbgze)=>{
+                            const deleteAbnormalTs = (text, jxbgza, jxbgzb, jxbgzc, jxbgzd, jxbgze) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -339,13 +340,13 @@
                                                                                         if (deleteCount <= maxCount) {
                                                                                             for (const path in paths) {
                                                                                                 if (path !== maxPath) {
-                                                                                                    paths[path].forEach(p=>{
+                                                                                                    paths[path].forEach(p => {
                                                                                                         /*console.log("排除测试：\n"+p);*/
                                                                                                         if (!jxbgzd.test(p)) {
-                                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match)=>{
+                                                                                                            text = text.replace(new RegExp(rgtya + p + rgtyb,'gi'), (match) => {
                                                                                                                 if (!dypd.test(打印开关)) {
                                                                                                                     try {
-                                                                                                                        console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                                                        console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink => {
                                                                                                                             if (!tsLink.startsWith('http')) {
                                                                                                                                 if (m3u8gglj) {
                                                                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -405,7 +406,7 @@
                                 }
                             }
                             ;
-                            const durationtaragt = (text)=>{
+                            const durationtaragt = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -465,7 +466,7 @@
                                 }
                             }
                             ;
-                            const taragtduration = (text)=>{
+                            const taragtduration = (text) => {
                                 try {
                                     if (!itemm3u8.test(text)) {
                                         return text;
@@ -525,7 +526,7 @@
                                 }
                             }
                             ;
-                            const extinfa = (text)=>{
+                            const extinfa = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -559,8 +560,8 @@
                                                             }
                                                             if (endIndex !== -1) {
                                                                 let block = lines.slice(startIndex + 1, endIndex);
-                                                                let extinfLines = block.filter(line=>line.includes(tyad0));
-                                                                let tsLines = block.filter(line=>line.match(itemts));
+                                                                let extinfLines = block.filter(line => line.includes(tyad0));
+                                                                let tsLines = block.filter(line => line.match(itemts));
                                                                 if (extinfLines.length >= 4 && extinfLines.length <= 6) {
                                                                     let totalExtinfValue = 0;
                                                                     for (let extinf of extinfLines) {
@@ -594,8 +595,8 @@
                                                         try {
                                                             if (!dypd.test(打印开关)) {
                                                                 if (deletions.length > 0) {
-                                                                    console.log(logysa + logysl + deletions.reverse().map(line=>{
-                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                    console.log(logysa + logysl + deletions.reverse().map(line => {
+                                                                        return line.replace(tyad1053, tsLink => {
                                                                             if (!tsLink.startsWith('http')) {
                                                                                 if (m3u8gglj) {
                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -629,7 +630,7 @@
                                 }
                             }
                             ;
-                            const extinfb = (text,exta,extb,extc,extd)=>{
+                            const extinfb = (text, exta, extb, extc, extd) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -695,12 +696,12 @@
                                                                 }
                                                             }
                                                         }
-                                                        let cleanedLines = lines.filter(line=>line !== null).join('\n');
+                                                        let cleanedLines = lines.filter(line => line !== null).join('\n');
                                                         try {
                                                             if (!dypd.test(打印开关)) {
                                                                 if (deletedEntries.length > 0) {
-                                                                    console.log(logysa + logysl + deletedEntries.map(line=>{
-                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                    console.log(logysa + logysl + deletedEntries.map(line => {
+                                                                        return line.replace(tyad1053, tsLink => {
                                                                             if (!tsLink.startsWith('http')) {
                                                                                 if (m3u8gglj) {
                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -734,7 +735,7 @@
                                 }
                             }
                             ;
-                            const proqca = (text,item)=>{
+                            const proqca = (text, item) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -750,8 +751,8 @@
                                                             gggzdp = true;
                                                         } else {
                                                             try {
-                                                                itemsHandle.forEach(item=>{
-                                                                    item.reAds = item.reAds.filter(re=>re.source !== itemsdpgza);
+                                                                itemsHandle.forEach(item => {
+                                                                    item.reAds = item.reAds.filter(re => re.source !== itemsdpgza);
                                                                 }
                                                                 );
                                                             } catch (e) {}
@@ -766,16 +767,16 @@
                                                                 gggzpd = true;
                                                                 try {
                                                                     if (new RegExp(itemspdgza,'i').test(text) && new RegExp(itemstygza1,'i').test(text)) {
-                                                                        itemsHandle.forEach(item=>{
-                                                                            item.reAds = item.reAds.filter(re=>re.source !== itemstygza1);
+                                                                        itemsHandle.forEach(item => {
+                                                                            item.reAds = item.reAds.filter(re => re.source !== itemstygza1);
                                                                         }
                                                                         );
                                                                     }
                                                                 } catch (e) {}
                                                                 try {
                                                                     if (!(new RegExp(itemspdgza,'i').test(text) && new RegExp(itemstygza,'i').test(text))) {
-                                                                        itemsHandle.forEach(item=>{
-                                                                            item.reAds = item.reAds.filter(re=>re.source !== itemstygza);
+                                                                        itemsHandle.forEach(item => {
+                                                                            item.reAds = item.reAds.filter(re => re.source !== itemstygza);
                                                                         }
                                                                         );
                                                                     }
@@ -787,7 +788,7 @@
                                                             }
                                                         } catch (e) {}
                                                         try {
-                                                            if (itemsPaichu.some(regex=>regex.test(text))) {
+                                                            if (itemsPaichu.some(regex => regex.test(text))) {
                                                                 try {
                                                                     if (!M3umatchu3M(itemsHandle[0].reAds, itemstygza5)) {
                                                                         itemsHandle[0].reAds.push(itemstygza5);
@@ -818,7 +819,7 @@
                                                                                     try {
                                                                                         if (!dypd.test(打印开关)) {
                                                                                             console.log(logysa + "资源广告" + logysc + itemstygza3 + logyse, logysf, logysg, logysh, logysg);
-                                                                                            matchessc.forEach(match=>{
+                                                                                            matchessc.forEach(match => {
                                                                                                 console.log(match);
                                                                                             }
                                                                                             );
@@ -861,7 +862,7 @@
                                                                                 try {
                                                                                     if (!dypd.test(打印开关)) {
                                                                                         try {
-                                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink=>{
+                                                                                            console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match.replace(new RegExp(tyad1023,'gi'), tsLink => {
                                                                                                 if (!tsLink.startsWith('http')) {
                                                                                                     if (m3u8gglj) {
                                                                                                         return new URL(tsLink,m3u8gglj).href;
@@ -912,7 +913,7 @@
                                 }
                             }
                             ;
-                            const proqcb = (text)=>{
+                            const proqcb = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -925,12 +926,12 @@
                                                 } else {
                                                     if (!shouldStopExecution) {
                                                         const lines = text.split('\n');
-                                                        const tsLines = lines.filter(line=>line.trim().match(tyad5));
-                                                        const tsLinesWith00 = tsLines.filter(line=>line.includes('00'));
+                                                        const tsLines = lines.filter(line => line.trim().match(tyad5));
+                                                        const tsLinesWith00 = tsLines.filter(line => line.includes('00'));
                                                         const totalTsLines = tsLines.length;
                                                         const tsLinesWith00Count = tsLinesWith00.length;
                                                         if (tsLinesWith00Count / totalTsLines >= 0.666) {
-                                                            const prefixes = tsLinesWith00.map(line=>{
+                                                            const prefixes = tsLinesWith00.map(line => {
                                                                 const index = line.indexOf('00');
                                                                 return line.substring(0, index + 2);
                                                             }
@@ -959,7 +960,7 @@
                                                                     longestItem = item;
                                                                 }
                                                             }
-                                                            const tsLinesToDelete = tsLines.filter(line=>!line.startsWith(longestItem));
+                                                            const tsLinesToDelete = tsLines.filter(line => !line.startsWith(longestItem));
                                                             const tsLinesToDeleteCount = tsLinesToDelete.length;
                                                             if (tsLinesToDeleteCount / totalTsLines > 0.666) {
                                                                 return text;
@@ -990,8 +991,8 @@
                                                                     if (!dypd.test(打印开关)) {
                                                                         if (deletedLines.length > 0) {
                                                                             try {
-                                                                                console.log(logysa + logysq + deletedLines.reverse().map(line=>{
-                                                                                    return line.replace(tyad1053, tsLink=>{
+                                                                                console.log(logysa + logysq + deletedLines.reverse().map(line => {
+                                                                                    return line.replace(tyad1053, tsLink => {
                                                                                         if (!tsLink.startsWith('http')) {
                                                                                             if (m3u8gglj) {
                                                                                                 return new URL(tsLink,m3u8gglj).href;
@@ -1030,7 +1031,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8a = (text)=>{
+                            const removeprunerm3u8a = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1042,7 +1043,7 @@
                                                     return text;
                                                 } else {
                                                     let deletedContent = '';
-                                                    text = text.replace(itemstygza6, (match)=>{
+                                                    text = text.replace(itemstygza6, (match) => {
                                                         deletedContent += match + '\n';
                                                         return '';
                                                     }
@@ -1068,7 +1069,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8b = (text)=>{
+                            const removeprunerm3u8b = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1081,7 +1082,7 @@
                                                 } else {
                                                     let deletedContent = '';
                                                     let addedMatches = new Set();
-                                                    text = text.replace(itemstygza7, (match)=>{
+                                                    text = text.replace(itemstygza7, (match) => {
                                                         match = match.trim();
                                                         if (!addedMatches.has(match) && match !== '') {
                                                             deletedContent += match + '\n';
@@ -1111,7 +1112,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8c = (text)=>{
+                            const removeprunerm3u8c = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1123,15 +1124,15 @@
                                                     return text;
                                                 } else {
                                                     const lines = text.split('\n');
-                                                    const extinfLines = lines.filter(line=>tyad11.test(line));
-                                                    const extinfValues = extinfLines.map(line=>parseFloat(line.split(':')[1].split(',')[0]));
-                                                    const valueCounts = extinfValues.reduce((acc,value)=>{
+                                                    const extinfLines = lines.filter(line => tyad11.test(line));
+                                                    const extinfValues = extinfLines.map(line => parseFloat(line.split(':')[1].split(',')[0]));
+                                                    const valueCounts = extinfValues.reduce( (acc, value) => {
                                                         acc[value] = (acc[value] || 0) + 1;
                                                         return acc;
                                                     }
                                                     , {});
                                                     const maxCount = Math.max(...Object.values(valueCounts));
-                                                    const maxValue = Object.keys(valueCounts).find(key=>valueCounts[key] === maxCount);
+                                                    const maxValue = Object.keys(valueCounts).find(key => valueCounts[key] === maxCount);
                                                     const maxValueRatio = maxCount / extinfValues.length;
                                                     let deletedLines = [];
                                                     if (maxValueRatio > 0.987) {
@@ -1172,8 +1173,8 @@
                                                     try {
                                                         if (deletedLines.length > 0) {
                                                             if (!dypd.test(打印开关)) {
-                                                                console.log(logysa + logysl + deletedLines.map(line=>{
-                                                                    return line.replace(tyad1053, tsLink=>{
+                                                                console.log(logysa + logysl + deletedLines.map(line => {
+                                                                    return line.replace(tyad1053, tsLink => {
                                                                         if (!tsLink.startsWith('http')) {
                                                                             if (m3u8gglj) {
                                                                                 return new URL(tsLink,m3u8gglj).href;
@@ -1204,7 +1205,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8d = (text)=>{
+                            const removeprunerm3u8d = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1218,7 +1219,7 @@
                                                     const lines = text.split('\n');
                                                     const urlLengths = [];
                                                     const urlsWithIndex = [];
-                                                    lines.forEach((line,index)=>{
+                                                    lines.forEach( (line, index) => {
                                                         const match = line.match(new RegExp(tyad5 + '\\s*?$','i'));
                                                         if (match) {
                                                             urlsWithIndex.push({
@@ -1229,7 +1230,7 @@
                                                         }
                                                     }
                                                     );
-                                                    const lengthCounts = urlLengths.reduce((acc,length)=>{
+                                                    const lengthCounts = urlLengths.reduce( (acc, length) => {
                                                         acc[length] = (acc[length] || 0) + 1;
                                                         return acc;
                                                     }
@@ -1244,7 +1245,7 @@
                                                     }
                                                     let deletedUrls = [];
                                                     if (dominantLength !== null) {
-                                                        urlsWithIndex.forEach(({url, index})=>{
+                                                        urlsWithIndex.forEach( ({url, index}) => {
                                                             if (url.length !== dominantLength && !tyad14.test(url)) {
                                                                 deletedUrls.push(url);
                                                             }
@@ -1253,8 +1254,8 @@
                                                         if (deletedUrls.length > lengthCounts[dominantLength]) {
                                                             return text;
                                                         } else {
-                                                            deletedUrls.forEach((url)=>{
-                                                                const {index} = urlsWithIndex.find(u=>u.url === url);
+                                                            deletedUrls.forEach( (url) => {
+                                                                const {index} = urlsWithIndex.find(u => u.url === url);
                                                                 if (index >= 0) {
                                                                     lines.splice(index, 1);
                                                                     if (index - 1 >= 0 && !new RegExp(tyad7,'i').test(lines[index - 1])) {
@@ -1267,8 +1268,8 @@
                                                     }
                                                     if (deletedUrls.length > 0) {
                                                         if (!dypd.test(打印开关)) {
-                                                            console.log(logysa + logysm + deletedUrls.map(line=>{
-                                                                return line.replace(tyad1053, tsLink=>{
+                                                            console.log(logysa + logysm + deletedUrls.map(line => {
+                                                                return line.replace(tyad1053, tsLink => {
                                                                     if (!tsLink.startsWith('http')) {
                                                                         if (m3u8gglj) {
                                                                             return new URL(tsLink,m3u8gglj).href;
@@ -1298,7 +1299,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8e = (text)=>{
+                            const removeprunerm3u8e = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1311,11 +1312,11 @@
                                                 } else {
                                                     const lines = text.split('\n');
                                                     const matchedLines = [];
-                                                    const allLines = lines.map((line,index)=>({
+                                                    const allLines = lines.map( (line, index) => ({
                                                         line,
                                                         index
                                                     }));
-                                                    allLines.forEach(item=>{
+                                                    allLines.forEach(item => {
                                                         const match = item.line.match(tyad107);
                                                         if (match) {
                                                             matchedLines.push({
@@ -1329,13 +1330,13 @@
                                                         return text;
                                                     } else {
                                                         const matchedGroupCounts = {};
-                                                        matchedLines.forEach(item=>{
+                                                        matchedLines.forEach(item => {
                                                             matchedGroupCounts[item.matchedGroup] = (matchedGroupCounts[item.matchedGroup] || 0) + 1;
                                                         }
                                                         );
                                                         const minCount = Math.min(...Object.values(matchedGroupCounts));
-                                                        const lessFrequentMatchedGroups = Object.keys(matchedGroupCounts).filter(group=>matchedGroupCounts[group] === minCount);
-                                                        let filteredMatchedGroups = lessFrequentMatchedGroups.map(group=>{
+                                                        const lessFrequentMatchedGroups = Object.keys(matchedGroupCounts).filter(group => matchedGroupCounts[group] === minCount);
+                                                        let filteredMatchedGroups = lessFrequentMatchedGroups.map(group => {
                                                             const lastSlashIndex = group.lastIndexOf('/');
                                                             if (lastSlashIndex !== -1) {
                                                                 group = group.substring(0, lastSlashIndex + 1);
@@ -1345,7 +1346,7 @@
                                                             }
                                                             return group;
                                                         }
-                                                        ).filter(group=>group !== null);
+                                                        ).filter(group => group !== null);
                                                         const totalMatched = matchedLines.length;
                                                         let dominantMatchedGroup;
                                                         for (const matchedGroup in matchedGroupCounts) {
@@ -1394,7 +1395,7 @@
                                                                             }
                                                                             const cleanedNextLine = nextLine ? nextLine.replace(new RegExp(tyad5 + '.*?$','i'), '') : '';
                                                                             if (!tyad10.test(cleanedNextLine)) {
-                                                                                const isFilteredMatched = filteredMatchedGroups.some(group=>nextLine && nextLine.startsWith(group));
+                                                                                const isFilteredMatched = filteredMatchedGroups.some(group => nextLine && nextLine.startsWith(group));
                                                                                 if (isFilteredMatched) {
                                                                                     deletedLines.push(nextLine);
                                                                                     deletedLines.push(allLines[i].line);
@@ -1438,8 +1439,8 @@
                                                                         if (deletedLines.length > 0) {
                                                                             try {
                                                                                 if (!dypd.test(打印开关)) {
-                                                                                    console.log(logysa + logysn + deletedLines.reverse().map(line=>{
-                                                                                        return line.replace(tyad1053, tsLink=>{
+                                                                                    console.log(logysa + logysn + deletedLines.reverse().map(line => {
+                                                                                        return line.replace(tyad1053, tsLink => {
                                                                                             if (!tsLink.startsWith('http')) {
                                                                                                 if (m3u8gglj) {
                                                                                                     return new URL(tsLink,m3u8gglj).href;
@@ -1457,7 +1458,7 @@
                                                                             } catch (e) {}
                                                                         }
                                                                     } catch (e) {}
-                                                                    return endlist(allLines.map(item=>item.line).join('\n'));
+                                                                    return endlist(allLines.map(item => item.line).join('\n'));
                                                                 }
                                                             }
                                                         }
@@ -1475,7 +1476,7 @@
                                 }
                             }
                             ;
-                            const removeprunerm3u8f = (text)=>{
+                            const removeprunerm3u8f = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1490,7 +1491,7 @@
                                                     const extinfRegex = new RegExp('^\\s*?' + tyad1 + '(\\d+(\\.\\d+)?)\\s*?,','i');
                                                     const lines = text.split('\n');
                                                     const pathData = new Map();
-                                                    lines.forEach((line,i)=>{
+                                                    lines.forEach( (line, i) => {
                                                         const match = tsRegex.exec(line);
                                                         if (match) {
                                                             const path = match[1];
@@ -1512,10 +1513,10 @@
                                                     }
                                                     );
                                                     if (pathData.size === 2) {
-                                                        const sortedPaths = Array.from(pathData.entries()).sort((a,b)=>a[1].totalDuration - b[1].totalDuration);
+                                                        const sortedPaths = Array.from(pathData.entries()).sort( (a, b) => a[1].totalDuration - b[1].totalDuration);
                                                         const [shorterPath,longerPath] = sortedPaths;
-                                                        const removedLines = shorterPath[1].tsLines.map(index=>lines[index]);
-                                                        shorterPath[1].tsLines.forEach(index=>{
+                                                        const removedLines = shorterPath[1].tsLines.map(index => lines[index]);
+                                                        shorterPath[1].tsLines.forEach(index => {
                                                             lines[index] = '';
                                                         }
                                                         );
@@ -1523,8 +1524,8 @@
                                                             if (removedLines.length > 0) {
                                                                 try {
                                                                     if (!dypd.test(打印开关)) {
-                                                                        console.log(logysa + logysn + removedLines.map(line=>{
-                                                                            return line.replace(tyad1053, tsLink=>{
+                                                                        console.log(logysa + logysn + removedLines.map(line => {
+                                                                            return line.replace(tyad1053, tsLink => {
                                                                                 if (!tsLink.startsWith('http')) {
                                                                                     if (m3u8gglj) {
                                                                                         return new URL(tsLink,m3u8gglj).href;
@@ -1543,7 +1544,7 @@
                                                             }
                                                         } catch (e) {}
                                                     }
-                                                    return endlist(lines.filter(line=>line.trim() !== '').join('\n'));
+                                                    return endlist(lines.filter(line => line.trim() !== '').join('\n'));
                                                 }
                                             }
                                         } else {
@@ -1557,7 +1558,7 @@
                                 }
                             }
                             ;
-                            const prunerm3u8 = (text)=>{
+                            const prunerm3u8 = (text) => {
                                 try {
                                     if (!shouldStopExecution) {
                                         if (text) {
@@ -1570,12 +1571,12 @@
                                                 } else {
                                                     if (!shouldStopExecution) {
                                                         const lines = text.split('\n');
-                                                        const keyCount = lines.filter(line=>new RegExp(tyad1021,'i').test(line)).length;
+                                                        const keyCount = lines.filter(line => new RegExp(tyad1021,'i').test(line)).length;
                                                         if (keyCount >= 2) {
                                                             return text;
                                                         } else {
                                                             let discontinuityCount = 0;
-                                                            const filteredLines = lines.filter(line=>{
+                                                            const filteredLines = lines.filter(line => {
                                                                 if (new RegExp(tyad2,'i').test(line)) {
                                                                     discontinuityCount++;
                                                                     return false;
@@ -1608,7 +1609,7 @@
                                 }
                             }
                             ;
-                            const m3u8adgl = (textout)=>{
+                            const m3u8adgl = (textout) => {
                                 try {
                                     try {
                                         textout = proqcb(textout);
@@ -1669,12 +1670,12 @@
                                                     }
                                                 } catch (e) {}
                                                 if (!shouldStopExecution) {
-                                                    return realFetch.apply(thisArg, args).then(realResponse=>{
+                                                    return realFetch.apply(thisArg, args).then(realResponse => {
                                                         try {
                                                             if (!realResponse || !realResponse.ok) {
                                                                 return realResponse;
                                                             } else {
-                                                                return realResponse.text().then(textin=>{
+                                                                return realResponse.text().then(textin => {
                                                                     try {
                                                                         if (M3umatch(textin)) {
                                                                             return realResponse;
