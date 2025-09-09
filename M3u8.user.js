@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250829
+// @version 20250909
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?id=\d)/
 // @include /(?:lay|ideo)(?:.*?(?<!\/vod.*?)\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
@@ -142,6 +142,7 @@
                               , tyad1054 = '^\\s*?(?:\\d\\.\\d3{3,}|3\\.3{3,})\\s*?$'
                               , tyad1055 = new RegExp(tyad1054,'')
                               , tyad1056 = new RegExp('(?<!\\d)\\d\\.\\d(\\d)\\1{2,}(?!\\1)\\d\\s*?$','')
+                              , tyad1057 = tyad1011 + tyad5 + hhzz + '+?'
                               , itemts = new RegExp(tyad5,'i')
                               , itemm3u8 = new RegExp(tyad1010 + '#EXT-X-','i')
                               , itemsdpgza = tyad1026 + '(?<!0)(3)\\.\\1(?:((?<!0)\\d)\\2){2,}\\d+?,' + tyad1028 + '(?:' + tyad104 + tyad1028 + tyad1048 + tyad109
@@ -163,7 +164,7 @@
                               , itemsHandle = [{
                                 reUrl: wzm3u8,
                                 reAds: [new RegExp(itemsdpgza,'gim'), new RegExp(itemstygza,'gim'), itemstygpc1, itemstygza8, new RegExp('(?<=' + tyad1031 + '(?:#EXT-X-(?!KEY)' + tyad1017 + '){1,})(?:' + tyad1021 + tyad1017 + '(?:' + tyad1014 + ')?){1,}(?=' + tyad1021 + ')','gim'), /*动态拼接采集资源 正规则表达式,以达到智能删除插播广告的效果*/
-                                new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
+                                new RegExp(tyad1014 + tyad1 + '\\d\\.\\d((\\d){4,}(?!\\2)\\d)\\s*?,' + tyad1057 + '(?:' + tyad1 + '\\d\\.\\d\\1\\s*?,' + tyad1057 + '){3,6}' + tyad1047,'gim'), new RegExp(tyad1026 + '((?<!0)\\d\\.([1-9])(?!\\2)\\d{4,5}(?<!\\2)\\2),' + tyad1037 + '\\1,' + tyad1028 + '){2,6}' + tyad109,'gim'), new RegExp('(?<=' + tyad1030 + '+?(?:' + tyad1014 + tyad1048 + ')' + tyad1014 + '(?:' + tyad104 + hhzz + tyad1024 + '+?\\\/\\w{50,}\\.ts' + hhzz + '+?){1,}' + tyad1014 + '(?=' + tyad1030 + ')','gim'), new RegExp(tyadf + '(?:' + tyad100 + '?' + bhhzz + '+?' + tyad103 + '+?' + tyad1048 + ')' + tyad102 + '+?' + bhhzz + '+?-' + bhhzz + '+?\\d' + tyad1016 + '(?=' + tyad1 + ')','gim'), new RegExp(tyadf + bhhzz + '+?' + tyad103 + '+' + tyad1048 + ')(?:' + tyad1014 + ')?' + tyad102 + '+?[a-z\\d]+?0{4,}' + tyad1016 + '[\\s\\S]+?' + hhzz + '+[a-z\\d]+?0{2,}\\d' + tyad1016 + '(?<![\\s\\S]+?10' + tyad5 + '\\n*?[\\s\\S]*?' + hhzz + '+)(?=(?:' + tyad3 + '+|' + tyad1 + '\\d+(?:\\.\\d+)?\\s*?,' + hhzz + '+?[a-z\\d]+?10' + tyad1016 + '))','gi'), ],
                             }]
                               , itemsHandleby = [/*播放黑木耳采集资源的时候,额外增加该数组规则,避免其他的误杀*/
                             {
