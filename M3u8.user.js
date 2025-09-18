@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250909
+// @version 20250918
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?id=\d)/
 // @include /(?:lay|ideo)(?:.*?(?<!\/vod.*?)\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
@@ -35,7 +35,7 @@
                     enumerable: false,
                     configurable: false
                 });
-            } catch (e) {}
+            } catch {}
             try {
                 if (typeof Proxy === 'function') {
                     let m3u8wz, wzm3u8, mp4wz, flvwz, tswz, playsharewz, urlFromArgBy, ggbmd, shouldStopExecution, 打印开关, spbfurl, gggzdp, gggzpd, ggsjgg, ggzlhx, ggljbmd, ggljdmb, hhzz, bhhzz, dypd, m3u8gglj, m3u8ggljdypd, m3u8bflj;
@@ -207,7 +207,7 @@
                                     } else {
                                         return null;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return null;
                                 }
                             }
@@ -219,7 +219,7 @@
                                     } else {
                                         return false;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return false;
                                 }
                             }
@@ -255,7 +255,7 @@
                                         }
                                     }
                                     return true;
-                                } catch (e) {
+                                } catch {
                                     return false;
                                 }
                             }
@@ -280,7 +280,7 @@
                                             }
                                         }
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -362,7 +362,7 @@
                                                                                                                     } catch (e) {
                                                                                                                         try {
                                                                                                                             console.log(logysa + "广告资源" + logysb + jxbgzc + logysd + regexx + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
-                                                                                                                        } catch (e) {}
+                                                                                                                        } catch {}
                                                                                                                     }
                                                                                                                 }
                                                                                                                 return '';
@@ -381,10 +381,10 @@
                                                                                     return text;
                                                                                 }
                                                                             }
-                                                                        } catch (e) {
+                                                                        } catch {
                                                                             return text;
                                                                         }
-                                                                    } catch (e) {
+                                                                    } catch {
                                                                         return text;
                                                                     }
                                                                 }
@@ -402,7 +402,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -462,7 +462,7 @@
                                             return outputLines.join('\n').trim();
                                         }
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -515,14 +515,14 @@
                                                     if (!dypd.test(打印开关)) {
                                                         console.log(logysa + logyso + "-已经发现] ✂" + '已经把《' + tyad9 + '》数值从原来的值<' + originalTargetDuration + '>修改成<' + newTargetDuration + '>', logysf);
                                                     }
-                                                } catch (e) {}
+                                                } catch {}
                                                 return lines.join('\n');
                                             } else {
                                                 return text;
                                             }
                                         }
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -613,7 +613,7 @@
                                                                     ).join('\n'), logysf, logysi);
                                                                 }
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         return filteredLines.join('\n');
                                                     } else {
                                                         return text;
@@ -626,7 +626,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -718,7 +718,7 @@
                                                                     ).join('\n'), logysf, logysi);
                                                                 }
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         return cleanedLines;
                                                     } else {
                                                         return text;
@@ -731,7 +731,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -756,7 +756,7 @@
                                                                     item.reAds = item.reAds.filter(re => re.source !== itemsdpgza);
                                                                 }
                                                                 );
-                                                            } catch (e) {}
+                                                            } catch {}
                                                             gggzdp = false;
                                                         }
                                                     } catch (e) {
@@ -773,7 +773,7 @@
                                                                         }
                                                                         );
                                                                     }
-                                                                } catch (e) {}
+                                                                } catch {}
                                                                 try {
                                                                     if (!(new RegExp(itemspdgza,'i').test(text) && new RegExp(itemstygza,'i').test(text))) {
                                                                         itemsHandle.forEach(item => {
@@ -781,37 +781,37 @@
                                                                         }
                                                                         );
                                                                     }
-                                                                } catch (e) {}
+                                                                } catch {}
                                                                 if (!dypd.test(打印开关)) {
                                                                     console.table(itemsPaichu);
                                                                     console.table(itemsHandle);
                                                                 }
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         try {
                                                             if (itemsPaichu.some(regex => regex.test(text))) {
                                                                 try {
                                                                     if (!M3umatchu3M(itemsHandle[0].reAds, itemstygza5)) {
                                                                         itemsHandle[0].reAds.push(itemstygza5);
                                                                     }
-                                                                } catch (e) {}
+                                                                } catch {}
                                                                 text = extinfa(text);
                                                                 try {
                                                                     text = extinfb(text, tyad1055, 4, 6, 25);
-                                                                } catch (e) {}
+                                                                } catch {}
                                                                 try {
                                                                     text = extinfb(text, tyad1056, 1, 2, 15);
-                                                                } catch (e) {}
+                                                                } catch {}
                                                             } else {
                                                                 if (new RegExp(tyadb + bhhzz + '+?' + tyad5 + '\\?' + tyad1017,'i').test(text)) {} else {
                                                                     if (m3u8text(text)) {
                                                                         text = extinfa(text);
                                                                         try {
                                                                             text = extinfb(text, tyad1055, 4, 6, 25);
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         try {
                                                                             text = extinfb(text, tyad1056, 1, 2, 15);
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                     } else {
                                                                         try {
                                                                             if (text.match(itemstygza2)) {
@@ -825,7 +825,7 @@
                                                                                             }
                                                                                             );
                                                                                         }
-                                                                                    } catch (e) {}
+                                                                                    } catch {}
                                                                                     text = text.replace(itemstygza3, '');
                                                                                 } else {
                                                                                     text = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
@@ -833,25 +833,25 @@
                                                                             } else {
                                                                                 text = deleteAbnormalTs(text, '[^\\.]+?', '(?:' + bhhzz + '+\\\/|\\b)', '路径');
                                                                             }
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         try {
                                                                             if (!text.match(itemstygza4)) {
                                                                                 text = deleteAbnormalTs(text, '(?:\\d+?|[a-z]+?)', '\\w+?(?:[^\\d]\\d{2})?', '名称');
                                                                             }
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         try {
                                                                             text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{3})', '名称', '空', 100);
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         try {
                                                                             text = deleteAbnormalTs(text, '\\d+?', '\\w+(?=\\d{4})', '名称');
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         try {
                                                                             text = deleteAbnormalTs(text, '\\d+?', '[^0]\\d+[^0]0{2,}\\d0', '名称', /(?<=[^0]0{3,})\d+$/);
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                     }
                                                                 }
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         try {
                                                             for (const reAd of item.reAds) {
                                                                 try {
@@ -878,13 +878,13 @@
                                                                                         } catch (e) {
                                                                                             try {
                                                                                                 console.log(logysa + "资源广告" + logysc + reAd + logyse + "%c" + match, logysf, logysg, logysh, logysg, logysi);
-                                                                                            } catch (e) {}
+                                                                                            } catch {}
                                                                                         }
                                                                                     }
-                                                                                } catch (e) {}
+                                                                                } catch {}
                                                                                 return "";
                                                                             }
-                                                                        } catch (e) {
+                                                                        } catch {
                                                                             return match;
                                                                         }
                                                                     });
@@ -892,7 +892,7 @@
                                                                     continue;
                                                                 }
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         if (text.length < text.length) {
                                                             return endlist(text);
                                                         } else {
@@ -909,7 +909,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1007,10 +1007,10 @@
                                                                                     );
                                                                                 }
                                                                                 ).join('\n'), logysf, logysi);
-                                                                            } catch (e) {}
+                                                                            } catch {}
                                                                         }
                                                                     }
-                                                                } catch (e) {}
+                                                                } catch {}
                                                                 return endlist(newLines.join('\n'));
                                                             }
                                                         } else {
@@ -1027,7 +1027,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1055,7 +1055,7 @@
                                                                 console.log(logysa + logysk + deletedContent, logysf, logysi);
                                                             }
                                                         }
-                                                    } catch (e) {}
+                                                    } catch {}
                                                     return endlist(text);
                                                 }
                                             }
@@ -1065,7 +1065,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1098,7 +1098,7 @@
                                                                 console.log(logysa + logysk + deletedContent, logysf, logysi);
                                                             }
                                                         }
-                                                    } catch (e) {}
+                                                    } catch {}
                                                     return endlist(text);
                                                 }
                                             }
@@ -1108,7 +1108,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1191,7 +1191,7 @@
                                                                 ).join('\n'), logysf, logysi);
                                                             }
                                                         }
-                                                    } catch (e) {}
+                                                    } catch {}
                                                     return text;
                                                 }
                                             }
@@ -1201,7 +1201,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1295,7 +1295,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text
                                 }
                             }
@@ -1456,9 +1456,9 @@
                                                                                     }
                                                                                     ).join('\n'), logysf, logysi);
                                                                                 }
-                                                                            } catch (e) {}
+                                                                            } catch {}
                                                                         }
-                                                                    } catch (e) {}
+                                                                    } catch {}
                                                                     return endlist(allLines.map(item => item.line).join('\n'));
                                                                 }
                                                             }
@@ -1472,7 +1472,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1541,9 +1541,9 @@
                                                                         }
                                                                         ).join('\n'), logysf, logysi);
                                                                     }
-                                                                } catch (e) {}
+                                                                } catch {}
                                                             }
-                                                        } catch (e) {}
+                                                        } catch {}
                                                     }
                                                     return endlist(lines.filter(line => line.trim() !== '').join('\n'));
                                                 }
@@ -1554,7 +1554,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1591,7 +1591,7 @@
                                                                         console.log(logysa + logysj + "-已经发现] ✂" + '已删除《' + discontinuityCount + '》个' + tyad2 + logysj, logysf);
                                                                     }
                                                                 }
-                                                            } catch (e) {}
+                                                            } catch {}
                                                             return endlist(removeprunerm3u8a(filteredLines.join('\n')));
                                                         }
                                                     } else {
@@ -1605,7 +1605,7 @@
                                     } else {
                                         return text;
                                     }
-                                } catch (e) {
+                                } catch {
                                     return text;
                                 }
                             }
@@ -1614,37 +1614,37 @@
                                 try {
                                     try {
                                         textout = proqcb(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = prunerm3u8(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = removeprunerm3u8e(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = removeprunerm3u8b(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = removeprunerm3u8c(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = removeprunerm3u8d(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = removeprunerm3u8f(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = durationtaragt(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = taragtduration(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     try {
                                         textout = endlist(textout);
-                                    } catch (e) {}
+                                    } catch {}
                                     /*console.log("测试广告：\n"+textout);*/
                                     return textout;
-                                } catch (e) {
+                                } catch {
                                     return textout;
                                 }
                             }
@@ -1666,10 +1666,10 @@
                                                         m3u8bflj = m3u8gglj;
                                                         try {
                                                             console.clear();
-                                                        } catch (e) {}
+                                                        } catch {}
                                                         console.log("播放链接：" + m3u8bflj);
                                                     }
-                                                } catch (e) {}
+                                                } catch {}
                                                 if (!shouldStopExecution) {
                                                     return realFetch.apply(thisArg, args).then(realResponse => {
                                                         try {
@@ -1690,12 +1690,12 @@
                                                                                     let textout = proqca(textin, item);
                                                                                     try {
                                                                                         textout = m3u8adgl(textout);
-                                                                                    } catch (e) {}
+                                                                                    } catch {}
                                                                                     try {
                                                                                         if (M3umatch(textout)) {
                                                                                             return realResponse;
                                                                                         }
-                                                                                    } catch (e) {}
+                                                                                    } catch {}
                                                                                     if (textout !== textin) {
                                                                                         return new Response(textout,{
                                                                                             status: realResponse.status,
@@ -1708,13 +1708,13 @@
                                                                                 }
                                                                             }
                                                                         }
-                                                                    } catch (e) {
+                                                                    } catch {
                                                                         return realResponse;
                                                                     }
                                                                 }
                                                                 );
                                                             }
-                                                        } catch (e) {
+                                                        } catch {
                                                             return realResponse;
                                                         }
                                                     }
@@ -1726,7 +1726,7 @@
                                         } else {
                                             return Reflect.apply(target, thisArg, args);
                                         }
-                                    } catch (e) {
+                                    } catch {
                                         return Reflect.apply(target, thisArg, args);
                                     }
                                 }
@@ -1749,10 +1749,10 @@
                                                             m3u8bflj = m3u8gglj;
                                                             try {
                                                                 console.clear();
-                                                            } catch (e) {}
+                                                            } catch {}
                                                             console.log("播放链接：" + m3u8bflj);
                                                         }
-                                                    } catch (e) {}
+                                                    } catch {}
                                                     try {
                                                         thisArg.addEventListener('readystatechange', async function() {
                                                             try {
@@ -1768,7 +1768,7 @@
                                                                             if (M3umatch(textin)) {
                                                                                 return;
                                                                             }
-                                                                        } catch (e) {}
+                                                                        } catch {}
                                                                         if (!new RegExp(tyad5,'i').test(textin)) {
                                                                             return;
                                                                         } else {
@@ -1778,12 +1778,12 @@
                                                                                 let textout = proqca(textin, item);
                                                                                 try {
                                                                                     textout = m3u8adgl(textout);
-                                                                                } catch (e) {}
+                                                                                } catch {}
                                                                                 try {
                                                                                     if (M3umatch(textout)) {
                                                                                         return;
                                                                                     }
-                                                                                } catch (e) {}
+                                                                                } catch {}
                                                                                 if (textout !== textin) {
                                                                                     Reflect.defineProperty(thisArg, 'response', {
                                                                                         value: textout
@@ -1798,11 +1798,11 @@
                                                                         }
                                                                     }
                                                                 }
-                                                            } catch (e) {
+                                                            } catch {
                                                                 return;
                                                             }
                                                         });
-                                                    } catch (e) {}
+                                                    } catch {}
                                                     return Reflect.apply(target, thisArg, args);
                                                 }
                                             } else {
@@ -1811,18 +1811,18 @@
                                         } else {
                                             return Reflect.apply(target, thisArg, args);
                                         }
-                                    } catch (e) {
+                                    } catch {
                                         return Reflect.apply(target, thisArg, args);
                                     }
                                 }
                             });
                         }
-                    } catch (e) {}
+                    } catch {}
                 } else {
                     alert("当前浏览器不支持 Proxy，无法执行相关功能。");
                 }
-            } catch (e) {}
+            } catch {}
         }
-    } catch (e) {}
+    } catch {}
 }
 )();
