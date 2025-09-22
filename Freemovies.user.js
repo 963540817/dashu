@@ -3,7 +3,7 @@
 // @description 请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:tw 推荐使用 暴力猴 使用，相对稳定一些。
 // @description:en 手机不推荐用脚本，建议直接使用app。
-// @copyright 2025-09-27
+// @copyright 2025-09-28
 // @version 1
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
@@ -57,6 +57,7 @@
 {name:"酷播",url:"https://api.yzzy-api.com/inc/apijson.php",jxb:"原",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzh:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jj:"1"},
 {name:"茅台",url:"https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"期颐",url:"https://iqiyizyapi.com/api.php/provide/vod/from/iqym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
+{name:"豪华",url:"https://iqiyizyapi.com/api.php/provide/vod/from/iqym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
 {name:"木耳",url:"https://www.heimuer.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"大鹏",url:"https://caiji.dbzy.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"如意",url:"https://cj.rycjapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
@@ -67,7 +68,6 @@
 {name:"光速",url:"https://guangsuzy.net",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"虎牙",url:"https://www.huyaapi.com",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"丫丫",url:"https://cj.yayazy.net",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
-{name:"豪华",url:"https://hhzyapi.com",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"OK",url:"http://api.okzyw.net",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"U酷",url:"https://api.ukuapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"量子",url:"https://cj.lziapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
