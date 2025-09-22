@@ -57,7 +57,7 @@
 {name:"酷播",url:"https://api.yzzy-api.com/inc/apijson.php",jxb:"原",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzh:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jj:"1"},
 {name:"茅台",url:"https://caiji.maotaizy.cc/api.php/provide/vod/from/mtm3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"期颐",url:"https://iqiyizyapi.com/api.php/provide/vod/from/iqym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
-{name:"豪华",url:"https://iqiyizyapi.com/api.php/provide/vod/from/iqym3u8",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
+{name:"豪华",url:"https://hhzyapi.com/api.php/provide/vod",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"}, 
 {name:"木耳",url:"https://www.heimuer.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"大鹏",url:"https://caiji.dbzy.tv",jxb:"原",cjsj:"1",cjlx:"\\.m3u8",cjjc:"4",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"如意",url:"https://cj.rycjapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"aliceblue",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
