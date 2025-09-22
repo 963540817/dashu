@@ -3,8 +3,8 @@
 // @description 公益脚本，请勿上当受骗购买，请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:tw 推荐使用 暴力猴 使用，相对稳定一些。
 // @description:en 手机不推荐用脚本，建议直接使用app。
-// @copyright 2025-09-28
-// @version 20250928
+// @copyright 2025-09-29
+// @version 20250929
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
 // @icon https://greasyfork.s3.us-east-2.amazonaws.com/fzgc3knu3rtw0gbanqqug1gmpin9
