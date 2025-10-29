@@ -1,15 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
 
-rem 直接备份First Run文件Local State文件和Default文件夹。
-rem User Data\Local State，这个文件用于保存浏览器所有用户的公用设置参数。
-rem User Data\Default\Preferences，这个文件用于保存浏览器的设置项参数、以及保存新标签页里“热门网站”的网址和图标。
-rem User Data\Default\Web Data，这个文件用于保存搜索引擎相关配置参数。
-rem User Data\Default\Secure Preferences，记录了每个扩展的64位验证串。
-rem User Data\Default\Sync Data，与Google账户同步的数据，书签历史记录扩展和设置等。
-rem User Data\Default\Login Data，密码
-rem User Data\Default\Bookmarks，保存您的收藏夹
-
 set "dsa=User Data"
 set "dsb=Data"
 set "dsc=FontLookupTableCache"
