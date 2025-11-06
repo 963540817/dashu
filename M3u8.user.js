@@ -2,9 +2,9 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20250918
+// @version 20251106
 // @author 江小白
-// @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?id=\d)/
+// @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?(?:[^\/]+?&)?id=\d)/
 // @include /(?:lay|ideo)(?:.*?(?<!\/vod.*?)\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
 // @include /^https?:\/\/iframe\..+?\/embed\//
 // @include /^https?:\/\/(?:movie\.douban\.com\/subject|m\.douban\.com\/movie)\//
@@ -17,7 +17,7 @@
 // @include /^https?:\/\/[^\/]+?\/{1,}(?:(?:[a-zA-Z\d]+?\/){1,}(?:-?(?:\d{4,}_){1,}\d{4,}|[a-zA-Z]+?(?:-\d+?){1,}-\d+?\.s?html?)|(?:[a-zA-Z\d]+?\/){2,}(?:[a-zA-Z]+?-)?\d{2,8})$/
 // @include /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?\/{1,}(?:index\.php\/{1,}vod\/{1,}detail\/{1,}id\/{1,}\d+?|p\/{1,}\d[^\.]+?\d)\.html/
 // @exclude /^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?[^a-zA-Z\d](?:log|cookie)[^a-zA-Z\d]*?[^\/\.]*?\.s?htm/
-// @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
+// @exclude /^https?:\/\/(?:[^\/]+?\.)?(?:(?:mddcloud|ggpht|qpic|gstatic|[yg]timg|youtu|google|cloudflare)|(?:roajsdl|vvvdj|bing|jd|tmall|taobao|meizu|asus|nike|vmall|fliggy|adidas|gome|\w*?suning|liangxinyao|xiaomiyoupin|mmstat|\w*?video\w*?\.qq)\.)/
 // @exclude /^https?:\/\/(?:.+?\]|(?:[^\/]+?\/{1,}(?!api)){1,}\w+?\?\w*?id=.+?(?<!&key=.+?)[&#=\?]https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)|(?:[^\/]+?\/{1,}(?:proxyhttp|[a-zA-Z]*?kv\?)|.+?\.\w+?\/{1,}(?!\d{4,8})\d+?)$)/
 // @exclude /(?:^https?:\/\/(?!.+?https?(?::\/\/|:\\\/\\\/|%(?:3A|25)[^\/]+?)).+?\.(?:ts|vob|3gp|rmvb|flac|[fh]lv|og[gv]|m(?:3u8|p[34]|kv|4a|ov|pg|idi|peg)|w(?:[am]v|ma|ebm)|a(?:ac|pe|vi|lac))|\.(?:js(?:on)?|rb|swf|png|xml|bmp|pac|gif|apk|exe|zip|txt|aspx|docx?|jpe?g|p(?:y|df|ng)|i(?:co|dx|mage)|r(?:ss|ar|[0-9]{2,2})|s(?:h|vg|rt|ub)|(?:c|le)ss|w(?:ebp|off2)))(?:#|\?|\\|&|$)|\/0\/(?:\d+?_){1,}\d+?\/0$/
 // @exclude /^https?:\/\/(?:(?:v(?:-wb)?|m)\.youku\.com\/(?:.+?\/id_|video\?)|\w+?\.wasu\.c.+?\/(?:[^\/]+?-detail|[pP]lay\/show\/id)\/\d|www\.miguvideo\.com\/.+?\/detail\.html\?cid=\d|[^\/]+?\.tudou\.com\/(?:v\/|.+?\/id_)|v\.qq\.com\/(?:x\/(?:cover|page)|.+?\/p\/topic)\/|(?:3g|m)\.v\.qq\.com|w(?:ww)?\.mgtv\.com\/[a-z]\/|www\.mgtv\.com\/act\/|m\.mgtv\.com\/b\/|www\.iqiyi\.com\/(?:[vw]_|kszt\/)|m\.iqiyi\.com\/(?:v_|$)|tw\.iqiyi\.com\/v_|tv\.sohu\.com\/v\/|m\.tv\.sohu\.com\/(?:u\/|v|phone_play_film\?aid=)|film\.sohu\.com\/album\/|www\.le\.com\/ptv\/vplay\/|m\.le\.com\/vplay_|[vm]\.pptv\.com\/show\/|vip\.1905\.com\/play\/|www\.ixigua\.com\/|(?:player|live)\.bilibili\.com\/|www\.bilibili\.com\/(?:(?:cheese|bangumi)\/play|blackboard|.*?video)\/|m\.bilibili\.com\/bangumi\/play\/|www\.acfun\.cn\/(?:.+?\/ac|bangumi\/)|m\.acfun\.cn\/v\/)/
