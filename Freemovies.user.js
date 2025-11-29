@@ -406,9 +406,10 @@ if(qs('div[class^="message"] a')&&qs('div[class^="message"] a').innerText.match(
 else if(qs('div[class^="play-Panel-Wrap-note"]')&&qs('div[class^="play-Panel-Wrap-note"]').innerText.match(会员关键字)){dnzddjobj("电脑-风行"+vipzdjxwz+"-02");}
 }catch(e){log(e);jkcwobj("风行报错"+e);}}
 else if(obj.match(/^https?:\/\/v\.qq\.com\/(?:x\/cover|.+?\/p\/topic)\//)){try{if(yjsj.getItem("ymyypdobj")=='0'){
-if(vipvideotg==1){if(qs(qqviptbaby)){if(!!js.qqvipobj){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-00-a");}}}else{if(((qs(qqviptba)&&qs(qqviptba).currentSrc.match(会员图标))||(qs(qqviptbc)&&qs(qqviptbc).innerText.match(会员文字)))&&(dcm.readyState==='complete')){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-01-a");}}
-if(qs(qqxyje)?.parentNode?.parentNode?.querySelector('[class*="ark"][class*="op"]')?.innerText?.match(会员文字)&&(dcm.readyState==='complete')){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-01-b");}
-}if(qs('[class^="panel-tip-pa"][class*="ideo"] [class*="itle"]')&&qs('[class^="panel-tip-pa"][class*="ideo"] [class*="itle"]').innerText.match(会员关键字)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"01-01");}
+if(vipvideotg==1){if(qs(qqviptbaby)){if(!!js.qqvipobj){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-00-a");}}}else{if(((qs(qqviptba)&&qs(qqviptba).currentSrc.match(会员图标))||(qs(qqviptbc)&&qs(qqviptbc).innerText.match(会员文字)))&&(dcm.readyState==='complete')){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-01-a");}}if(dcm.readyState==='complete'){
+if(qs(qqxyje)?.parentNode?.parentNode?.querySelector('[class*="ark"][class*="op"]')?.innerText?.match(会员文字)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-01-b");}
+else if(qs('[class*="lay"][class*="tem"][class*="ist"][class*="ext"][class*="ctive"]'+bqtyys+' [class*="mg"][class*="ag"][class*="op"]')?.innerText?.match(会员文字)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-02-b");}
+}}if(qs('[class^="panel-tip-pa"][class*="ideo"] [class*="itle"]')&&qs('[class^="panel-tip-pa"][class*="ideo"] [class*="itle"]').innerText.match(会员关键字)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"01-01");}
 else if(qs('[class^="panel-overlay"][class*="panel-tip-pay"][class$="container"]')&&!(qs('video')&&qs('video').currentSrc)&&qs('[class="txp_time_duration"]')&&qs('[class="txp_time_duration"]').innerText.match(视频空时间)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-01");}
 else if(qs('[class^="panel-overlay"][class*="panel-tip-pay"][class$="container"]')&&qs('video:not([src*="http"])~video:not([src*="http"])')&&qs('[class="txp_time_duration"]')&&qs('[class="txp_time_duration"]').innerText.match(视频空时间)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-02");}
 else if(qs('.content h1')&&qs('.content h1').innerText.match(会员关键字)){dnzddjobj("电脑-腾讯"+vipzdjxwz+"-03");}
