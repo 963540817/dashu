@@ -108,15 +108,15 @@ https://greasyfork.org/zh-CN/scripts/375806
 
 
 采集播放自定义：
-{name:"光速",url:"https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
-{name:"红牛",url:"https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
-{name:"飘花",url:"http://www.zzrhgg.com/api.php/provide/vod/from/kbm3u8/",json:"3",zd:"1",qp:"1",diy:"#33CC99"},
-{name:"ikun",url:"https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
-{name:"非凡",url:"http://cj.ffzyapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
-{name:"量子",url:"https://cj.lziapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
-{name:"高清",url:"https://api.1080zyku.com/inc/apijson.php/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
-{name:"闪电",url:"https://sdzyapi.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
-{name:"樱花",url:"https://m3u8.apiyhzy.com/api.php/provide/vod/",json:"3",zd:"1",qp:"1",diy:"#33CC99",title:"备用"},
+{name:"光速",url:"https://api.guangsuapi.com/api.php/provide/vod/from/gsm3u8/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"红牛",url:"https://www.hongniuzy2.com/api.php/provide/vod/from/hnm3u8/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"飘花",url:"http://www.zzrhgg.com/api.php/provide/vod/from/kbm3u8/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"ikun",url:"https://ikunzyapi.com/api.php/provide/vod/from/ikm3u8/at/json/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"非凡",url:"http://cj.ffzyapi.com/api.php/provide/vod/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"量子",url:"https://cj.lziapi.com/api.php/provide/vod/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"高清",url:"https://api.1080zyku.com/inc/apijson.php/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"闪电",url:"https://sdzyapi.com/api.php/provide/vod/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
+{name:"樱花",url:"https://m3u8.apiyhzy.com/api.php/provide/vod/",json:"3",zd:"1",cjzd:"1",px:"1",qp:"1"},
 
 
 
