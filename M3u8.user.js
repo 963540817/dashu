@@ -2,7 +2,7 @@
 // @name M3u8
 // @description:en 不推荐手机浏览器使用，特别是没有安装 猴子 的 那种套壳浏览器
 // @description 解析 或 破解 vip影视 的时候，使用的 《在线播放器》 和 《在线VIP解析接口》 和 《第三方影视野鸡网站》 全局通用 拦截和过滤 （解析资源/采集资源） 的 插播广告切片
-// @version 20260408
+// @version 20260430
 // @author 江小白
 // @include /\.php\?vod_id=\d+?$|\/\?id=[a-zA-Z\d]+?$|\.m3u8(?:\?(?!.+?&)|$)|\/[pP]lay(?:er)?(?:\/|\?(?:[^\/]+?&)?id=\d)/
 // @include /(?:lay|ideo)(?:.*?(?<!\/vod.*?)\.s?htm|(?:\?id|_key)=[a-zA-Z\d]{2,}$|s?\/\d{4,8}\/(?:.+?=\d{4,16}|(?:[^\/]+?\/){1,})$|\.php\?[^=]+?=[a-zA-Z\d]+?$|[\.\-][a-zA-Z\d]+?\/(?:[^_]+?_){1,}[^\/\.\?\=]+?$)/
@@ -55,7 +55,7 @@
                     ggsjgg = '4|20';
                     ggzlhx = 'ts|png|jpe?g|txt';
                     ggljbmd = /&(?:[a-z]*?(?:sign|token|version)|[a-z]+?_?key)=/i;
-                    ggbmd = /\.php|\/\?vkey=|(?:[\.\_](?:ts|mp4|flv)(?:\/.+?)?\.m3u8|\/m3u8\/.*?m3u8[\?&].+?\.m3u8.*?)(?:#|\?|\\|&|$)/i;
+                    ggbmd = /\.php|\/\?vkey=|(?:[\.\_\/](?:ts|mp4|flv)(?:\/.+?)?\.m3u8|\/m3u8\/.*?m3u8[\?&].+?\.m3u8.*?)(?:#|\?|\\|&|$)|\.m3u8\?(?:[a-z]=[^=]+?=$|[^_]+?_key=)/i;
                     ggljdmb = new RegExp('\\.(?:' + ggzlhx + ')' + hhzz + '+?#EXTINF','i');
                     shouldStopExecution = false;
                     try {
