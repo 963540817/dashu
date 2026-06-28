@@ -76,7 +76,7 @@
 {name:"OK",url:"http://api.okzyw.net",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"茅台",url:"https://caiji.maotaizy.cc",cj:"/index.php/ajax/suggest?mid=1&wd=",jc:"/api.php/provide/vod?ac=videolist&ids=",jxb:"原",cjjc:'3',json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"U酷",url:"https://api.ukuapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
-{name:"量子",url:"https://cj.lziapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
+{name:"量子",url:"https://cj.lziapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用",jxthsj:"0"},
 {name:"非凡",url:"http://api.ffzyapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"金鹰",url:"https://jyzyapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
 {name:"暴风",url:"https://bfzyapi.com",jxb:"原",cjlx:"\\.m3u8",json:"3",hc:"0",zd:"1",qp:"1",px:"1",diy:"tan",cjdiy:"#33CC99",sj:"0",cjzd:"1",title:"非解析,资源网采集播放,备用"},
