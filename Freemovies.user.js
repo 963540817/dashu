@@ -3,7 +3,7 @@
 // @description 请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:tw 推荐使用 暴力猴 使用，相对稳定一些。
 // @description:en 手机不推荐用脚本，建议直接使用app。
-// @copyright 2026-08-26
+// @copyright 2026-08-27
 // @version 1
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
@@ -146,7 +146,7 @@ else if(objj.match(/\.wasu\./)){qs('ul[class*="vip_tipbox block"] li[class="ws_c
 else if(objj.match(/\.ixigua\./)){qs('a[class*="playlist"][class*="active"]:not([class$="selectItem"])').nextElementSibling.click();}
 else if(objj.match(/\.fun\.tv/)){const torrList=qs('li[class^="torr-list"][class*="nowplay scrollpos"][class*="torr-list-normal"]'),previousSiblingText=torrList.previousSibling.innerText,currentText=torrList.innerText;if(torrList&&previousSiblingText>currentText){torrList.previousSibling.click();}else{torrList.nextElementSibling.click();}}
 else if(obj.match(/\.sohu\.com\/v/)){qs('ul>li.on[data-vid]>a[href*="/v"]').parentNode.nextElementSibling.click();}
-else if(obj.match(/\.bilibili.com\/bangumi/)){if(qs(bilibilixyja)){if(qs('div[class^="eplist_ep_list_wrapper_"]>div[class^="eplist_list_title_"] [class^="eplist_ep_list_order_"][class$="undefined"]')){qs(bilibilixyja).previousSibling.click();}else{qs(bilibilixyja).nextElementSibling.click();}}else{qs(bilibilixyjb).nextElementSibling.click();}}else{await js.byzdxjobj();}}catch{try{if(qs('div#江小白')){await jxbzjmsbobj();await qczddjaobj();await scvideo();}}catch{}}}else{try{
+else if(obj.match(/\.bilibili.com\/bangumi/)){if(qs('button[aria-label*="正序"]')){js.arialabe=true;}else{js.arialabe=false;}if(qs(bilibilixyja)){if(js.arialabe){try{qs(bilibilixyja).previousSibling.click();}catch{try{qs(bilibilixyja).previousElementSibling.click();}catch{qs(bilibilixyja).parentNode.previousElementSibling.lastElementChild.click();}}}else{try{qs(bilibilixyja).nextElementSibling.click();}catch{qs(bilibilixyja).parentNode.nextElementSibling.firstElementChild.click();}}}else{if(js.arialabe){try{qs(bilibilixyjb).previousSibling.click();}catch{try{qs(bilibilixyjb).previousElementSibling.click();}catch{qs(bilibilixyjb).parentNode.previousElementSibling.lastElementChild.click();}}}else{try{qs(bilibilixyjb).nextElementSibling.click();}catch{qs(bilibilixyjb).parentNode.nextElementSibling.firstElementChild.click();}}}}else{await js.byzdxjobj();}}catch{try{if(qs('div#江小白')){await jxbzjmsbobj();await qczddjaobj();await scvideo();}}catch{}}}else{try{
 /* **手机端 浏览器插件替换播放器之后自动下一集** */
 if(objj.match(/\.youku\./)){qs(youkusjxyja).nextElementSibling.click();}
 else if(objj.match(/\.qq\./)){if(qs(qqsjxyja)){try{qs(qqsjxyja).parentNode.nextElementSibling.click();}catch{qs(qqsjxyja).nextElementSibling.click();}}else{qs(sjqqxyjb).nextElementSibling.click();}}
