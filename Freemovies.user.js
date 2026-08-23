@@ -3,7 +3,7 @@
 // @description 请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:tw 推荐使用 暴力猴 使用，相对稳定一些。
 // @description:en 手机不推荐用脚本，建议直接使用app。
-// @copyright 2026-08-28
+// @copyright 2026-08-27
 // @version 1
 // @author 江小白
 // @homepageURL https://raw.githubusercontent.com/963540817/dashu/main/1.txt
