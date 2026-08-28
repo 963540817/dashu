@@ -48,7 +48,7 @@
 /* *** 自定义接口请移步 辅助脚本，不然脚本更新，自定义会被覆盖掉***  *** 倘若出现跨域弹窗，请允许 全部域名 即可****  *** 非解析的资源采集播放，容易出现跑马灯水印，请勿相信任何广告****** *** */
 /* 以下是传统的视频解析 （支持json解析接口，最好需要加json:"1"参数，也可不加）*/
 {name:"虾米",url:"https://jx.xmflv.com/?url=",jxb:"原",hc:"0",zd:"1",zdts:"1",qp:"1",j:"电脑",dm:"1",jj:"1"},
-{name:"酥皮",url:"https://bfq.txnp.cn/player?url=",jxb:"原",hc:"0",zd:"1",qp:"1",wb:"&route=哔哩1080P"},
+{name:"酥皮",url:"https://bfq.txnp.cn/player?url=",jxb:"原",hc:"0",zd:"1",qp:"1",wb:"&route=1080P2"},
 {name:"二手",url:"https://jx.2s0.cn/player/analysis.php?v=",jxb:"原",hc:"0",zd:"1",qp:"1"},
 {name:"邦宁",url:"https://video.isyour.love/player/getplayer?url=",zd:"1",j:"电脑",vip:"强制跳转"},
 {name:"宅男",url:"https://zn.kptv.us/?url=",urlpro:"https://jx.kptv.us/?url=",zd:"1",j:"电脑",vip:"强制跳转"},
