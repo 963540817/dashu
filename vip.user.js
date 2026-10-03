@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name         养老vip脚本
-// @version      11
+// @version      963540817
 // @description  单纯写好玩的，能不能用不清楚
 // @author       屏幕前的你
 // @match        *://*.qq.com/*
