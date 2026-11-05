@@ -1,0 +1,20 @@
+name: Sync to jxb
+
+on:
+  push:
+    branches: [ main ] # 如果你的默认分支是 master，请改成 master
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dashu
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to jxb
+        run: |
+          git remote add jxb https://${{ secrets.JXB_SYNC_TOKEN }}@github.com/qq963540817/jxb.git
+          git push jxb HEAD:main --force
