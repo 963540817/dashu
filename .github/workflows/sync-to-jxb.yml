@@ -2,7 +2,7 @@ name: Sync to jxb
 
 on:
   push:
-    branches: [ main ] # 如果你的默认分支是 master，请改成 master
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -16,5 +16,5 @@ jobs:
 
       - name: Push to jxb
         run: |
-          git remote add jxb https://${{ secrets.JXB_SYNC_TOKEN }}@github.com/qq963540817/jxb.git
+          git remote add jxb https://963540817:${{ secrets.JXB_SYNC_TOKEN }}@github.com/963540817/jxb.git
           git push jxb HEAD:main --force
