@@ -16,5 +16,5 @@ jobs:
 
       - name: Push to jxb
         run: |
-          git remote add jxb https://963540817:${{ secrets.JXB_SYNC_TOKEN }}@github.com/963540817/jxb.git
+          git remote add jxb https://qq963540817:${{ secrets.JXB_SYNC_TOKEN }}@github.com/qq963540817/jxb.git
           git push jxb HEAD:main --force
