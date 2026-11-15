@@ -3,8 +3,8 @@
 // @description 公益脚本，请勿上当受骗购买，请不要相信“解析”出现的一切任何形式的广告，江小白无聊作品，单纯写好玩的，任何浏览器 自带集成 此脚本 的均跟 原作者 无关
 // @description:tw 推荐使用 暴力猴 使用，相对稳定一些。
 // @description:en 手机不推荐用脚本，建议直接使用app。
-// @copyright 2026-11-13
-// @version 20261113
+// @copyright 2026-11-14
+// @version 2026-11-14
 // @author 江小白
 // @homepageURL https://gcore.jsdelivr.net/gh/963540817/dashu@master/1.txt
 // @icon https://greasyfork.s3.us-east-2.amazonaws.com/fzgc3knu3rtw0gbanqqug1gmpin9
@@ -58,6 +58,7 @@
 {name:"789",url:"https://api-api.789jiexi.net/jiexi.php?url=",jxb:"原",hc:"0",zd:"1",qp:"1",dqjx:"1"},
 {name:"洛雪",url:"https://jx.lxyy.club/index.php?url=",hc:"0",zd:"1",dqjx:"1",vip:"强制弹小窗"},
 {name:"风云",url:"https://v.jiasu7.top/jx.php?url=",hc:"0",zd:"1",dqjx:"1",vip:"强制弹小窗"},
+{name:"无名",url:"https://jx.wmxz.online/?url=",jxb:"原",hc:"0",qp:"1",qc:"0",vip:"强制跳转"},
 {name:"邦宁",url:"https://video.isyour.love/player/getplayer?url=",hc:"0",zd:"1",j:"电脑",vip:"强制跳转"},
 {name:"麒麟",url:"https://www.66dpw.vip/?url=",urlpro:"https://svip.qlplayer.cyou/?url=",hc:"0",zd:"1",vip:"强制跳转"},
 /* 以下是来自资源网采集播放，跟传统的视频解析不一样 *//* 资源采集容易出现插播广告，可以去 群共享 下载 去广告播放器插件（Json插件播放器 或者 猫HD）*/
@@ -90,6 +91,7 @@
 /* 以下是跳转搜索你正在观看的视频*/
 {name:"资源站",url:"http://ikanbot.eu.org/search?q=",json:"3",j:"电脑"},
 {name:"采集站",url:"https://eco.fe-spark.cn/search?search=",vip:"强制搜索"},
+{name:"片库",url:"https://jx.wmxz.online/?url=",vip:"强制搜索",qc:"0"},
 //{name:"豆瓣",url:navigator.userAgent.replace(navigator.userAgent,match=>{if(/iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|MIDP|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone/i.test(match)){return"https://m.douban.com/search/?query=";}else{return"https://search.douban.com/movie/subject_search?search_text=";}}),jyjk:"0",jjjj:"douban",vip:"强制搜索"},
 /* 以下采集更新太慢，暂时不启用，想用的话，自己复制黏贴到 辅助脚本 使用 *//*
 {name:"全部",url:"全部",对比:"综艺|动漫|电视剧",json:"3",hc:"0",hs:"0",zd:"1",cjzd:"1",qc:"0",diy:"tomato",title:"非解析,资源网采集播放,备用"},
