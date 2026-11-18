@@ -64,14 +64,6 @@ https://raw.githubusercontent.com/963540817/dashu/main/222.user.js
 
 说明：辅助脚本 是自定义接口用的，如果不需要 自定义接口，无需安装 辅助脚本
 
-手机腾讯网页选集脚本:
-已经安装 jxb.user.js 或 Freemovies.user.js 的无需安装此脚本
-
-https://seep.eu.org/https://raw.githubusercontent.com/963540817/dashu/main/qqsj.user.js
-https://p.xbta.cc/https://raw.githubusercontent.com/963540817/dashu/main/qqsj.user.js
-https://cdn.jsdmirror.com/gh/963540817/dashu@main/qqsj.user.js
-https://gcore.jsdelivr.net/gh/963540817/dashu@master/qqsj.user.js
-https://raw.githubusercontent.com/963540817/dashu/main/qqsj.user.js
 
 养老vip脚本:（单纯普通接口功能）
 
