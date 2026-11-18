@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         手机腾讯选集
-// @version      3
+// @version      4
 // @description  修复集数提取与上下中排序，适配多种标题格式
 // @author       屏幕前的你
 // @noframes
@@ -1058,10 +1058,10 @@
             switching = true;
             try {
                 if (mode === 'scroll') {
-                    hint.textContent = `选集（共${totalEpisodes}集）👉 点击切回分页`;
+                    hint.textContent = `选集（${totalEpisodes}）👉 切回分页`;
                     renderScrollMode();
                 } else {
-                    hint.textContent = `选集（共${totalEpisodes}集）👉 点击切换滑动`;
+                    hint.textContent = `选集（${totalEpisodes}）👉 切换滑动`;
                     requestAnimationFrame(() => {
                         pageSize = calcPageSize();
                         totalPages = Math.ceil(totalEpisodes / pageSize) || 1;
